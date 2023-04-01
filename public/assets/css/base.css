@@ -1,0 +1,23 @@
+:root {
+    --white-color: #fff;
+    --black-color: #000;
+    --text-color: #333;
+    --lightwhite-color: #F5F5F5;
+    --darkblue-color: #364F6B;
+    --lightblue-color: #3FC1C9;
+    --pink-color: #FC5185;
+    --grey-color: #bababa;
+    --yellow-color: #ffff00;
+}
+
+* {
+    box-sizing: inherit;
+}
+
+html {
+    font-size: 62.5%;
+    line-height: 1.6rem;
+    font-family: 'Roboto', sans-serif;
+    box-sizing: border-box;
+}
+
