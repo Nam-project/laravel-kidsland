@@ -82,7 +82,7 @@
                                         <ul class="login-success-plus">
                                             <li class="login-success-plus__i"><a href="{{ route('user.dashboard') }}">Thông
                                                     tin tài khoản</a></li>
-                                            <li class="login-success-plus__i"><a href="">Đơn hàng của tôi</a></li>
+                                            <li class="login-success-plus__i"><a href="/cart">Đơn hàng của tôi</a></li>
                                             <li class="login-success-plus__i"><a
                                                     onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
                                                     href="{{ route('logout') }}">Đăng xuất</a></li>
