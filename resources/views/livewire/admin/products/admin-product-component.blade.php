@@ -17,7 +17,7 @@
     <div class="card">
         <div class="card-header">
             <div class="card-tools">
-                <a href="" class="btn btn-block btn-primary">Thêm sản phẩm</a>
+                <a href="{{route('admin.addproduct')}}" class="btn btn-block btn-primary">Thêm sản phẩm</a>
             </div>
         </div>
         @if (Session::has('massage'))
@@ -40,6 +40,7 @@
                         <th>#</th>
                         <th>Hình ảnh</th>
                         <th>Tên sản phẩm</th>
+                        <th>Số lượng</th>
                         <th>Stock</th>
                         <th>Giá</th>
                         <th>Thuộc danh mục</th>
@@ -47,15 +48,17 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($products as $key => $product)
+                    @foreach ($products as $product)
                         <tr>
-                            <td>{{ $key + 1 }}</td>
+                            <td>{{ $product->id }}</td>
                             <td><img src="{{asset('assets/imgs/products')}}/{{$product->image}}" height="100px" alt=""></td>
                             <td>{{ $product->name }}</td>
+                            <td>{{ $product->quantity }}</td>
                             <td>{{ $product->stock_status }}</td>
-                            <td>{{ }}</td>
+                            <td>{{ $product->sale_price }}</td>
+                            <td>{{ $product->subcategory->name }}</td>
                             <td>
-                                <a class="btn btn-primary btn-sm" href=""><i class="nav-icon fas fa-edit"></i></a>
+                                <a class="btn btn-primary btn-sm" href="{{route('admin.editproduct',['product_slug'=>$product->slug])}}"><i class="nav-icon fas fa-edit"></i></a>
                                 <button class="btn btn-danger btn-sm" wire:click.prevent=""><i class="ion-android-delete"></i></button>
                             </td>
                         </tr>

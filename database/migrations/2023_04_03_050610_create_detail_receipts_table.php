@@ -15,7 +15,7 @@ class CreateDetailReceiptsTable extends Migration
     {
         Schema::create('detail_receipts', function (Blueprint $table) {
             $table->id();
-            $table->decimal('price'); //don gia
+            $table->double('price'); //don gia
             $table->unsignedInteger('quantity');
             $table->bigInteger('product_id')->unsigned()->nullable();
             $table->bigInteger('warehouse_id')->unsigned()->nullable();

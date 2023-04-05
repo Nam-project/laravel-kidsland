@@ -6,7 +6,7 @@
                 <div class="col l-2 m-3 c-6 product__item">
                     <div class="product__item-link">
                         <a href="{{Route('product.details',['slug'=>$product->slug])}}">
-                            <img src="{{asset('assets/imgs/'.$product->image)}}" alt="{{$product->name}}"
+                            <img src="{{asset('assets/imgs/products/'.$product->image)}}" alt="{{$product->name}}"
                                 class="product__img">
                             <div class="product__name">{{$product->name}}
                             </div>

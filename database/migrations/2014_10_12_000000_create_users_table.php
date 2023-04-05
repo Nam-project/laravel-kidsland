@@ -17,13 +17,16 @@ class CreateUsersTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
+            $table->string('address')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
             $table->foreignId('current_team_id')->nullable();
             $table->text('profile_photo_path')->nullable();
             $table->string('utype')->default('USR')->comment('ADM for Admin and USR for User or Customer');
+            $table->bigInteger('ward_id')->nullable();
             $table->timestamps();
+            $table->foreign('ward_id')->references('xaid')->on('devvn_xaphuongthitran');
         });
     }
 

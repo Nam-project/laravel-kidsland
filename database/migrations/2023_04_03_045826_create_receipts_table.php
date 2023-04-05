@@ -15,7 +15,7 @@ class CreateReceiptsTable extends Migration
     {
         Schema::create('receipts', function (Blueprint $table) {
             $table->id();
-            $table->decimal('total'); //tong
+            $table->double('total'); //tong
             $table->enum('status',['confirm','unconfimred']);
             $table->bigInteger('receiver')->unsigned()->nullable();
             $table->bigInteger('user_id')->unsigned()->nullable();

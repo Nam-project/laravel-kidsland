@@ -18,8 +18,8 @@ class CreateProductsTable extends Migration
             $table->string('name');
             $table->string('slug')->unique();
             $table->text('description')->nullable(); // mô tả
-            $table->decimal('regular_price'); //giá
-            $table->decimal('sale_price'); //giá bán
+            $table->double('regular_price'); //giá
+            $table->double('sale_price'); //giá bán
             $table->string('SKU'); //
             $table->enum('stock_status',['instock','outofstock']); //trạng thái hang
             $table->boolean('featured')->default(false);

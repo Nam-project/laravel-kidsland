@@ -1,0 +1,172 @@
+<div class="content-wrapper p-2">
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Sản phẩm</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Home</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('admin.products') }}">Sản phẩm</a></li>
+                        <li class="breadcrumb-item active">Chỉnh sửa sản phẩm</li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+    <div class="card card-primary">
+        <div class="card-header">
+            <h3 class="card-title">Chỉnh sửa sản phẩm</h3>
+        </div>
+        <!-- /.card-header -->
+        <!-- form start -->
+        @if (Session::has('massage'))
+            <div class="card bg-success m-1">
+                <div class="card-header">
+                    <div class="card-title">{{ Session::get('massage') }}</div>
+
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="remove"><i
+                                class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        @endif
+        <form wire:submit.prevent="updateProduct">
+            <div class="card-body">
+                <div class="form-group">
+                    <label for="nameCategory">Tên sản phẩm</label>
+                    <input type="text" class="form-control" placeholder="Tên sản phẩm" wire:model="name"
+                        wire:keyup="generateSlug">
+                </div>
+                <div class="form-group">
+                    <label for="slugCategory">Slug</label>
+                    <input type="text" class="form-control" placeholder="Slug sản phẩm" wire:model="slug">
+                </div>
+                <div class="form-group">
+                    <label for="fileInput">Hinh ảnh</label>
+                    <div class="custom-file">
+                        <input class="pt-2" type="file" id="file-upload" name="file-upload" wire:model="newimage">
+                    </div>
+                    @if ($newimage)
+                        <img src="{{ $newimage->temporaryUrl() }}" alt="" height="200px">
+                    @else
+                        <img src="{{ asset('assets/imgs/products') }}/{{$image}}" alt="" height="200px">
+                    @endif
+                </div>
+
+                <div class="form-group" wire:ignore>
+                    <label>Mô tả</label>
+                    <textarea class="form-control" name="" id="editordescribe" cols="30" rows="10"
+                        wire:model="description">{{$description}}</textarea>
+                </div>
+                <div class="form-group">
+                    <label for="slugCategory">Regular price</label>
+                    <input type="text" class="form-control" placeholder="Regular price" wire:model="regular_price">
+                </div>
+                <div class="form-group">
+                    <label for="slugCategory">Giá bán</label>
+                    <input type="text" class="form-control" placeholder="Giá bán" wire:model="sale_price">
+                </div>
+                <div class="form-group">
+                    <label for="slugCategory">Số lượng</label>
+                    <input type="text" class="form-control" placeholder="Số lượng" wire:model="quantity">
+                </div>
+                <div class="form-group">
+                    <label for="slugCategory">SKU</label>
+                    <input type="text" class="form-control" placeholder="SKU" wire:model="SKU">
+                </div>
+                <div class="form-group">
+                    <label for="slugCategory">Featured</label>
+                    <select class="custom-select" wire:model="featured">
+                        <option value="0">No</option>
+                        <option value="1">Yes</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Danh mục</label>
+                    <select class="custom-select" wire:model="subcategory_id">
+                        <option value="">Chọn danh mục</option>
+                        @foreach ($subcategories as $subcategory)
+                            <option value="{{ $subcategory->id }}">{{ $subcategory->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Thương hiệu</label>
+                    <select class="custom-select" wire:model="brand_id">
+                        <option value="">Chọn thương hiệu</option>
+                        @foreach ($brands as $brand)
+                            <option value="{{ $brand->id }}">{{ $brand->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="slugCategory">Stock</label>
+                    <select class="custom-select" wire:model="stock_status">
+                        <option value="instock">InStock</option>
+                        <option value="outofstock">Out Of Stock</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="slugCategory">Size</label>
+                    <input type="text" class="form-control" placeholder="Size" wire:model="size">
+                </div>
+                <div class="form-group">
+                    <label for="slugCategory">Độ tuổi phù hợp</label>
+                    <input type="text" class="form-control" placeholder="Độ tuổi phù hợp"
+                        wire:model="suitable_age">
+                </div>
+                <div class="form-group" wire:ignore>
+                    <label>Hướng dẫn sử dụng</label>
+                    <textarea class="form-control" name="" id="editoruser_manual" wire:model="user_manual">{{$user_manual}}</textarea>
+                </div>
+                <div class="form-group" wire:ignore>
+                    <label>Hướng dẫn bảo quản</label>
+                    <textarea class="form-control" name="" id="editorpreserve" wire:model="preserve">{{$preserve}}</textarea>
+                </div>
+
+            </div>
+            <!-- /.card-body -->
+
+            <div class="card-footer">
+                <button type="submit" class="btn btn-primary">Cập nhật</button>
+            </div>
+        </form>
+    </div>
+    <script src="{{ asset('assets/js/ckeditor.js') }}"></script>
+    <script>
+        ClassicEditor
+            .create(document.querySelector('#editordescribe'))
+            .then(function(editor) {
+                editor.model.document.on('change:data', () => {
+                    @this.set('description', editor.getData())
+                })
+            })
+            .catch(error => {
+                console.error(error);
+            });
+        ClassicEditor
+            .create(document.querySelector('#editoruser_manual'))
+            .then(function(editor) {
+                editor.model.document.on('change:data', () => {
+                    @this.set('user_manual', editor.getData())
+                })
+            })
+            .catch(error => {
+                console.error(error);
+            });
+        ClassicEditor
+            .create(document.querySelector('#editorpreserve'))
+            .then(function(editor) {
+                editor.model.document.on('change:data', () => {
+                    @this.set('preserve', editor.getData())
+                })
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    </script>
+</div>
