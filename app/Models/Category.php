@@ -10,4 +10,14 @@ class Category extends Model
     use HasFactory;
 
     protected $table = "categories";
+
+    public function brand()
+    {
+        return $this->hasMany(Brand::class);
+    }
+
+    public function subcategory()
+    {
+        return $this->hasMany(SubCategory::class);
+    }
 }

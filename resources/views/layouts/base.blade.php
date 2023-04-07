@@ -120,7 +120,7 @@
                     </nav> --}}
                     <nav class="nav__bar">
                         <ul class="nav__bar-group row">
-                            <li class="nav__bar-item col l-2"><a href="" class="nav__bar-link"></a></li>
+                            <li class="nav__bar-item col l-2"><a href="/shop" class="nav__bar-link"><i class="fa-solid fa-shop"></i><span>Shop</span></a></li>
                             <li class="nav__bar-item col l-2"><a href="" class="nav__bar-link"><i class="fa-solid fa-phone"></i><span>Liên hệ</span></a></li>
                             <li class="nav__bar-item col l-2"><a href="" class="nav__bar-link"><i class="fa-brands fa-slack"></i><span>Góp ý</span></a></li>
                             <li class="nav__bar-item col l-2"><a href="" class="nav__bar-link"><i class="fa-solid fa-circle-question"></i><span>Hổ trợ</span></a></li>

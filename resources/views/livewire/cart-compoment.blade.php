@@ -20,7 +20,7 @@
                         <div class="products__cart-i">
                             <input type="checkbox" name="" id="">
                             <a href="{{route('product.details',['slug'=>$item->model->slug])}}">
-                                <img src="{{asset('assets/imgs/'.$item->model->image) }}" alt="{{$item->model->name}}"
+                                <img src="{{asset('assets/imgs/products/'.$item->model->image) }}" alt="{{$item->model->name}}"
                                     class="product__cart-img">
                                 <div class="product__cart-name">{{$item->model->name}}</div>
                             </a>

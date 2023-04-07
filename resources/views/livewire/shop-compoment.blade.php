@@ -1,6 +1,5 @@
 <div class="main__content">
     <div class="grid wide">
-        <div class="title__for-you">Gợi ý hôm nay</div>
         <div class="row product__list">
             @foreach ($products as $product)
                 <div class="col l-2 m-3 c-6 product__item">
@@ -25,6 +24,6 @@
                 </div>
             @endforeach
         </div>
-        {{$products->links()}}
+        {{$products->links('custom-pagination-links-view')}}
     </div>
 </div>
