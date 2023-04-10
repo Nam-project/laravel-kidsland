@@ -37,6 +37,7 @@ class AdminAddProductComponent extends Component
         $this->stock_status = 'instock';
         $this->featured = 0;
         $this->quantity = 0;
+        $this->sale_price = 0;
     }
 
     public function generateSlug()
@@ -44,8 +45,39 @@ class AdminAddProductComponent extends Component
         $this->slug = Str::slug($this->name);
     }
 
+    public function updated($fields)
+    {
+        $this->validateOnly($fields, [
+            'name' => 'required|unique:products',
+            'slug' => 'required|unique:products',
+            'image' => 'required',
+            'description' => 'required',
+            'regular_price' => 'required|numeric',
+            'sale_price' => 'numeric',
+            'quantity' => 'numeric',
+            'SKU' => 'required',
+            'image' => 'required|mimes:jpeg,png,jpg',
+            'subcategory_id' => 'required',
+            'brand_id' => 'required'
+        ]);
+    }
+
     public function addProduct()
     {
+        $this->validate([
+            'name' => 'required|unique:products',
+            'slug' => 'required|unique:products',
+            'image' => 'required',
+            'description' => 'required',
+            'regular_price' => 'required|numeric',
+            'sale_price' => 'numeric',
+            'quantity' => 'numeric',
+            'SKU' => 'required',
+            'image' => 'required|mimes:jpeg,png',
+            'subcategory_id' => 'required',
+            'brand_id' => 'required'
+        ]);
+
         $product = new Product();
         $product->name = $this->name;
         $product->slug = $this->slug;
@@ -60,35 +92,25 @@ class AdminAddProductComponent extends Component
         $product->brand_id = $this->brand_id;
         $product->stock_status = $this->stock_status;
 
-        if (isset($this->name) && isset($this->sale_price) && isset($this->SKU)) {
-            if (Product::where('name', '=', $this->name)->exists()) {
-                // Do something if the record exists
-                session()->flash('massage', 'Sản phẩm đã tồn tại');
-            } else { 
-                if ($this->image) {
-                    $imageName = Carbon::now()->timestamp.'.'.$this->image->extension();
-                    $this->image->storeAs('products', $imageName);
-                    $product->image = $imageName;
-                    // Tiếp tục xử lý lưu ảnh và tạo bản ghi
-                }else {
-                    $product->image = NULL;
-                }
-                $product->save();
-                session()->flash('massage', 'Tạo sản phẩm thành công');
-                $detailproduct = new ProductDetails();
-                if (isset($product->id)) {
-                    $detailproduct->size = $this->size;
-                    $detailproduct->suitable_age = $this->suitable_age;
-                    $detailproduct->user_manual = $this->user_manual;
-                    $detailproduct->preserve = $this->preserve;
-                    $detailproduct->product_id	 = $product->id;
+        if ($this->image) {
+            $imageName = Carbon::now()->timestamp.'.'.$this->image->extension();
+            $this->image->storeAs('products', $imageName);
+            $product->image = $imageName;
+            // Tiếp tục xử lý lưu ảnh và tạo bản ghi
+        }else {
+            $product->image = NULL;
+        }
+        $product->save();
+        session()->flash('massage', 'Tạo sản phẩm thành công');
+        $detailproduct = new ProductDetails();
+        if (isset($product->id)) {
+            $detailproduct->size = $this->size;
+            $detailproduct->suitable_age = $this->suitable_age;
+            $detailproduct->user_manual = $this->user_manual;
+            $detailproduct->preserve = $this->preserve;
+            $detailproduct->product_id	 = $product->id;
         
-                    $detailproduct->save();
-                }
-                
-            }
-        } else {
-            session()->flash('massage', 'Vui lòng điền đủ thông tin!');
+            $detailproduct->save();
         }
 
         return redirect()->route('admin.addproduct');

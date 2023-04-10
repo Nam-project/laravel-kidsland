@@ -3,14 +3,14 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Danh mục con</h1>
+                    <h1>Cân nặng và tuổi</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Home</a></li>
                         <li class="breadcrumb-item"><a href="{{ route('admin.categories') }}">Danh mục</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('admin.subcategory') }}">Danh mục con</a></li>
-                        <li class="breadcrumb-item active">Chỉnh sửa danh mục con</li>
+                        <li class="breadcrumb-item"><a href="{{ route('admin.weightage') }}">Cân nặng và tuổi</a></li>
+                        <li class="breadcrumb-item active">Chỉnh sửa Cân nặng và tuổi</li>
                     </ol>
                 </div>
             </div>
@@ -18,7 +18,7 @@
     </section>
     <div class="card card-primary">
         <div class="card-header">
-            <h3 class="card-title">Chỉnh sửa danh mục con</h3>
+            <h3 class="card-title">Chỉnh sửa Cân nặng và tuổi</h3>
         </div>
         <!-- /.card-header -->
         <!-- form start -->
@@ -46,20 +46,12 @@
                   </div>
             </div>
         @endif --}}
-        <form wire:submit.prevent="updateSubCategory">
+        <form wire:submit.prevent="updateWeightAge">
             <div class="card-body">
                 <div class="form-group">
-                    <label for="nameCategory">Tên danh mục con</label>
-                    <input type="text" class="form-control" placeholder="Tên danh mục" wire:model="name"
-                        wire:keyup="generateSlug">
+                    <label for="nameCategory">Tên cân nặng hoặc tuổi</label>
+                    <input type="text" class="form-control" placeholder="Tên danh mục" wire:model="name">
                     @error('name')
-                        <p class="text-danger">{{ $message }}</p>
-                    @enderror
-                </div>
-                <div class="form-group">
-                    <label for="slugCategory">Slug</label>
-                    <input type="text" class="form-control" placeholder="Slug danh mục" wire:model="slug">
-                    @error('slug')
                         <p class="text-danger">{{ $message }}</p>
                     @enderror
                 </div>

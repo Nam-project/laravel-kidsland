@@ -75,10 +75,10 @@
                     <div class="details__quantity">
                         <div class="details__quantity-text">Số lượng</div>
                         <div class="details__quantity-add">
-                            <button class="minus-btn" type="button">-</button>
-                            <input type="number" min="1" max="{{ $product->quantity }}" value="1"
+                            <button class="minus-btn" wire:click.prevent="decreseQuantity" type="button">-</button>
+                            <input type="number" min="1" max="{{ $product->quantity }}" value="1" wire:model = "qty"
                                 class="details__quantity-input">
-                            <button class="plus-btn" type="button">+</button>
+                            <button class="plus-btn" wire:click.prevent="increaseQuantity" type="button">+</button>
                         </div>
                         <div class="details__quantity-text">{{ $product->quantity }} sản phẩm có sẵn</div>
                     </div>
@@ -95,7 +95,7 @@
                         <div class="details__information-title">
                             <div onclick="scrollToElement('target-element')" class="information__text text__active">Chi
                                 tiết sản phẩm</div>
-                            <div class="information__text">Đánh giá</div>
+                            <div class="information__text"><a href="#evaluate">Đánh giá</a></div>
                             <div class="information__text">Thảo luận & hỏi đáp</div>
                         </div>
                     </div>
@@ -161,6 +161,122 @@
                     </div>
                 </div>
             </div>
+
+            <div id="evaluate" class="details__evaluate row">
+                <div class="details__evaluate-title col l-12">Đánh giá - Nhận xét<i class="fa-solid fa-caret-right"></i></div>
+                <div class="details__evaluate-rating col l-4">
+                    <div class="review-rating__summary">
+                        <div class="review-rating__point">4.3</div>
+                        <div class="review-rating__stars">
+                            <div class="review-rating__star" style="--rating: 4.3;" aria-label="Rating of this product is 2.3 out of 5."></div>
+                            <div class="review-rating__total">100 nhận xét</div>
+                        </div>
+                    </div>
+                    <div class="review-rating__detail">
+                        <div class="review-rating__level">
+                            <div class="review-rating__group">
+                                <span class="star__active"><i class="fa-solid fa-star"></i></span>
+                                <span class="star__active"><i class="fa-solid fa-star"></i></span>
+                                <span class="star__active"><i class="fa-solid fa-star"></i></span>
+                                <span class="star__active"><i class="fa-solid fa-star"></i></span>
+                                <span class="star__active"><i class="fa-solid fa-star"></i></span>
+                            </div>
+                            <div class="review-rating__processbar">
+                                <div class="rating__processbar-cushion" style="width: 80%;"></div>
+                            </div>
+                            <div class="review-rating__number">80</div>
+                        </div>
+                        <div class="review-rating__level">
+                            <div class="review-rating__group">
+                                <span class="star__active"><i class="fa-solid fa-star"></i></span>
+                                <span class="star__active"><i class="fa-solid fa-star"></i></span>
+                                <span class="star__active"><i class="fa-solid fa-star"></i></span>
+                                <span class="star__active"><i class="fa-solid fa-star"></i></span>
+                                <span class=""><i class="fa-solid fa-star"></i></span>
+                            </div>
+                            <div class="review-rating__processbar">
+                                <div class="rating__processbar-cushion" style="width: 10%;"></div>
+                            </div>
+                            <div class="review-rating__number">10</div>
+                        </div>
+                        <div class="review-rating__level">
+                            <div class="review-rating__group">
+                                <span class="star__active"><i class="fa-solid fa-star"></i></span>
+                                <span class="star__active"><i class="fa-solid fa-star"></i></span>
+                                <span class="star__active"><i class="fa-solid fa-star"></i></span>
+                                <span class=""><i class="fa-solid fa-star"></i></span>
+                                <span class=""><i class="fa-solid fa-star"></i></span>
+                            </div>
+                            <div class="review-rating__processbar">
+                                <div class="rating__processbar-cushion" style="width: 10%;"></div>
+                            </div>
+                            <div class="review-rating__number">10</div>
+                        </div>
+                        <div class="review-rating__level">
+                            <div class="review-rating__group">
+                                <span class="star__active"><i class="fa-solid fa-star"></i></span>
+                                <span class="star__active"><i class="fa-solid fa-star"></i></span>
+                                <span class=""><i class="fa-solid fa-star"></i></span>
+                                <span class=""><i class="fa-solid fa-star"></i></span>
+                                <span class=""><i class="fa-solid fa-star"></i></span>
+                            </div>
+                            <div class="review-rating__processbar">
+                                <div class="rating__processbar-cushion" style="width: 30%;"></div>
+                            </div>
+                            <div class="review-rating__number">30</div>
+                        </div>
+                        <div class="review-rating__level">
+                            <div class="review-rating__group">
+                                <span class="star__active"><i class="fa-solid fa-star"></i></span>
+                                <span class=""><i class="fa-solid fa-star"></i></span>
+                                <span class=""><i class="fa-solid fa-star"></i></span>
+                                <span class=""><i class="fa-solid fa-star"></i></span>
+                                <span class=""><i class="fa-solid fa-star"></i></span>
+                            </div>
+                            <div class="review-rating__processbar">
+                                <div class="rating__processbar-cushion" style="width: 5%;"></div>
+                            </div>
+                            <div class="review-rating__number">5</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="details__evaluate-comment col l-8">
+                    <div class="evaluate__comment-rating">
+                        <a href="" class="evaluate__comment-avatar"><img src="../assets/imgs/user.png" alt=""></a>
+                        <div class="evaluate__comment-main">
+                            <div class="evaluate__comment-username">Năm Nguyễn <span>08/04/2023</span></div>
+                            <div class="evaluate__comment-star">
+                                <span class="star__active"><i class="fa-solid fa-star"></i></span>
+                                <span class="star__active"><i class="fa-solid fa-star"></i></span>
+                                <span class="star__active"><i class="fa-solid fa-star"></i></span>
+                                <span class="star__active"><i class="fa-solid fa-star"></i></span>
+                                <span class="star__active"><i class="fa-solid fa-star"></i></span>
+                            </div>
+                            <div class="evaluate__comment-text">
+                                Đơn hàng được giao đúng hẹn, nguyên vẹn và sạch sẽ.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="evaluate__comment-rating">
+                        <a class="evaluate__comment-avatar"><img src="../assets/imgs/user.png" alt=""></a>
+                        <div class="evaluate__comment-main">
+                            <div class="evaluate__comment-username">Năm Nguyễn <span>08/04/2023</span></div>
+                            <div class="evaluate__comment-star">
+                                <span class="star__active"><i class="fa-solid fa-star"></i></span>
+                                <span class="star__active"><i class="fa-solid fa-star"></i></span>
+                                <span class="star__active"><i class="fa-solid fa-star"></i></span>
+                                <span class="star__active"><i class="fa-solid fa-star"></i></span>
+                                <span class="star__active"><i class="fa-solid fa-star"></i></span>
+                            </div>
+                            <div class="evaluate__comment-text">
+                                Đơn hàng được giao đúng hẹn, nguyên vẹn và sạch sẽ.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 </div>

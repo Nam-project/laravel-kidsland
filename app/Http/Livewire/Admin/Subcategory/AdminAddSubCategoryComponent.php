@@ -19,24 +19,28 @@ class AdminAddSubCategoryComponent extends Component
         $this->slug = Str::slug($this->name);
     }
 
+    public function updated($fields)
+    {
+        $this->validateOnly($fields, [
+            'name' => 'required|unique:sub_categories',
+            'slug' => 'required|unique:sub_categories',
+            'category_id' => 'required'
+        ]);   
+    }
+
     public function storeSubCategory()
     {
+        $this->validate([
+            'name' => 'required|unique:sub_categories',
+            'slug' => 'required|unique:sub_categories',
+            'category_id' => 'required'
+        ]);
         $subcategory = new SubCategory();
         $subcategory->name = $this->name;
         $subcategory->slug = $this->slug;
         $subcategory->category_id = $this->category_id;
-        if (SubCategory::where('name', '=', $this->name)->exists()) {
-            // Do something if the record exists
-            session()->flash('error', 'Danh mục con đã tồn tại');
-        } else {
-            if($this->name && $this->category_id)
-            {
-                $subcategory->save();
-                session()->flash('massage', 'Tạo danh mục con thành công');
-            }else {
-                session()->flash('error', 'Vui lòng điền đủ thông tin');
-            }
-        }
+        $subcategory->save();
+        session()->flash('massage', 'Tạo danh mục con thành công');
     }
 
 

@@ -22,7 +22,7 @@ class ShopCompoment extends Component
 
     public function render()
     {
-        $product = Product::paginate(18);
+        $product = Product::paginate(15);
         return view('livewire.shop-compoment', ['products'=>$product])->layout("layouts.base");
     }
 }

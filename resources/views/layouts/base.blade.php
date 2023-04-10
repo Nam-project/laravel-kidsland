@@ -59,7 +59,7 @@
                             @if (Auth::user()->utype === 'ADM')
                                 <div class="login-success">
                                     <div class="login-success__link">
-                                        <img src="assets/imgs/user.png" alt="" class="login-success__img">
+                                        <img src="../assets/imgs/user.png" alt="" class="login-success__img">
                                         <div class="login-success__name">{{ Auth::user()->name }}</div>
                                         <i class="fa-solid fa-caret-down login-success__icon"></i>
                                         <ul class="login-success-plus">

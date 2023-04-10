@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCouponsTable extends Migration
+class CreateWeightAgesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,12 @@ class CreateCouponsTable extends Migration
      */
     public function up()
     {
-        Schema::create('coupons', function (Blueprint $table) {
+        Schema::create('weight_ages', function (Blueprint $table) {
             $table->id();
-            $table->string('code')->unique();
-            $table->enum('type',['fixed','percent']);
-            $table->unsignedInteger('quantity');
-            $table->unsignedInteger('cart_value');
+            $table->string('name');
+            $table->bigInteger('category_id')->unsigned()->nullable();
             $table->timestamps();
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
         });
     }
 
@@ -30,6 +29,6 @@ class CreateCouponsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('coupons');
+        Schema::dropIfExists('weight_ages');
     }
 }

@@ -3,14 +3,13 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Danh mục con</h1>
+                    <h1>Phiếu giảm giá</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Home</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('admin.categories') }}">Danh mục</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('admin.subcategory') }}">Danh mục con</a></li>
-                        <li class="breadcrumb-item active">Thêm danh mục con</li>
+                        <li class="breadcrumb-item"><a href="{{ route('admin.coupon') }}">Phiếu giảm giá</a></li>
+                        <li class="breadcrumb-item active">Thêm phiếu giảm giá</li>
                     </ol>
                 </div>
             </div>
@@ -18,7 +17,7 @@
     </section>
     <div class="card card-primary">
         <div class="card-header">
-            <h3 class="card-title">Thêm danh mục con</h3>
+            <h3 class="card-title">Thêm phiếu giảm giá</h3>
         </div>
         <!-- /.card-header -->
         <!-- form start -->
@@ -48,32 +47,37 @@
                 </div>
             </div>
         @endif
-        <form wire:submit.prevent="storeSubCategory">
+        <form wire:submit.prevent="storeCoupon">
             <div class="card-body">
                 <div class="form-group">
-                    <label for="nameCategory">Tên danh mục con</label>
-                    <input type="text" class="form-control" placeholder="Tên danh mục" wire:model="name"
-                        wire:keyup="generateSlug">
-                    @error('name')
+                    <label for="nameCategory">Code</label>
+                    <input type="text" class="form-control" placeholder="Code" wire:model="code">
+                    @error('code')
                         <p class="text-danger">{{ $message }}</p>
                     @enderror
                 </div>
                 <div class="form-group">
-                    <label for="slugCategory">Slug</label>
-                    <input type="text" class="form-control" placeholder="Slug danh mục" wire:model="slug">
-                    @error('slug')
-                        <p class="text-danger">{{ $message }}</p>
-                    @enderror
-                </div>
-                <div class="form-group">
-                    <label>Danh mục</label>
-                    <select class="custom-select" wire:model="category_id">
-                        <option value="">Chọn danh mục</option>
-                        @foreach ($categories as $category)
-                            <option value="{{ $category->id }}">{{ $category->name }}</option>
-                        @endforeach
+                    <label for="nameCategory">Type</label>
+                    <select class="custom-select" wire:model="type">
+                        <option value="">Select</option>
+                        <option value="fixed">VNĐ</option>
+                        <option value="percent">%</option>
                     </select>
-                    @error('category_id')
+                    @error('type')
+                        <p class="text-danger">{{ $message }}</p>
+                    @enderror
+                </div>
+                <div class="form-group">
+                    <label for="nameCategory">Cart value</label>
+                    <input type="text" class="form-control" placeholder="Cart value" wire:model="cart_value">
+                    @error('cart_value')
+                        <p class="text-danger">{{ $message }}</p>
+                    @enderror
+                </div>
+                <div class="form-group">
+                    <label for="slugCategory">Số lượng</label>
+                    <input type="text" class="form-control" placeholder="Số lượng" wire:model="quantity">
+                    @error('quantity')
                         <p class="text-danger">{{ $message }}</p>
                     @enderror
                 </div>

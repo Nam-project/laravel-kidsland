@@ -25,12 +25,13 @@
             <div class="card bg-success m-1">
                 <div class="card-header">
                     <div class="card-title">{{ Session::get('massage') }}</div>
-    
+
                     <div class="card-tools">
-                      <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i>
-                      </button>
+                        <button type="button" class="btn btn-tool" data-card-widget="remove"><i
+                                class="fas fa-times"></i>
+                        </button>
                     </div>
-                  </div>
+                </div>
             </div>
         @endif
         <form wire:submit.prevent="storeCategory">
@@ -39,10 +40,16 @@
                     <label for="nameCategory">Tên danh mục</label>
                     <input type="text" class="form-control" placeholder="Tên danh mục" wire:model="name"
                         wire:keyup="generateSlug">
+                    @error('name')
+                        <p class="text-danger">{{ $message }}</p>
+                    @enderror
                 </div>
                 <div class="form-group">
                     <label for="slugCategory">Slug</label>
                     <input type="text" class="form-control" placeholder="Slug danh mục" wire:model="slug">
+                    @error('slug')
+                        <p class="text-danger">{{ $message }}</p>
+                    @enderror
                 </div>
                 <div class="form-group">
                     <label for="fileInput">Hinh ảnh</label>

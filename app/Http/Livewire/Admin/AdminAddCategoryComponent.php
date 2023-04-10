@@ -20,8 +20,20 @@ class AdminAddCategoryComponent extends Component
         $this->slug = Str::slug($this->name);
     }
 
+    public function updated($fields)
+    {
+        $this->validateOnly($fields, [
+            'name' => 'required',
+            'slug' => 'required|unique:categories'
+        ]);   
+    }
+
     public function storeCategory()
     {
+        $this->validate([
+            'name' => 'required',
+            'slug' => 'required|unique:categories'
+        ]);
         $category = new Category();
         $category->name = $this->name;
         $category->slug = $this->slug;
@@ -38,13 +50,9 @@ class AdminAddCategoryComponent extends Component
             }else {
                 $category->image = NULL;
             }
-            if($this->name) {
-                // Do something if the record does not exist
-                $category->save();
-                session()->flash('massage', 'Tạo danh mục thành công');
-            }else {
-                session()->flash('massage', 'Vui lòng điền đủ thông tin');
-            }
+            // Do something if the record does not exist
+            $category->save();
+            session()->flash('massage', 'Tạo danh mục thành công');
         }
     }
 

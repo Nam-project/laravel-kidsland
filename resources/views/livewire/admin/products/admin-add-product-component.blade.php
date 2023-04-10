@@ -40,16 +40,25 @@
                     <label for="nameCategory">Tên sản phẩm</label>
                     <input type="text" class="form-control" placeholder="Tên sản phẩm" wire:model="name"
                         wire:keyup="generateSlug">
+                    @error('name')
+                        <p class="text-danger">{{ $message }}</p>
+                    @enderror
                 </div>
                 <div class="form-group">
                     <label for="slugCategory">Slug</label>
                     <input type="text" class="form-control" placeholder="Slug sản phẩm" wire:model="slug">
+                    @error('slug')
+                        <p class="text-danger">{{ $message }}</p>
+                    @enderror
                 </div>
                 <div class="form-group">
                     <label for="fileInput">Hinh ảnh</label>
                     <div class="custom-file">
                         <input class="pt-2" type="file" id="file-upload" name="file-upload" wire:model="image">
                     </div>
+                    @error('image')
+                        <p class="text-danger">{{ $message }}</p>
+                    @enderror
                     @if ($image)
                         <img src="{{ $image->temporaryUrl() }}" alt="" height="200px">
                     @endif
@@ -60,21 +69,36 @@
                     <textarea class="form-control" name="" id="editordescribe" cols="30" rows="10"
                         wire:model="description"></textarea>
                 </div>
+                @error('description')
+                    <p class="text-danger">{{ $message }}</p>
+                @enderror
                 <div class="form-group">
                     <label for="slugCategory">Regular price</label>
                     <input type="text" class="form-control" placeholder="Regular price" wire:model="regular_price">
+                    @error('regular_price')
+                        <p class="text-danger">{{ $message }}</p>
+                    @enderror
                 </div>
                 <div class="form-group">
                     <label for="slugCategory">Giá bán</label>
                     <input type="text" class="form-control" placeholder="Giá bán" wire:model="sale_price">
+                    @error('sale_price')
+                        <p class="text-danger">{{ $message }}</p>
+                    @enderror
                 </div>
                 <div class="form-group">
                     <label for="slugCategory">Số lượng</label>
                     <input type="text" class="form-control" placeholder="Số lượng" wire:model="quantity">
+                    @error('quantity')
+                        <p class="text-danger">{{ $message }}</p>
+                    @enderror
                 </div>
                 <div class="form-group">
                     <label for="slugCategory">SKU</label>
                     <input type="text" class="form-control" placeholder="SKU" wire:model="SKU">
+                    @error('SKU')
+                        <p class="text-danger">{{ $message }}</p>
+                    @enderror
                 </div>
                 <div class="form-group">
                     <label for="slugCategory">Featured</label>
@@ -91,6 +115,9 @@
                             <option value="{{ $subcategory->id }}">{{ $subcategory->name }}</option>
                         @endforeach
                     </select>
+                    @error('subcategory_id')
+                        <p class="text-danger">{{ $message }}</p>
+                    @enderror
                 </div>
                 <div class="form-group">
                     <label>Thương hiệu</label>
@@ -100,6 +127,9 @@
                             <option value="{{ $brand->id }}">{{ $brand->name }}</option>
                         @endforeach
                     </select>
+                    @error('brand_id')
+                        <p class="text-danger">{{ $message }}</p>
+                    @enderror
                 </div>
                 <div class="form-group">
                     <label for="slugCategory">Stock</label>

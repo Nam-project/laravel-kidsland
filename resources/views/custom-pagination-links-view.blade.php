@@ -6,13 +6,13 @@
                 @if ($paginator->onFirstPage())
                     <li>
                         <span class="pagination__crumb crumb__default crumb__next">
-                            {!! __('pagination.previous') !!}
+                            <i class="fa-solid fa-angle-left"></i>
                         </span>
                     </li>
                 @else
                     <li>
                         <button wire:click="previousPage" wire:loading.attr="disabled" rel="prev" class="pagination__crumb crumb__next">
-                            {!! __('pagination.previous') !!}
+                            <i class="fa-solid fa-angle-left"></i>
                         </button>
                     </li>
                 @endif
@@ -40,13 +40,13 @@
                 @if ($paginator->hasMorePages())
                     <li>
                         <button wire:click="nextPage" wire:loading.attr="disabled" rel="next" class="pagination__crumb crumb__prev">
-                            {!! __('pagination.next') !!}
+                            <i class="fa-solid fa-angle-right"></i>
                         </button>
                     </li>
                 @else
                     <li>
                         <span class="pagination__crumb crumb__default crumb__prev">
-                            {!! __('pagination.next') !!}
+                            <i class="fa-solid fa-angle-right"></i>
                         </span>
                     </li>
                 @endif

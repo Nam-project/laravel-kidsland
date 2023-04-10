@@ -22,6 +22,12 @@ use App\Http\Livewire\Admin\Products\AdminEditProductComponent;
 use App\Http\Livewire\Admin\Slider\AdminHomeSliderComponent;
 use App\Http\Livewire\Admin\Slider\AdminAddHomeSliderComponent;
 use App\Http\Livewire\Admin\Slider\AdminEditHomeSliderComponent;
+use App\Http\Livewire\Admin\Weightage\AdminWeightAgeComponent;
+use App\Http\Livewire\Admin\Weightage\AdminAddWeightAgeComponent;
+use App\Http\Livewire\Admin\Weightage\AdminEditWeightAgeComponent;
+use App\Http\Livewire\Admin\Coupon\AdminCouponComponent;
+use App\Http\Livewire\Admin\Coupon\AdminAddCouponComponent;
+use App\Http\Livewire\Admin\Coupon\AdminEditCouponComponent;
 
 
 
@@ -89,5 +95,15 @@ Route::middleware(['auth:sanctum', 'verified', 'authadmin'])->group(function() {
     Route::get('/admin/slider', AdminHomeSliderComponent::class)->name('admin.homeslider');
     Route::get('/admin/slider/add', AdminAddHomeSliderComponent::class)->name('admin.addhomeslider');
     Route::get('/admin/slider/edit/{slider_id}', AdminEditHomeSliderComponent::class)->name('admin.edithomeslider');
+
+    // WeightAge
+    Route::get('/admin/weightage', AdminWeightAgeComponent::class)->name('admin.weightage');
+    Route::get('/admin/weightage/add', AdminAddWeightAgeComponent::class)->name('admin.addweightage');
+    Route::get('/admin/weightage/edit/{weightage_id}', AdminEditWeightAgeComponent::class)->name('admin.editweightage');
+
+    // WeightAge
+    Route::get('/admin/coupon', AdminCouponComponent::class)->name('admin.coupon');
+    Route::get('/admin/coupon/add', AdminAddCouponComponent::class)->name('admin.addcoupon');
+    Route::get('/admin/coupon/edit/{coupon_id}', AdminEditCouponComponent::class)->name('admin.editcoupon');
 
 });
