@@ -7,7 +7,7 @@
             @endif --}}
             @if (Cart::count() > 0)
             <div class="cart__header">
-                <div class="cart__header--products"><input type="checkbox" name="" id=""><span>Sản
+                <div class="cart__header--products"><span>Sản
                         phẩm</span></div>
                 <div class="cart__header--item">Đơn giá</div>
                 <div class="cart__header--item">Số lượng</div>
@@ -18,7 +18,7 @@
                 @foreach (Cart::content() as $item)
                     <div class="products__cart-item">
                         <div class="products__cart-i">
-                            <input type="checkbox" name="" id="">
+                            
                             <a href="{{route('product.details',['slug'=>$item->model->slug])}}">
                                 <img src="{{asset('assets/imgs/products/'.$item->model->image) }}" alt="{{$item->model->name}}"
                                     class="product__cart-img">
@@ -40,15 +40,45 @@
                         </div>
 
                     </div>
-                    
                 @endforeach
-                <div class="cart__order">
-                    <div class="cart__order-title">Order Summary</div>
-                    <div class="summary-info"><span>Subtotal</span><p>{{Cart::subtotal() }}</p></div>
-                    <div class="summary-info"><span>Tax</span><p>{{Cart::tax()}}</p></div>
-                    <div class="summary-info"><span>Shipping</span><p>Free shopping</p></div>
-                    <div class="summary-info"><span>Total</span><p>{{Cart::total()}}</p></div>
-                </div>
+            </div>
+            <div class="cart__order">
+                <div class="summary-info"><span></span><input type="checkbox" class="check__coupon-cart" value="1" name="" id="check_coupon" wire:model="coupon_code"><label for="check_coupon" class="cart__order-coupon">Chọn hoặc nhập mã khuyến mãi</label></div>
+                @if ($coupon_code == 1)
+                    <label for="check_coupon" class="coupon__cart-cushion"></label> 
+                    <div class="coupon__cart-form">
+                        <div class="coupon__cart-title"><span>Chọn khuyến mãi</span><label class="coupon__cart-close " for="check_coupon"><i  class="fa-solid fa-xmark"></i></label></div>
+                        @if (Session::has('coupon_massage'))
+                            <p>{{Session::get('coupon_massage')}}</p>
+                        @endif
+                        <div class="coupon__cart-group">
+                            <span class="coupon__cart-text">CODE</span>
+                            <input type="text" class="coupon__cart-input" wire:model="couponCode">
+                            <button class="coupon__cart-apply">ÁP DỤNG</button>
+                        </div>
+                        <div class="coupon__cart-list">
+                            <div class="coupon__cart-item">
+                                <div class="coupon__item-left">
+                                    <div class="coupon__item-promotion">15k</div>
+                                </div>
+                                <div class="coupon__item-right">
+                                    <div class="coupon__item-title">COUPON</div>
+                                    <button class="coupon__item-btn">Chọn</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endif
+                <div class="summary-info"><span>Tạm tính</span><p>{{Cart::subtotal() }} <span class="copper">đ</span></p></div>
+                @if (Session::has('coupon'))
+                    <div class="summary-info"><span>Giảm giá {{Session::get('coupon')['code']}}</span><p></p></div>
+                    <div class="summary-info"><span>Vận chuyển</span><p>Free shopping</p></div>
+                    <div class="summary-info"><span>Tổng thanh toán</span><p>   <span class="copper">đ</span></p></div>
+                @else
+                    <div class="summary-info"><span>Vận chuyển</span><p>Free shopping</p></div>
+                    <div class="summary-info"><span>Tổng thanh toán</span><p>{{Cart::total()}} <span class="copper">đ</span></p></div>
+                @endif
+                <div class="summary-info"><span></span><button class="cart__btn-buynow">Mua hàng</button></div>
             </div>
             @else
                 <div class="cart-empty">
