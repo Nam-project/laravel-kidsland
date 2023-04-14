@@ -7,17 +7,20 @@ use Livewire\Component;
 use Livewire\WithPagination;
 use Cart;
 
-class ShopCompoment extends Component
+class SearchComponent extends Component
 {
     use WithPagination;
 
     public $sorting;
     public $pagesize;
 
+    public $search;
+
     public function mount()
     {
         $this->sorting = 'default';
         $this->pagesize = 15;
+        $this->fill(request()->only('search'));
     }
 
     public function store($product_id, $product_name, $product_price)
@@ -32,16 +35,16 @@ class ShopCompoment extends Component
     public function render()
     {
         if ($this->sorting == 'price') {
-            $product = Product::orderBy('regular_price', 'DESC')->paginate($this->pagesize);
+            $product = Product::where('name','like','%'.$this->search.'%')->orderBy('regular_price', 'DESC')->paginate($this->pagesize);
         } else if ($this->sorting == 'price_desc') {
-            $product = Product::orderBy('regular_price', 'ASC')->paginate($this->pagesize);
+            $product = Product::where('name','like','%'.$this->search.'%')->orderBy('regular_price', 'ASC')->paginate($this->pagesize);
         } else if ($this->sorting == 'orderby_new') {
-            $product = Product::orderBy('created_at', 'DESC')->paginate($this->pagesize);
+            $product = Product::where('name','like','%'.$this->search.'%')->orderBy('created_at', 'DESC')->paginate($this->pagesize);
         } else if ($this->sorting == 'orderby_old') {
-            $product = Product::orderBy('created_at', 'ASC')->paginate($this->pagesize);
+            $product = Product::where('name','like','%'.$this->search.'%')->orderBy('created_at', 'ASC')->paginate($this->pagesize);
         } else {
-            $product = Product::paginate($this->pagesize);
+            $product = Product::where('name','like','%'.$this->search.'%')->paginate($this->pagesize);
         }
-        return view('livewire.shop-compoment', ['products'=>$product])->layout("layouts.base");
+        return view('livewire.search-component', ['products'=>$product])->layout("layouts.base");
     }
 }

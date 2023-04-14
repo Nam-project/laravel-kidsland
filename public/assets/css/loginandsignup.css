@@ -1,0 +1,206 @@
+html {
+    background-color: var(--lightwhite-color);
+}
+
+.main__login {
+    
+}
+
+.login {
+    margin-top: 25px;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 0 20px 6px #090b6f85;
+
+}
+
+.login__left {
+    background-color: var(--white-color);
+}
+
+.login__left-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* height: 70%; */
+}
+
+.login__right {
+    background-color: var(--white-color);
+    
+}
+
+.home__link {
+    float: right;
+    margin: 5px;
+    font-size: 14px;
+    padding: 5px 10px;
+    color: var(--blue--color);
+    text-decoration: none;
+}
+
+.login__right-title {
+    padding: 110px 50px 50px;
+    font-size: 35px;
+    color: var(--text-color);
+}
+
+.login__right-text {
+    padding: 10px 50px 25px;
+    font-size: 14px;
+    color: var(--grey-color);
+}
+
+.login__right-link {
+    color: var(--blue--color);
+    font-weight: 500;
+}
+
+.login__right-form {
+    padding: 0 50px;
+}
+
+.login__right-group { 
+    position:relative; 
+    margin-bottom:45px; 
+  }
+  .login__right-input {
+    font-size:18px;
+    padding:10px 10px 10px 5px;
+    display:block;
+    width:100%;
+    border:none;
+    border-bottom:1px solid var(--grey-color);
+  }
+  .login__right-input:focus { outline:none; }
+  
+  /* LABEL ======================================= */
+  .login__right-label 				 {
+    color:var(--grey-color); 
+    font-size:16px;
+    font-weight:normal;
+    position:absolute;
+    pointer-events:none;
+    left:3px;
+    top:10px;
+    transition:0.2s ease all; 
+    -moz-transition:0.2s ease all; 
+    -webkit-transition:0.2s ease all;
+  }
+  
+  /* active state */
+  .login__right-input:focus ~ .login__right-label, .login__right-input:valid ~ .login__right-label 		{
+    top:-20px;
+    font-size:14px;
+    color:var(--text-color);
+  }
+  
+  /* BOTTOM BARS ================================= */
+  .login__right-bar 	{ position:relative; display:block; width: 100%; }
+  .login__right-bar:before, .login__right-bar:after 	{
+    content:'';
+    height:2px; 
+    width:0;
+    bottom:1px; 
+    position:absolute;
+    background: var(--lightblue-color); 
+    transition:0.2s ease all; 
+    -moz-transition:0.2s ease all; 
+    -webkit-transition:0.2s ease all;
+  }
+  .login__right-bar:before {
+    left:50%;
+  }
+  .login__right-bar:after {
+    right:50%; 
+  }
+  
+  /* active state */
+  .login__right-input:focus ~ .login__right-bar:before, .login__right-input:focus ~ .login__right-bar:after {
+    width:50%;
+  }
+  
+  
+  /* ANIMATIONS ================ */
+  @-webkit-keyframes inputHighlighter {
+      from { background:#5264AE; }
+    to 	{ width:0; background:transparent; }
+  }
+  @-moz-keyframes inputHighlighter {
+      from { background:#5264AE; }
+    to 	{ width:0; background:transparent; }
+  }
+  @keyframes inputHighlighter {
+      from { background:#5264AE; }
+    to 	{ width:0; background:transparent; }
+  }
+
+.login__remember {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 45px;
+}
+
+.login__right-remembers {
+    font-size: 14px;
+    color: var(--text-color);
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.login__right-remember {
+    outline: none;
+}
+
+.remember {
+    padding-left: 10px;
+}
+
+.forget-password {
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 14px;
+    color: var(--text-color);
+}
+
+.forget-password:hover {
+    color: var(--blue--color);
+}
+
+.login-btn {
+    /* padding: 10px 20px; */
+    cursor: pointer;
+    font-size: 16px;
+    float: right;
+    color: #fff;
+    padding: 12px 35px;
+    border-radius: 50px;
+    display: inline-block;
+    border: 0;
+    outline: 0;
+    box-shadow: 0px 4px 20px 0px #49c628a6;
+    background-image: linear-gradient(135deg, #70F570 10%, #49C628 100%);
+}
+
+.mb-4 {
+    color: red;
+}
+
+.pl-50 {
+    padding-left: 50px;
+}
+
+.login__account-have {
+    font-size: 14px;
+    color: var(--grey-color);
+    text-decoration: none;
+}
+
+.login__account-have:hover {
+    color: var(--blue--color);
+}
+
+.login__account-group {
+    padding-bottom: 40px;
+}

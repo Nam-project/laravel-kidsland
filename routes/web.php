@@ -3,6 +3,7 @@
 use App\Http\Livewire\HomeComponent;
 use App\Http\Livewire\ShopCompoment;
 use App\Http\Livewire\CartCompoment;
+use App\Http\Livewire\SearchComponent;
 use App\Http\Livewire\CheckoutCompoment;
 use App\Http\Livewire\DetailsComponent;
 use App\Http\Livewire\User\UserDashboardCompoment;
@@ -61,6 +62,8 @@ Route::get('/checkout', CheckoutCompoment::class);
 Route::get('/product/{slug}',DetailsComponent::class)->name('product.details');
 
 Route::get('/cart/count', [CartCompoment::class, 'getCartCount']);
+
+Route::get('/search',SearchComponent::class)->name('product.search');
 
 // Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 //     return view('dashboard');

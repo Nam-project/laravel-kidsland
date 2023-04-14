@@ -13,18 +13,24 @@
                 <div class="shop-sort-bar">
                     <div class="shop-sort-by-options">
                         <div class="shop-sort-bar__label">Sắp xếp theo</div>
-                        <button class="shop-sort-by-option btn-shop__active">Mới nhất</button>
+                        {{-- <button class="shop-sort-by-option btn-shop__active" >Mới nhất</button>
                         <button class="shop-sort-by-option">Cũ nhất</button>
-                        <button class="shop-sort-by-option">Bán chạy</button>
-                        <div class="shop-sort-by-price"><span>Giá</span><i class="fa-solid fa-caret-down"></i>
-                            <ul class="shop-sort-by-price__select">
-                                <li ><button class="shop-sort-by-price__item">Giá: Thấp đến cao</button></li>
-                                <li ><button class="shop-sort-by-price__item">Giá: Cao đến thấp</button></li>
-                            </ul>
-                        </div>
+                        <button class="shop-sort-by-option">Bán chạy</button> --}}
+                        <select name="" id="" class="shop-sort-by__select" wire:model ="sorting">
+                            <option value="">Default sorting</option>
+                            <option value="orderby_new">Mới nhất</option>
+                            <option value="orderby_old">Cũ nhất</option>
+                            <option value="price">Giá: Cao đến thấp</option>
+                            <option value="price_desc">Giá: Thấp đến cao</option>
+                        </select>
                     </div>
                     <div class="shop-mini-page-controller">
-
+                        <select name="" id="" class="shop-sort-by__select" wire:model ="pagesize">
+                            <option value="15">15 trên trang</option>
+                            <option value="20">20 trên trang</option>
+                            <option value="25">25 trên trang</option>
+                            <option value="30">30 trên trang</option>
+                        </select>
                     </div>
                 </div>
                 <div class="row">
@@ -37,7 +43,7 @@
                                     <div class="product__name">{{ $product->name }}
                                     </div>
                                     <div class="product__group">
-                                        <div class="product__price">{{ $product->sale_price }} <span
+                                        <div class="product__price">{{ $product->regular_price }} <span
                                                 class="copper">đ</span></div>
                                         <div class="product__assess">5<i class="fa-solid fa-star"></i></i></div>
                                     </div>

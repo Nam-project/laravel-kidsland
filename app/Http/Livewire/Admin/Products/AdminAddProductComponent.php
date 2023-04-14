@@ -31,6 +31,7 @@ class AdminAddProductComponent extends Component
     public $suitable_age;
     public $user_manual;
     public $preserve;
+    public $images;
 
     public function mount()
     {
@@ -100,6 +101,17 @@ class AdminAddProductComponent extends Component
         }else {
             $product->image = NULL;
         }
+
+        if ($this->images) {
+            $imagesname = '';
+            foreach($this->images as $key => $image) {
+                $imgName = Carbon::now()->timestamp.$key.'.'.$image->extension();
+                $image->storeAs('products',$imgName);
+                $imagesname = $imagesname . ',' . $imgName;
+            }
+            $product->images = $imagesname;
+        }
+
         $product->save();
         session()->flash('massage', 'Tạo sản phẩm thành công');
         $detailproduct = new ProductDetails();

@@ -11,49 +11,36 @@
                     <swiper-container style="--swiper-navigation-color: #fff; --swiper-pagination-color: #fff"
                         class="mySwiper" thumbs-swiper=".mySwiper2" space-between="10">
                         <swiper-slide>
-                            <img class="details__img"
-                                src="{{ asset('assets/imgs/products/'.$product->image) }}" />
+                            <img class="details__img" src="{{ asset('assets/imgs/products/' . $product->image) }}" />
                         </swiper-slide>
-                        <swiper-slide>
-                            <img class="details__img"
-                                src="{{ asset('assets/imgs/thuc-pham-bo-sung-aptamil-2.jpg') }}" />
-                        </swiper-slide>
-                        <swiper-slide>
-                            <img class="details__img"
-                                src="{{ asset('assets/imgs/thuc-pham-bo-sung-aptamil-2.jpg') }}" />
-                        </swiper-slide>
-                        <swiper-slide>
-                            <img class="details__img"
-                                src="{{ asset('assets/imgs/thuc-pham-bo-sung-aptamil-2.jpg') }}" />
-                        </swiper-slide>
-                        <swiper-slide>
-                            <img class="details__img"
-                                src="{{ asset('assets/imgs/thuc-pham-bo-sung-aptamil-2.jpg') }}" />
-                        </swiper-slide>
-                        </swiper-slide>
+                        @php
+                            $images = explode(',', $product->images);
+                        @endphp
+                        @foreach ($images as $image)
+                            @if ($image)
+                                <swiper-slide>
+                                    <img class="details__img" src="{{ asset('assets/imgs/products/' . $image) }}" />
+                                </swiper-slide>
+                            @endif
+                        @endforeach
                     </swiper-container>
 
                     <swiper-container class="mySwiper2" space-between="10" slides-per-view="4" free-mode="true"
                         watch-slides-progress="true" navigation="true">
                         <swiper-slide>
-                            <img src="{{ asset('assets/imgs/products/'.$product->image) }}" />
+                            <img class="details__img-group" src="{{ asset('assets/imgs/products/' . $product->image) }}" />
                         </swiper-slide>
-                        <swiper-slide>
-                            <img src="{{ asset('assets/imgs/thuc-pham-bo-sung-aptamil-2.jpg') }}" />
-                        </swiper-slide>
-                        <swiper-slide>
-                            <img src="{{ asset('assets/imgs/thuc-pham-bo-sung-aptamil-2.jpg') }}" />
-                        </swiper-slide>
-                        <swiper-slide>
-                            <img src="{{ asset('assets/imgs/thuc-pham-bo-sung-aptamil-2.jpg') }}" />
-                        </swiper-slide>
-                        <swiper-slide>
-                            <img src="{{ asset('assets/imgs/thuc-pham-bo-sung-aptamil-2.jpg') }}" />
-                        </swiper-slide>
+                        @foreach ($images as $image)
+                            @if ($image)
+                                <swiper-slide>
+                                    <img class="details__img-group" src="{{ asset('assets/imgs/products/' . $image) }}" />
+                                </swiper-slide>
+                            @endif
+                        @endforeach
                     </swiper-container>
                 </div>
                 <div class="col l-7 c-12 m-12">
-                    <div class="details__name">{{$product->name}}</div>
+                    <div class="details__name">{{ $product->name }}</div>
                     <div class="details__group-evaluate">
                         <div class="star__evaluate">
                             <span>5.0</span>
@@ -76,14 +63,16 @@
                         <div class="details__quantity-text">Số lượng</div>
                         <div class="details__quantity-add">
                             <button class="minus-btn" wire:click.prevent="decreseQuantity" type="button">-</button>
-                            <input type="number" min="1" max="{{ $product->quantity }}" value="1" wire:model = "qty"
-                                class="details__quantity-input">
+                            <input type="number" min="1" max="{{ $product->quantity }}" value="1"
+                                wire:model="qty" class="details__quantity-input">
                             <button class="plus-btn" wire:click.prevent="increaseQuantity" type="button">+</button>
                         </div>
                         <div class="details__quantity-text">{{ $product->quantity }} sản phẩm có sẵn</div>
                     </div>
                     <div class="details__cart">
-                        <button class="details__cart-add" wire:click.prevent="store({{$product->id}},'{{$product->name}}',{{$product->regular_price}})"><i class="fa-solid fa-cart-plus"></i>Thêm vào giỏ
+                        <button class="details__cart-add"
+                            wire:click.prevent="store({{ $product->id }},'{{ $product->name }}',{{ $product->regular_price }})"><i
+                                class="fa-solid fa-cart-plus"></i>Thêm vào giỏ
                             hàng</button>
                         <button class="details__cart-buy">Mua ngay</button>
                     </div>
@@ -114,23 +103,23 @@
                         </tr>
                         <tr>
                             <td class="td__01">Độ tuổi phù hợp</td>
-                            <td>{{$productdetail->suitable_age}}</td>
+                            <td>{{ $productdetail->suitable_age }}</td>
                         </tr>
                         <tr>
                             <td class="td__01">Trọng lượng sản phẩm</td>
-                            <td>{{$productdetail->size}}</td>
+                            <td>{{ $productdetail->size }}</td>
                         </tr>
                         <tr>
                             <td class="td__01">Hướng dẫn sử dụng</td>
-                            <td>{!!$productdetail->user_manual!!}</td>
+                            <td>{!! $productdetail->user_manual !!}</td>
                         </tr>
                         <tr>
                             <td class="td__01">Hướng dẫn bảo quản</td>
-                            <td>{!!$productdetail->preserve!!}</td>
+                            <td>{!! $productdetail->preserve !!}</td>
                         </tr>
                     </table>
                     <div class="details__describe">
-                        {!!$product->description!!}
+                        {!! $product->description !!}
                     </div>
 
                 </div>
@@ -139,13 +128,14 @@
                         @foreach ($related_products as $r_product)
                             <div class="col l-12 c-12 m-12 product__item">
                                 <div class="product__item-link">
-                                    <a href="{{Route('product.details',['slug'=>$r_product->slug])}}">
-                                        <img src="{{asset('assets/imgs/products/'.$r_product->image)}}" alt="{{$r_product->name}}"
-                                            class="product__img">
-                                        <div class="product__name">{{$r_product->name}}
+                                    <a href="{{ Route('product.details', ['slug' => $r_product->slug]) }}">
+                                        <img src="{{ asset('assets/imgs/products/' . $r_product->image) }}"
+                                            alt="{{ $r_product->name }}" class="product__img">
+                                        <div class="product__name">{{ $r_product->name }}
                                         </div>
                                         <div class="product__group">
-                                            <div class="product__price">{{$r_product->sale_price}} <span class="copper">đ</span></div>
+                                            <div class="product__price">{{ $r_product->sale_price }} <span
+                                                    class="copper">đ</span></div>
                                             <div class="product__assess">5<i class="fa-solid fa-star"></i></i></div>
                                         </div>
                                     </a>
@@ -163,12 +153,14 @@
             </div>
 
             <div id="evaluate" class="details__evaluate row">
-                <div class="details__evaluate-title col l-12">Đánh giá - Nhận xét<i class="fa-solid fa-caret-right"></i></div>
+                <div class="details__evaluate-title col l-12">Đánh giá - Nhận xét<i
+                        class="fa-solid fa-caret-right"></i></div>
                 <div class="details__evaluate-rating col l-4">
                     <div class="review-rating__summary">
                         <div class="review-rating__point">4.3</div>
                         <div class="review-rating__stars">
-                            <div class="review-rating__star" style="--rating: 4.3;" aria-label="Rating of this product is 2.3 out of 5."></div>
+                            <div class="review-rating__star" style="--rating: 4.3;"
+                                aria-label="Rating of this product is 2.3 out of 5."></div>
                             <div class="review-rating__total">100 nhận xét</div>
                         </div>
                     </div>
@@ -243,7 +235,8 @@
 
                 <div class="details__evaluate-comment col l-8">
                     <div class="evaluate__comment-rating">
-                        <a href="" class="evaluate__comment-avatar"><img src="../assets/imgs/user.png" alt=""></a>
+                        <a href="" class="evaluate__comment-avatar"><img src="../assets/imgs/user.png"
+                                alt=""></a>
                         <div class="evaluate__comment-main">
                             <div class="evaluate__comment-username">Năm Nguyễn <span>08/04/2023</span></div>
                             <div class="evaluate__comment-star">

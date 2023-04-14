@@ -28,16 +28,10 @@
                                     alt=""></a>
                         </div>
                     </div>
-                    <div class="search">
-                        <div class="search-ip">
-                            <input type="text" class="search__input" placeholder="Bố mẹ tìm gì cho bé hôm nay ?">
-                            <button class="search__btn"><i
-                                    class="fa-solid search__icon fa-magnifying-glass"></i></button>
-                        </div>
-                        <div class="search-more">
+                    
 
-                        </div>
-                    </div>
+                    @livewire('header-search-component')
+
                     <div class="with-login-register">
                         {{-- <div class="login-register">
                             <a href="" class="loginr">Đăng Ký</a>

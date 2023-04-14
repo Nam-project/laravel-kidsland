@@ -64,6 +64,21 @@
                     @endif
                 </div>
 
+                <div class="form-group">
+                    <label for="fileInput">Hinh ảnh group</label>
+                    <div class="custom-file">
+                        <input class="pt-2" type="file" id="file-upload" name="file-upload" wire:model="images" multiple>
+                    </div>
+                    @error('images')
+                        <p class="text-danger">{{ $message }}</p>
+                    @enderror
+                    @if ($images)
+                        @foreach ($images as $image)
+                            <img src="{{ $image->temporaryUrl() }}" alt="" height="200px">
+                        @endforeach
+                    @endif
+                </div>
+
                 <div class="form-group" wire:ignore>
                     <label>Mô tả</label>
                     <textarea class="form-control" name="" id="editordescribe" cols="30" rows="10"

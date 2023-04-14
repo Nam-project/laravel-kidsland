@@ -50,19 +50,22 @@ class CartCompoment extends Component
 
     public function applyCouponCode()
     {
-        $coupon = Coupon::where('code',$this->couponCode)->where('cart_value', '<=', Cart::instance('cart')->subtotal())->first();
+        $coupon = Coupon::where('code',$this->couponCode)->first();
         if(!$coupon)
         {
             session()->flash('coupon_massage', 'Mã giảm giá không hợp lệ!');
             return;
+        }else 
+        {
+            session()->put('coupon', [
+                'code' => $coupon->code,
+                'type' => $coupon->type,
+                'cart_value' => $coupon->cart_value,
+                'quantity' => $coupon->quantity,
+            ]);
+            $this->coupon_code = null;
         }
 
-        session()->put('coupon', [
-            'code' => $coupon->code,
-            'type' => $coupon->type,
-            'cart_value' => $coupon->cart_value,
-            'quantity' => $coupon->quantity,
-        ]);
     }
 
     public function calculateDiscounts()
@@ -75,21 +78,31 @@ class CartCompoment extends Component
             }
             else
             {
-                $this->discount = ( Cart::instance('cart')->subtotal * session()->get('coupon')['cart_value'] )/100;
+                
+                $this->discount = (number_format(str_replace(',', '', Cart::instance()->subtotal), 0, '.', '') * session()->get('coupon')['cart_value'])/100;
             }
-            $this->subtotalAfterDiscount = Cart::instance('cart')->subtotal() - $this->discount;
+            $this->subtotalAfterDiscount =number_format(str_replace(',', '', Cart::instance()->subtotal), 0, '.', '') - $this->discount;
 
         }
     }
 
+    public function removeCoupon()
+    {
+        session()->forget('coupon');
+    }
+
     public function render()
     {
+        // dd(Cart::count());
         if(session()->has('coupon'))
         {
-            // if (Cart::instance('cart')->subtotal < ) 
-            // {
-            //     # code...
-            // }
+            if (session()->get('coupon')['quantity'] > 0) {
+                $this->calculateDiscounts();
+            }
+            else
+            {
+                session()->forget('coupon');
+            }
         }
         return view('livewire.cart-compoment')->layout("layouts.base");
     }
