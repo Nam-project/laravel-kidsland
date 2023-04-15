@@ -5,7 +5,7 @@
                 <ul class="category-list">
                     <div class="category__title"><i class="fa-solid fa-bars"></i>Danh mục</div>
                     @foreach ($category as $item)
-                        <li class="category-item"><a href="" class="category__link">{{ $item->name }}<i
+                        <li class="category-item"><a href="{{route('product.category',['category_slug'=>$item->slug])}}" class="category__link">{{ $item->name }}<i
                                     class="fa-solid fa-angle-right category-icon"></i> </a>
                             <div class="content__subcategory">
                                 <img class="content__subcategory-img"
@@ -25,6 +25,15 @@
                                         @foreach ($item->brand as $brand)
                                             <li class="subcategory__title"><a class="subcategory__title-link"
                                                     href="">{{ $brand->name }}</a></li>
+                                        @endforeach
+                                    </ul>
+                                @endif
+                                @if (count($item->weightAge) > 0)
+                                    <ul class="weightage__title-gr">
+                                        <h4 class="subcategory__heading">Size</h4>
+                                        @foreach ($item->weightAge as $weightAge)
+                                            <li class="subcategory__title"><a class="subcategory__title-link"
+                                                    href="">{{ $weightAge->name }}</a></li>
                                         @endforeach
                                     </ul>
                                 @endif

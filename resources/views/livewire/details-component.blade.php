@@ -28,12 +28,14 @@
                     <swiper-container class="mySwiper2" space-between="10" slides-per-view="4" free-mode="true"
                         watch-slides-progress="true" navigation="true">
                         <swiper-slide>
-                            <img class="details__img-group" src="{{ asset('assets/imgs/products/' . $product->image) }}" />
+                            <img class="details__img-group"
+                                src="{{ asset('assets/imgs/products/' . $product->image) }}" />
                         </swiper-slide>
                         @foreach ($images as $image)
                             @if ($image)
                                 <swiper-slide>
-                                    <img class="details__img-group" src="{{ asset('assets/imgs/products/' . $image) }}" />
+                                    <img class="details__img-group"
+                                        src="{{ asset('assets/imgs/products/' . $image) }}" />
                                 </swiper-slide>
                             @endif
                         @endforeach
@@ -269,6 +271,14 @@
                     </div>
                 </div>
             </div>
+
+
+            <div id="evaluate" class="details__evaluate row">
+                <div class="details__evaluate-title col l-12">Đánh giá - Nhận xét<i
+                        class="fa-solid fa-caret-right"></i></div>
+                
+            </div>
+
 
         </div>
     </div>

@@ -20,4 +20,10 @@ class Category extends Model
     {
         return $this->hasMany(SubCategory::class);
     }
+
+    public function weightAge()
+    {
+        return $this->hasMany(WeightAge::class);
+    }
+    
 }

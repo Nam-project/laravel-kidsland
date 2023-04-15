@@ -22,9 +22,21 @@ class AdminProductComponent extends Component
                     unlink($imagePath);
                 }
             }
+
+            if ($product->images) {
+                $images = explode(",", $product->images);
+                foreach ($images as $image) {
+                    if ($image) {
+                        unlink('assets/imgs/products/'.$image);
+                    }
+                }
+            }
+
             $product->delete();
             session()->flash('massage', 'Xóa sản phẩm '.$nameproduct.' thành công!');
         }
+
+
         if(session('tasks_url')){
             return redirect(session('tasks_url'));
         }

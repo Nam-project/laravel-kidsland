@@ -34,6 +34,10 @@ class AdminEditProductComponent extends Component
     public $newimage;
     public $product_id;
 
+    public $images;
+    public $newimages;
+
+
     public function mount($product_slug)
     {
         $product = Product::where('slug', $product_slug)->first();
@@ -42,6 +46,7 @@ class AdminEditProductComponent extends Component
         $this->name = $product->name;
         $this->slug = $product->slug;
         $this->image = $product->image;
+        $this->images = explode(",",$product->images);
         $this->description = $product->description;
         $this->regular_price = $product->regular_price;
         $this->sale_price = $product->sale_price;
@@ -63,8 +68,47 @@ class AdminEditProductComponent extends Component
         $this->slug = Str::slug($this->name);
     }
 
+    public function updated($fields)
+    {
+        $this->validateOnly($fields, [
+            'name' => 'required',
+            'slug' => 'required',
+            'description' => 'required',
+            'regular_price' => 'required|numeric',
+            'sale_price' => 'numeric',
+            'quantity' => 'numeric',
+            'SKU' => 'required',
+            'subcategory_id' => 'required',
+            'brand_id' => 'required'
+        ]);
+
+        if ($this->newimage) {
+            $this->validateOnly($fields, [
+                'newimage' => 'required|mimes:jpeg,png',
+            ]);
+        }
+    }
+
     public function updateProduct()
     {
+        $this->validate([
+            'name' => 'required',
+            'slug' => 'required',
+            'description' => 'required',
+            'regular_price' => 'required|numeric',
+            'sale_price' => 'numeric',
+            'quantity' => 'numeric',
+            'SKU' => 'required',
+            'subcategory_id' => 'required',
+            'brand_id' => 'required'
+        ]);
+
+        if ($this->newimage) {
+            $this->validate([
+                'newimage' => 'required|mimes:jpeg,png',
+            ]);
+        }
+
         $product = Product::find($this->product_id);
         $product->name = $this->name;
         $product->slug = $this->slug;
@@ -79,32 +123,50 @@ class AdminEditProductComponent extends Component
         $product->brand_id = $this->brand_id;
         $product->stock_status = $this->stock_status;
 
-        if (isset($this->name) && isset($this->sale_price) && isset($this->SKU)) {
-            if ($this->newimage) {
-                if($this->image) {
-                    $imagePath = 'assets/imgs/products/' . $this->image;
-                    if (file_exists($imagePath)) {
-                        unlink($imagePath);
+        if ($this->newimage) 
+        {
+            if($this->image) {
+                $imagePath = 'assets/imgs/products/' . $this->image;
+                if (file_exists($imagePath)) {
+                    unlink($imagePath);
+                }
+            }
+            $imageName = Carbon::now()->timestamp.'.'.$this->newimage->extension();
+            $this->newimage->storeAs('products', $imageName);
+            $product->image = $imageName;
+            // Tiếp tục xử lý lưu ảnh và tạo bản ghi
+        }
+
+        if($this->newimages)
+        {
+            if ($product->images) {
+                $images = explode(",",$product->images);
+                foreach ($images as $img) {
+                    if ($img) {
+                        unlink('assets/imgs/products/'.$img);
                     }
                 }
-                $imageName = Carbon::now()->timestamp.'.'.$this->newimage->extension();
-                $this->newimage->storeAs('products', $imageName);
-                $product->image = $imageName;
-                // Tiếp tục xử lý lưu ảnh và tạo bản ghi
             }
-                $product->save();
-                session()->flash('massage', 'Cập nhật sản phẩm thành công');
-                $detailproduct = ProductDetails::where('product_id', $this->product_id)->first();
 
-                $detailproduct->size = $this->size;
-                $detailproduct->suitable_age = $this->suitable_age;
-                $detailproduct->user_manual = $this->user_manual;
-                $detailproduct->preserve = $this->preserve;
-        
-                $detailproduct->save();
-        } else {
-            session()->flash('massage', 'Vui lòng điền đủ thông tin!');
+            $imagesname = '';
+            foreach ($this->newimages as $key=>$img) {
+                $imgName = Carbon::now()->timestamp.$key.'.'.$img->extension();
+                $img->storeAs('products', $imgName);
+                $imagesname = $imagesname.','.$imgName;
+            }
+            $product->images = $imagesname;
         }
+
+        $product->save();
+        session()->flash('massage', 'Cập nhật sản phẩm thành công');
+        $detailproduct = ProductDetails::where('product_id', $this->product_id)->first();
+
+        $detailproduct->size = $this->size;
+        $detailproduct->suitable_age = $this->suitable_age;
+        $detailproduct->user_manual = $this->user_manual;
+        $detailproduct->preserve = $this->preserve;
+        
+        $detailproduct->save();
 
         return redirect()->route('admin.products');
     }

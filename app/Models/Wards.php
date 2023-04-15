@@ -10,6 +10,9 @@ class Wards extends Model
     use HasFactory;
 
     public $timestamps = false;
+    protected $fillable = [
+        'name','type','maqh'
+    ];
     protected $primaryKey = 'xaid';
     protected $table = "devvn_xaphuongthitran";
 }

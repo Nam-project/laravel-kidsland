@@ -106,7 +106,7 @@
                             <p>{{ Cart::total() }} <span class="copper">đ</span></p>
                         </div>
                     @endif
-                    <div class="summary-info"><span></span><button class="cart__btn-buynow">Mua hàng</button></div>
+                    <div class="summary-info"><span></span><button wire:click.prevent="checkout" class="cart__btn-buynow">Mua hàng</button></div>
                 </div>
             @else
                 <div class="cart-empty">

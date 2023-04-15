@@ -6,6 +6,7 @@ use App\Http\Livewire\CartCompoment;
 use App\Http\Livewire\SearchComponent;
 use App\Http\Livewire\CheckoutCompoment;
 use App\Http\Livewire\DetailsComponent;
+use App\Http\Livewire\CategoryComponent;
 use App\Http\Livewire\User\UserDashboardCompoment;
 use App\Http\Livewire\Admin\AdminDashboardCompoment;
 use App\Http\Livewire\Admin\AdminCategoryComponent;
@@ -57,9 +58,11 @@ Route::get('/shop', ShopCompoment::class);
 
 Route::get('/cart', CartCompoment::class)->name('product.cart');
 
-Route::get('/checkout', CheckoutCompoment::class);
+Route::get('/checkout', CheckoutCompoment::class)->name('checkout');
 
 Route::get('/product/{slug}',DetailsComponent::class)->name('product.details');
+
+Route::get('/product-category/{category_slug}', CategoryComponent::class)->name('product.category');
 
 Route::get('/cart/count', [CartCompoment::class, 'getCartCount']);
 

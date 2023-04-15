@@ -10,6 +10,9 @@ class Province extends Model
     use HasFactory;
 
     public $timestamps = false;
+    protected $fillable = [
+        'name','type','matp'
+    ];
     protected $primaryKey = 'maqh';
     protected $table = "devvn_quanhuyen";
 }

@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 use Livewire\Component;
 use Cart;
 use App\Models\Coupon;
+use Illuminate\Support\Facades\Auth;
 
 class CartCompoment extends Component
 {
@@ -91,8 +92,35 @@ class CartCompoment extends Component
         session()->forget('coupon');
     }
 
+    public function checkout()
+    {
+        if (Auth::check()) {
+            return redirect()->route('checkout');
+        }else {
+            return redirect()->route('login');
+        }
+    }
+
+    public function setAmountForCheckout()
+    {
+        if (session()->has('coupon')) {
+            session()->put('checkout', [
+                'discount' => $this->discount,
+                'subtotal' => $this->subtotalAfterDiscount
+            ]);
+        }
+        else {
+            session()->put('checkout', [
+                'discount' => 0,
+                'subtotal' => number_format(str_replace(',', '', Cart::instance()->subtotal), 0, '.', '')
+            ]);
+        }
+    }
+
     public function render()
     {
+
+        // dd(number_format(str_replace(',', '', Cart::instance()->subtotal), 0, '.', ''));
         // dd(Cart::count());
         if(session()->has('coupon'))
         {
@@ -104,6 +132,7 @@ class CartCompoment extends Component
                 session()->forget('coupon');
             }
         }
+        $this->setAmountForCheckout();
         return view('livewire.cart-compoment')->layout("layouts.base");
     }
 }
