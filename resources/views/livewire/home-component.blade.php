@@ -5,7 +5,8 @@
                 <ul class="category-list">
                     <div class="category__title"><i class="fa-solid fa-bars"></i>Danh mục</div>
                     @foreach ($category as $item)
-                        <li class="category-item"><a href="{{route('product.category',['category_slug'=>$item->slug])}}" class="category__link">{{ $item->name }}<i
+                        <li class="category-item"><a href="{{ route('product.category', ['category_slug' => $item->slug]) }}"
+                                class="category__link">{{ $item->name }}<i
                                     class="fa-solid fa-angle-right category-icon"></i> </a>
                             <div class="content__subcategory">
                                 <img class="content__subcategory-img"
@@ -15,7 +16,8 @@
                                         <h4 class="subcategory__heading">Theo loại</h4>
                                         @foreach ($item->subcategory as $subcate)
                                             <li class="subcategory__title"><a class="subcategory__title-link"
-                                                    href="">{{ $subcate->name }}</a></li>
+                                                    href="{{ route('product.category', ['category_slug' => $item->slug, 'subcategory_slug' => $subcate->slug]) }}">{{ $subcate->name }}</a>
+                                            </li>
                                         @endforeach
                                     </ul>
                                 @endif
@@ -153,19 +155,21 @@
             @foreach ($products as $product)
                 <div class="col l-2 m-3 c-6 product__item">
                     <div class="product__item-link">
-                        <a href="{{Route('product.details',['slug'=>$product->slug])}}">
-                            <img src="{{ asset('assets/imgs/products') }}/{{$product->image}}" alt=""
+                        <a href="{{ Route('product.details', ['slug' => $product->slug]) }}">
+                            <img src="{{ asset('assets/imgs/products') }}/{{ $product->image }}" alt=""
                                 class="product__img">
-                            <div class="product__name">{{$product->name}}
+                            <div class="product__name">{{ $product->name }}
                             </div>
                             <div class="product__group">
-                                <div class="product__price">{{$product->regular_price}}<span class="copper">đ</span></div>
+                                <div class="product__price">{{ $product->regular_price }}<span
+                                        class="copper">đ</span></div>
                                 <div class="product__assess">5<i class="fa-solid fa-star"></i></i></div>
                             </div>
                         </a>
                         <div class="product__with-cart">
                             <a href="" class="product__buy-now btn-pink">Mua ngay</a>
-                            <button  onclick="updateCartCount()" class="product__cart" wire:click.prevent="store({{$product->id}},'{{$product->name}}',{{$product->regular_price}})">
+                            <button onclick="updateCartCount()" class="product__cart"
+                                wire:click.prevent="store({{ $product->id }},'{{ $product->name }}',{{ $product->regular_price }})">
                                 <i class="fa-solid fa-cart-plus"></i>
                             </button>
                         </div>
@@ -175,6 +179,6 @@
 
         </div>
         {{-- <div class="see-more"><a href="/shop" class="see-more__link btn-pink">Xem thêm</a></div> --}}
-        <div class="see-more"><button wire:click = 'loadMore' class="see-more__link btn-pink">Xem thêm</button></div>
+        <div class="see-more"><button wire:click='loadMore' class="see-more__link btn-pink">Xem thêm</button></div>
     </div>
 </div>

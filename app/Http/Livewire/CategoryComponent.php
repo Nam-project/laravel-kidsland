@@ -6,6 +6,7 @@ use App\Models\Product;
 use Livewire\Component;
 use Livewire\WithPagination;
 use App\Models\Category;
+use App\Models\SubCategory;
 use Cart;
 
 class CategoryComponent extends Component
@@ -16,11 +17,26 @@ class CategoryComponent extends Component
     public $pagesize;
     public $category_slug;
 
-    public function mount($category_slug)
+    public $fromPrice;
+    public $toPrice;
+    public $minPrice;
+    public $maxPrice;
+
+    public $subcategory_slug;
+
+    public $brandInputs = [];
+
+    protected $queryString = ['brandInputs'];
+
+
+    public function mount($category_slug, $subcategory_slug=null)
     {
         $this->sorting = 'default';
         $this->pagesize = 15;
         $this->category_slug = $category_slug;
+        $this->subcategory_slug = $subcategory_slug;
+        $this->minPrice = Product::min('regular_price');
+        $this->maxPrice = Product::max('regular_price');
     }
 
     public function store($product_id, $product_name, $product_price)
@@ -32,42 +48,127 @@ class CategoryComponent extends Component
         return redirect()->back();
     }
 
+    public function rangePrice()
+    {
+        $this->minPrice = $this->fromPrice;
+        $this->maxPrice = $this->toPrice;
+    }
+
     public function render()
     {
+        $category = "";
+        $category_id = null;
+        $subcategory_id = null;
+        if ($this->subcategory_slug) {
+            $subcategory = SubCategory::where('slug', $this->subcategory_slug)->first();
+            $subcategory_id = $subcategory->id;
+            $category = $subcategory->category;
+        }else {
+            $category = Category::where('slug',$this->category_slug)->first();
+            $category_id = $category->id;
+        }
+
+        // dd($category);
         
-        $category = Category::where('slug',$this->category_slug)->first();
-        $category_id = $category->id;
-        $category_name = $category->name;
         // $products = Product::whereHas('subcategory', function ($query) use ($category_id) {
         //     $query->where('category_id', $category_id);
         // })->get();
 
         if ($this->sorting == 'price') {
-            $product = Product::whereHas('subcategory', function ($query) use ($category_id) 
-            {
-                $query->where('category_id', $category_id);
-            })->orderBy('regular_price', 'DESC')->paginate($this->pagesize);
+            if ($this->subcategory_slug) {
+                $product = Product::where('subcategory_id',$subcategory_id)
+                ->when($this->brandInputs, function($q){
+                    $q->whereIn('brand_id',$this->brandInputs);
+                })
+                ->whereBetween('regular_price', [$this->minPrice, $this->maxPrice])
+                ->orderBy('regular_price', 'DESC')->paginate($this->pagesize);
+            }else {
+                $product = Product::whereHas('subcategory', function ($query) use ($category_id) 
+                {
+                    $query->where('category_id', $category_id);
+                })->when($this->brandInputs, function($q){
+                    $q->whereIn('brand_id',$this->brandInputs);
+                })
+                ->whereBetween('regular_price', [$this->minPrice, $this->maxPrice])
+                ->orderBy('regular_price', 'DESC')->paginate($this->pagesize);
+            }
         } else if ($this->sorting == 'price_desc') {
-            $product = Product::whereHas('subcategory', function ($query) use ($category_id) 
-            {
-                $query->where('category_id', $category_id);
-            })->orderBy('regular_price', 'ASC')->paginate($this->pagesize);
+            if ($this->subcategory_slug) {
+                $product = Product::where('subcategory_id',$subcategory_id)
+                ->when($this->brandInputs, function($q){
+                    $q->whereIn('brand_id',$this->brandInputs);
+                })
+                ->whereBetween('regular_price', [$this->minPrice, $this->maxPrice])
+                ->orderBy('regular_price', 'ASC')->paginate($this->pagesize);
+            }else {
+                $product = Product::whereHas('subcategory', function ($query) use ($category_id) 
+                {
+                    $query->where('category_id', $category_id);
+                })->when($this->brandInputs, function($q){
+                    $q->whereIn('brand_id',$this->brandInputs);
+                })
+                ->whereBetween('regular_price', [$this->minPrice, $this->maxPrice])
+                ->orderBy('regular_price', 'ASC')->paginate($this->pagesize);
+                
+            }
         } else if ($this->sorting == 'orderby_new') {
-            $product = Product::whereHas('subcategory', function ($query) use ($category_id) 
-            {
-                $query->where('category_id', $category_id);
-            })->orderBy('created_at', 'DESC')->paginate($this->pagesize);
+            if ($this->subcategory_slug) {
+                $product = Product::where('subcategory_id',$subcategory_id)
+                ->when($this->brandInputs, function($q){
+                    $q->whereIn('brand_id',$this->brandInputs);
+                })
+                ->whereBetween('regular_price', [$this->minPrice, $this->maxPrice])
+                ->orderBy('created_at', 'DESC')->paginate($this->pagesize);
+            }else {
+                $product = Product::whereHas('subcategory', function ($query) use ($category_id) 
+                {
+                    $query->where('category_id', $category_id);
+                })->when($this->brandInputs, function($q){
+                    $q->whereIn('brand_id',$this->brandInputs);
+                })
+                ->whereBetween('regular_price', [$this->minPrice, $this->maxPrice])
+                ->orderBy('created_at', 'DESC')->paginate($this->pagesize);
+                
+            }
         } else if ($this->sorting == 'orderby_old') {
-            $product = Product::whereHas('subcategory', function ($query) use ($category_id) 
-            {
-                $query->where('category_id', $category_id);
-            })->orderBy('created_at', 'ASC')->paginate($this->pagesize);
+            if ($this->subcategory_slug) {
+                $product = Product::where('subcategory_id',$subcategory_id)
+                ->when($this->brandInputs, function($q){
+                    $q->whereIn('brand_id',$this->brandInputs);
+                })
+                ->whereBetween('regular_price', [$this->minPrice, $this->maxPrice])
+                ->orderBy('created_at', 'ASC')->paginate($this->pagesize);
+            }else {
+                $product = Product::whereHas('subcategory', function ($query) use ($category_id) 
+                {
+                    $query->where('category_id', $category_id);
+                })
+                ->when($this->brandInputs, function($q){
+                    $q->whereIn('brand_id',$this->brandInputs);
+                })
+                ->whereBetween('regular_price', [$this->minPrice, $this->maxPrice])
+                ->orderBy('created_at', 'ASC')->paginate($this->pagesize);
+                
+            }
         } else {
-            $product = Product::whereHas('subcategory', function ($query) use ($category_id) 
-            {
-                $query->where('category_id', $category_id);
-            })->paginate($this->pagesize);
+            if ($this->subcategory_slug) {
+                $product = Product::where('subcategory_id',$subcategory_id)
+                ->when($this->brandInputs, function($q){
+                    $q->whereIn('brand_id',$this->brandInputs);
+                })
+                ->whereBetween('regular_price', [$this->minPrice, $this->maxPrice])
+                ->paginate($this->pagesize);
+            }else {
+                $product = Product::whereHas('subcategory', function ($query) use ($category_id) 
+                {
+                    $query->where('category_id', $category_id);
+                })->when($this->brandInputs, function($q){
+                    $q->whereIn('brand_id',$this->brandInputs);
+                })
+                ->whereBetween('regular_price', [$this->minPrice, $this->maxPrice])
+                ->paginate($this->pagesize);
+            }
         }
-        return view('livewire.category-component', ['products'=>$product])->layout("layouts.base");
+        return view('livewire.category-component', ['products'=>$product, 'category'=>$category])->layout("layouts.base");
     }
 }

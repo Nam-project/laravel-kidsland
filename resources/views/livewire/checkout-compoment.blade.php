@@ -11,15 +11,24 @@
                     <i class="fa-solid fa-location-dot"></i>
                     Địa chỉ nhận hàng
                 </div>
-                <form class="checkout-form__address">
+                <form wire:submit.prevent="placeOrder" class="checkout-form__address">
                     <div class="checkout__address-group">
                         <div class="checkout__address-name">
                             <label class="checkout__address-label" for="">Họ và tên:</label>
-                            <input class="checkout__address-input" type="text" placeholder="Họ và tên">
+                            <input class="checkout__address-input" wire:model="name" type="text"
+                                placeholder="Họ và tên">
+                            @error('name')
+                                <p class="checkout-error">{{ $message }}</p>
+                            @enderror
+
                         </div>
                         <div class="checkout__address-name">
                             <label class="checkout__address-label" for="">Số điện thoại:</label>
-                            <input class="checkout__address-input" type="text" placeholder="Số điện thoại">
+                            <input class="checkout__address-input" wire:model="phone" type="number"
+                                placeholder="Số điện thoại">
+                            @error('phone')
+                                <p class="checkout-error">{{ $message }}</p>
+                            @enderror
                         </div>
                     </div>
                     <div class="checkout__address-group">
@@ -49,7 +58,8 @@
                         </div>
                         <div class="checkout__address-city">
                             <label class="checkout__address-label" for="">Xã phường:</label>
-                            <select class="checkout__address-input" type="text" placeholder="Họ và tên">
+                            <select class="checkout__address-input" type="text" wire:model="ward_id"
+                                placeholder="Họ và tên">
                                 <option value="" selected>Chọn xã phường</option>
                                 @if ($province_id)
                                     @foreach ($wards as $ward)
@@ -59,12 +69,19 @@
                                     <option value="">Vui lòng chọn quận huyện</option>
                                 @endif
                             </select>
+                            @error('ward_id')
+                                <p class="checkout-error">{{ $message }}</p>
+                            @enderror
                         </div>
                     </div>
                     <div class="checkout__address-group">
                         <div class="checkout__address-name">
                             <label class="checkout__address-label" for="">Địa chỉ cụ thể:</label>
-                            <input class="checkout__address-input" type="text" placeholder="Địa chỉ cụ thể">
+                            <input class="checkout__address-input" wire:model="address" type="text"
+                                placeholder="Địa chỉ cụ thể">
+                            @error('address')
+                                <p class="checkout-error">{{ $message }}</p>
+                            @enderror
                         </div>
                     </div>
                     <div class="checkout__address-group">
@@ -75,11 +92,12 @@
                         <div class="checkout__products-title">Sản phẩm</div>
                         @foreach (Cart::content() as $item)
                             <div class="checkout__products-item">
-                                <img src="{{ asset('assets/imgs/products/' . $item->model->image) }}" alt="{{ $item->model->name }}"
-                                    class="checkout__products-img">
+                                <img src="{{ asset('assets/imgs/products/' . $item->model->image) }}"
+                                    alt="{{ $item->model->name }}" class="checkout__products-img">
                                 <div class="checkout__products-name">{{ $item->model->name }}</div>
-                                <div class="checkout__products-text"><span>Đơn giá:</span>{{ $item->model->regular_price }}<span
-                                        class="copper">đ</span> </div>
+                                <div class="checkout__products-text"><span>Đơn
+                                        giá:</span>{{ $item->price }}<span class="copper">đ</span>
+                                </div>
                                 <div class="checkout__products-text"><span>Số lượng:</span>{{ $item->qty }}</div>
                             </div>
                         @endforeach
@@ -96,18 +114,21 @@
                         <div class="row">
                             <div class="col l-9 m-8 c-0"></div>
                             <div class="col l-3 m-4 c-12">
-                                <div class="checkout__infor-item">
-                                    <div class="">Tổng tiền hàng:</div>
-                                    <div class="">27.500 <span class="copper">đ</span> </div>
-                                </div>
-                                <div class="checkout__infor-item">
+                                @if (Session::has('checkout'))
+                                    <div class="checkout__infor-item">
+                                        <div class="">Tổng tiền hàng:</div>
+                                        <div class="">{{Session::get('checkout')['subtotal']}}<span class="copper">đ</span> </div>
+                                    </div>
+                                    {{-- <div class="checkout__infor-item">
                                     <div class="">Phí vận chuyển:</div>
                                     <div class="">27.500 <span class="copper">đ</span> </div>
-                                </div>
-                                <div class="checkout__infor-item">
-                                    <div class="">Tổng thanh toán:</div>
-                                    <div class="checkout__infor-item-money">27.500 <span class="copper">đ</span> </div>
-                                </div>
+                                </div> --}}
+                                    {{-- <div class="checkout__infor-item">
+                                        <div class="">Tổng thanh toán:</div>
+                                        <div class="checkout__infor-item-money">27.500 <span class="copper">đ</span>
+                                        </div>
+                                    </div> --}}
+                                @endif
                                 <button class="btn__checkout">Đặt hàng</button>
                             </div>
 

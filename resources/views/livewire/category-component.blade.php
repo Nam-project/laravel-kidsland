@@ -5,8 +5,48 @@
                 <div class="shop-category__list">
                     <div class="shop-category__title">
                         <i class="fa-solid fa-bars"></i>
-                        Danh Mục
+                        Danh mục
                     </div>
+                    <div class="shop-category__dad">
+                        <i class="fa-solid fa-caret-right"></i>
+                        <a class="category__dad-link" href="">
+                            @if ($category)
+                                {{ $category->name }}
+                            @endif
+                        </a>
+                    </div>
+                    @if ($category)
+                        @foreach ($category->subcategory as $item)
+                            <a href="" class="shop-category__child">{{ $item->name }}</a>
+                        @endforeach
+                    @endif
+                </div>
+                <div class="shop-category__list">
+                    <div class="shop-category__title">
+                        <i class="fa-solid fa-filter"></i>
+                        Bộ lọc tìm kiếm
+                    </div>
+                    <div class="shop-category__subtitle">Theo thương hiệu</div>
+                    @if ($category)
+                        @foreach ($category->brand as $item)
+                            <div for="" class="shop-category__checkbox">
+                                <input id="brand{{ $item->id }}" wire:model="brandInputs"
+                                    value="{{ $item->id }}" type="checkbox">
+                                <label class="shop-category__checktext"
+                                    for="brand{{ $item->id }}">{{ $item->name }}</label>
+                            </div>
+                        @endforeach
+                    @endif
+                    <form action="" wire:submit.prevent="rangePrice">
+                        <div class="shop-category__subtitle">Khoảng giá</div>
+                        <div class="shop-price__range">
+                            <input type="number" wire:model="fromPrice" placeholder="TỪ -" class="shop-price__range-input">
+                        </div>
+                        <div class="shop-price__range">
+                            <input type="number" wire:model="toPrice" placeholder="ĐẾN" class="shop-price__range-input">
+                        </div>
+                        <button type="submit" class="shop-price__range-apply">ÁP DỤNG</button>
+                    </form>
                 </div>
             </div>
             <div class="shop-main col l-10">
@@ -16,7 +56,7 @@
                         {{-- <button class="shop-sort-by-option btn-shop__active" >Mới nhất</button>
                         <button class="shop-sort-by-option">Cũ nhất</button>
                         <button class="shop-sort-by-option">Bán chạy</button> --}}
-                        <select name="" id="" class="shop-sort-by__select" wire:model ="sorting">
+                        <select name="" id="" class="shop-sort-by__select" wire:model="sorting">
                             <option value="">Default sorting</option>
                             <option value="orderby_new">Mới nhất</option>
                             <option value="orderby_old">Cũ nhất</option>
@@ -25,7 +65,7 @@
                         </select>
                     </div>
                     <div class="shop-mini-page-controller">
-                        <select name="" id="" class="shop-sort-by__select" wire:model ="pagesize">
+                        <select name="" id="" class="shop-sort-by__select" wire:model="pagesize">
                             <option value="15">15 trên trang</option>
                             <option value="20">20 trên trang</option>
                             <option value="25">25 trên trang</option>

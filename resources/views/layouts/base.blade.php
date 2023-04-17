@@ -71,7 +71,7 @@
                             @else
                                 <div class="login-success">
                                     <div class="login-success__link">
-                                        <img src="assets/imgs/user.png" alt="" class="login-success__img">
+                                        <img src="../assets/imgs/user.png" alt="" class="login-success__img">
                                         <div class="login-success__name">{{ Auth::user()->name }}</div>
                                         <i class="fa-solid fa-caret-down login-success__icon"></i>
                                         <ul class="login-success-plus">
@@ -90,8 +90,8 @@
                             @endif
                         @else
                             <div class="login-register">
-                                <a href="{{ route('register') }}" class="loginr">Đăng Ký</a>
-                                <a href="{{ route('login') }}" class="loginr">Đăng Nhập</a>
+                                <a href="{{ route('register') }}" class="loginr btn__login"><span>Đăng Ký</span></a>
+                                <a href="{{ route('login') }}" class="loginr btn__sigup"><span>Đăng Nhập</span></a>
                             </div>
                             @endif
                             <div class="cart">
@@ -180,7 +180,7 @@
         </div>
 
 
-        <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-element-bundle.min.js"></script>
+        <script src="{{ asset('assets/js/swiper.js') }}"></script>
         <script src="{{ asset('assets/js/main.js') }}"></script>
         @livewireScripts
     </body>
