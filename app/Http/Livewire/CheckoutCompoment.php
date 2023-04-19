@@ -45,6 +45,7 @@ class CheckoutCompoment extends Component
         $order = new Order();
         $order->user_id = Auth::user()->id;
         $order->total = session()->get('checkout')['subtotal'];
+        $order->pay = session()->get('checkout')['subtotal'];
         $order->discount = session()->get('checkout')['discount'];
         $order->ward_id = $this->ward_id;
         $order->name = $this->name;
@@ -75,7 +76,7 @@ class CheckoutCompoment extends Component
         }else if($this->thankyou){
             return redirect()->route('thankyou');
         }else if(!session()->get('checkout')){
-            return redirect()->get('product.cart');
+            return redirect()->route('product.cart');
         }
     }
 

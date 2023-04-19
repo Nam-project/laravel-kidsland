@@ -1759,14 +1759,75 @@ swiper-container {
     margin-right: 5px;
 }
 
+.title__cursor {
+    cursor: pointer;
+    display: block;
+}
+
+#c__title-checkbox {
+    display: none;
+}
+
+.show__category-group {
+    font-size: 14px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.show__category-item {
+    position: relative;
+}
+
+.show__category-link {
+    color: var(--text-color);
+    padding: 8px 10px;
+    display: block;
+    text-decoration: none;
+}
+
+.show__category-item:hover {
+    background-color: var(--white-color);
+}
+
+.show__category-item:hover .show__subcategory-group {
+    display: block;
+}
+
+.show__subcategory-group {
+    position: absolute;
+    top: 0;
+    left: 100%;
+    display: none;
+    font-size: 14px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    background-color: var(--white-color);
+    z-index: 1;
+    width: 100%;
+    border-radius: 3px;
+}
+
+.show__subcategory-link {
+    color: var(--text-color);
+    padding: 8px 12px;
+    display: block;
+    text-decoration: none;
+}
+
+.show__subcategory-link:hover {
+    background-color: var(--white-color);
+}
+
 .shop-category__dad {
-    padding: 10px 0 5px;
+    padding: 10px 8px 5px 8px;
     font-size: 16px;
-    color: var(--pink-color);
+    color: var(--text-color);
 }
 
 .category__dad-link {
-    color: var(--pink-color);
+    color: var(--text-color);
     text-decoration: none;
 }
 
@@ -1774,8 +1835,14 @@ swiper-container {
     padding-right: 5px;
 }
 
+.shop-category__childs {
+    display: flex;
+    font-size: 14px;
+    align-items: center;
+}
+
 .shop-category__child {
-    padding: 8px 15px;
+    padding: 8px 10px;
     display: block;
     color: var(--text-color);
     font-size: 14px;
@@ -1785,7 +1852,7 @@ swiper-container {
 .shop-category__subtitle {
     color: var(--pink-color);
     font-size: 16px;
-    padding: 5px 15px;
+    padding: 5px 10px;
 }
 
 .shop-category__checkbox {
@@ -1801,7 +1868,7 @@ swiper-container {
 }
 
 .shop-price__range {
-    padding: 5px 15px;
+    padding: 5px 10px;
     font-size: 14px;
     color: var(--text-color);
     overflow: hidden;
@@ -1816,10 +1883,10 @@ swiper-container {
 }
 
 .shop-price__range-apply {
+    width: 100%;
     color: var(--white-color);
     font-size: 14px;
-    margin: 5px 15px;
-    padding: 6px 15px;
+    padding: 8px 15px;
     background-color: var(--pink-color);
     border-radius: 3px;
     border: none;

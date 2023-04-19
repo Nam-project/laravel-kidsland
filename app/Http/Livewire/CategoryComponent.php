@@ -28,6 +28,8 @@ class CategoryComponent extends Component
 
     protected $queryString = ['brandInputs'];
 
+    public $showCategory;
+
 
     public function mount($category_slug, $subcategory_slug=null)
     {
@@ -56,6 +58,7 @@ class CategoryComponent extends Component
 
     public function render()
     {
+        $categories = Category::all();
         $category = "";
         $category_id = null;
         $subcategory_id = null;
@@ -169,6 +172,6 @@ class CategoryComponent extends Component
                 ->paginate($this->pagesize);
             }
         }
-        return view('livewire.category-component', ['products'=>$product, 'category'=>$category])->layout("layouts.base");
+        return view('livewire.category-component', ['products'=>$product, 'category'=>$category, 'subcategory_slug'=>$this->subcategory_slug, 'categories'=>$categories])->layout("layouts.base");
     }
 }

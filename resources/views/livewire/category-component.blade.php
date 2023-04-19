@@ -3,21 +3,48 @@
         <div class="row product__list">
             <div class="shop-filter-panel col l-2">
                 <div class="shop-category__list">
-                    <div class="shop-category__title">
+                    <label for="c__title-checkbox" class="shop-category__title title__cursor">
                         <i class="fa-solid fa-bars"></i>
                         Danh mục
-                    </div>
+                    </label>
+                    <input type="checkbox" name="" value="1" wire:model="showCategory" id="c__title-checkbox">
+                    @if ($showCategory == 1)
+                        <ul class="show__category-group">
+                            @foreach ($categories as $item)
+                                <li class="show__category-item"><a class="show__category-link"
+                                        href="">{{ $item->name }}</a>
+                                    @if ($item->subcategory)
+                                        <ul class="show__subcategory-group">
+                                            @foreach ($item->subcategory as $item)
+                                                <li><a href=""
+                                                        class="show__subcategory-link">{{ $item->name }}</a></li>
+                                            @endforeach
+                                        </ul>
+                                    @endif
+                                </li>
+                            @endforeach
+                        </ul>
+                    @endif
                     <div class="shop-category__dad">
-                        <i class="fa-solid fa-caret-right"></i>
-                        <a class="category__dad-link" href="">
-                            @if ($category)
+                        @if (!$subcategory_slug)
+                            <i class="fa-solid fa-caret-right"></i>
+                        @endif
+                        @if ($category)
+                            <a class="category__dad-link"
+                                href="{{ route('product.category', ['category_slug' => $category->slug]) }}">
                                 {{ $category->name }}
-                            @endif
-                        </a>
+                            </a>
+                        @endif
                     </div>
-                    @if ($category)
+                    @if (count($category->subcategory) > 0)
                         @foreach ($category->subcategory as $item)
-                            <a href="" class="shop-category__child">{{ $item->name }}</a>
+                            <div class="shop-category__childs">
+                                @if ($subcategory_slug && $item->slug == $subcategory_slug)
+                                    <i class="fa-solid fa-caret-right"></i>
+                                @endif
+                                <a href="{{ route('product.category', ['category_slug' => $category->slug, 'subcategory_slug' => $item->slug]) }}"
+                                    class="shop-category__child">{{ $item->name }}</a>
+                            </div>
                         @endforeach
                     @endif
                 </div>
@@ -40,12 +67,16 @@
                     <form action="" wire:submit.prevent="rangePrice">
                         <div class="shop-category__subtitle">Khoảng giá</div>
                         <div class="shop-price__range">
-                            <input type="number" wire:model="fromPrice" placeholder="TỪ -" class="shop-price__range-input">
+                            <input type="number" wire:model="fromPrice" placeholder="TỪ -"
+                                class="shop-price__range-input">
                         </div>
                         <div class="shop-price__range">
-                            <input type="number" wire:model="toPrice" placeholder="ĐẾN" class="shop-price__range-input">
+                            <input type="number" wire:model="toPrice" placeholder="ĐẾN"
+                                class="shop-price__range-input">
                         </div>
-                        <button type="submit" class="shop-price__range-apply">ÁP DỤNG</button>
+                        <div class="shop-price__range">
+                            <button type="submit" class="shop-price__range-apply">ÁP DỤNG</button>
+                        </div>
                     </form>
                 </div>
             </div>
