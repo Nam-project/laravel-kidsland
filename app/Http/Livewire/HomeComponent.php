@@ -33,6 +33,7 @@ class HomeComponent extends Component
         $sliders = HomeSlider::where('status', 1)->get();
         $category = Category::all();
         $products = Product::latest()->paginate($this->per_page);
-        return view('livewire.home-component', ['sliders'=>$sliders, 'category'=>$category, 'products'=>$products])->layout('layouts.base');
+        $saleProducts =Product::where('sale_price','>',0)->inRandomOrder()->get()->take(6);
+        return view('livewire.home-component', ['sliders'=>$sliders, 'category'=>$category, 'products'=>$products,'saleProducts'=>$saleProducts])->layout('layouts.base');
     }
 }

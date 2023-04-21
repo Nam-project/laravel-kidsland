@@ -5,7 +5,8 @@
                 <ul class="category-list">
                     <div class="category__title"><i class="fa-solid fa-bars"></i>Danh mục</div>
                     @foreach ($category as $item)
-                        <li class="category-item"><a href="{{ route('product.category', ['category_slug' => $item->slug]) }}"
+                        <li class="category-item"><a
+                                href="{{ route('product.category', ['category_slug' => $item->slug]) }}"
                                 class="category__link">{{ $item->name }}<i
                                     class="fa-solid fa-angle-right category-icon"></i> </a>
                             <div class="content__subcategory">
@@ -76,78 +77,20 @@
                 </a>
             </div>
             <div class="row flast-sale__list">
-                <div class="col l-2 m-3 c-6 flast-sale__item">
-                    <a href="" class="flast-sale__link">
-                        <img src="{{ asset('assets/imgs/sua-enfagrow-premium.jpg') }}" alt=""
-                            class="sale__item-img">
-                        <div class="flast-sale__name">Sữa Enfagrow Premium Toddler Nutritional 907g (từ 1 tuổi)
-                        </div>
-                        <div class="flast-sale__price">
-                            <div class="sale__price-old">800.000 <span class="copper">đ</span></div>
-                            <div class="sale__price-new">735.000 <span class="copper">đ</span></div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col l-2 m-3 c-6 flast-sale__item">
-                    <a href="" class="flast-sale__link">
-                        <img src="{{ asset('assets/imgs/thuc-pham-bo-sung-aptamil-2.jpg') }}" alt=""
-                            class="sale__item-img">
-                        <div class="flast-sale__name">Sữa Enfagrow Premium Toddler Nutritional 907g (từ 1 tuổi)
-                        </div>
-                        <div class="flast-sale__price">
-                            <div class="sale__price-old">800.000 <span class="copper">đ</span></div>
-                            <div class="sale__price-new">735.000 <span class="copper">đ</span></div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col l-2 m-3 c-6 flast-sale__item">
-                    <a href="" class="flast-sale__link">
-                        <img src="{{ asset('assets/imgs/sua-enfagrow-premium.jpg') }}" alt=""
-                            class="sale__item-img">
-                        <div class="flast-sale__name">Sữa Enfagrow Premium Toddler Nutritional 907g (từ 1 tuổi)
-                        </div>
-                        <div class="flast-sale__price">
-                            <div class="sale__price-old">800.000 <span class="copper">đ</span></div>
-                            <div class="sale__price-new">735.000 <span class="copper">đ</span></div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col l-2 m-3 c-6 flast-sale__item">
-                    <a href="" class="flast-sale__link">
-                        <img src="{{ asset('assets/imgs/thuc-pham-bo-sung-aptamil-2.jpg') }}" alt=""
-                            class="sale__item-img">
-                        <div class="flast-sale__name">Sữa Enfagrow Premium Toddler Nutritional 907g (từ 1 tuổi)
-                        </div>
-                        <div class="flast-sale__price">
-                            <div class="sale__price-old">800.000 <span class="copper">đ</span></div>
-                            <div class="sale__price-new">735.000 <span class="copper">đ</span></div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col l-2 m-3 c-6 flast-sale__item">
-                    <a href="" class="flast-sale__link">
-                        <img src="{{ asset('assets/imgs/sua-enfagrow-premium.jpg') }}" alt=""
-                            class="sale__item-img">
-                        <div class="flast-sale__name">Sữa Enfagrow Premium Toddler Nutritional 907g (từ 1 tuổi)
-                        </div>
-                        <div class="flast-sale__price">
-                            <div class="sale__price-old">800.000 <span class="copper">đ</span></div>
-                            <div class="sale__price-new">735000 <span class="copper">đ</span></div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col l-2 m-3 c-6 flast-sale__item">
-                    <a href="" class="flast-sale__link">
-                        <img src="{{ asset('assets/imgs/thuc-pham-bo-sung-aptamil-2.jpg') }}" alt=""
-                            class="sale__item-img">
-                        <div class="flast-sale__name">Sữa Enfagrow Premium Toddler Nutritional 907g (từ 1 tuổi)
-                        </div>
-                        <div class="flast-sale__price">
-                            <div class="sale__price-old">800.000 <span class="copper">đ</span></div>
-                            <div class="sale__price-new">735000 <span class="copper">đ</span></div>
-                        </div>
-                    </a>
-                </div>
+                @foreach ($saleProducts as $product)
+                    <div class="col l-2 m-3 c-6 flast-sale__item">
+                        <a href="{{route('product.details',['slug'=>$product->slug])}}" class="flast-sale__link">
+                            <img src="{{ asset('assets/imgs/products') }}/{{$product->image}}" alt=""
+                                class="sale__item-img">
+                            <div class="flast-sale__name">{{$product->name}}
+                            </div>
+                            <div class="flast-sale__price">
+                                <div class="sale__price-old">{{$product->regular_price}}<span class="copper">đ</span></div>
+                                <div class="sale__price-new">{{$product->sale_price}}<span class="copper">đ</span></div>
+                            </div>
+                        </a>
+                    </div>
+                @endforeach
             </div>
         </div>
         <div class="title__for-you">Gợi ý hôm nay</div>
@@ -161,8 +104,8 @@
                             <div class="product__name">{{ $product->name }}
                             </div>
                             <div class="product__group">
-                                <div class="product__price">{{ $product->regular_price }}<span
-                                        class="copper">đ</span></div>
+                                <div class="product__price">{{ $product->regular_price }}<span class="copper">đ</span>
+                                </div>
                                 <div class="product__assess">5<i class="fa-solid fa-star"></i></i></div>
                             </div>
                         </a>
