@@ -20,8 +20,16 @@ class DetailsComponent extends Component
 
     public function store($product_id, $product_name, $product_price)
     {
-        Cart::add($product_id, $product_name,$this->qty, $product_price)->associate('App\Models\Product');
-        session()->flash('success_message', 'Item added in Cart');
+        Cart::instance('cart')->add($product_id, $product_name,$this->qty, $product_price)->associate('App\Models\Product');
+        $this->emitTo('cart-count-component','refreshComponent');
+        toastr()->success('', 'Thêm vào giỏ hàng thành công');
+        return redirect()->back();
+    }
+
+    public function storeBuy($product_id, $product_name, $product_price)
+    {
+        Cart::instance('cart')->add($product_id, $product_name,$this->qty, $product_price)->associate('App\Models\Product');
+        $this->emitTo('cart-count-component','refreshComponent');
         return redirect()->route('product.cart');
     }
 

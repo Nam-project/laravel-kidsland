@@ -94,16 +94,7 @@
                                 <a href="{{ route('login') }}" class="loginr btn__sigup"><span>Đăng Nhập</span></a>
                             </div>
                             @endif
-                            <div class="cart">
-                                <a href="/cart" class="cart__icon"><i class="fa-solid fa-cart-shopping"><span
-                                            class="cart__number">
-                                            @if (Cart::count() > 0)
-                                                {{ Cart::count() }}
-                                            @else
-                                                0
-                                            @endif
-                                        </span></i></a>
-                            </div>
+                            @livewire('cart-count-component')
                         </div>
                     </div>
                     {{-- <nav class="header__nav">

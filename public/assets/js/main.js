@@ -36,30 +36,30 @@ function scrollToElement(id) {
 }
 
 // Cart update
-function updateCartCount() {
-  fetch('/cart/count')
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      return response.json();
-    })
-    .then(data => {
-      // Lấy số lượng mặt hàng từ dữ liệu JSON
-      const count = data.count;
+// function updateCartCount() {
+//   fetch('/cart/count')
+//     .then(response => {
+//       if (!response.ok) {
+//         throw new Error('Network response was not ok');
+//       }
+//       return response.json();
+//     })
+//     .then(data => {
+//       // Lấy số lượng mặt hàng từ dữ liệu JSON
+//       const count = data.count;
 
-      // Hiển thị số lượng mặt hàng trên trang web
-      const countElement = document.querySelector('.cart__number');
-      if (countElement) {
-        countElement.innerText = count + 1;
-      } else {
-        console.error('The cart count element could not be found.');
-      }
-    })
-    .catch(error => {
-      console.error('There was a problem with the fetch operation:', error);
-    });
-}
+//       // Hiển thị số lượng mặt hàng trên trang web
+//       const countElement = document.querySelector('.cart__number');
+//       if (countElement) {
+//         countElement.innerText = count + 1;
+//       } else {
+//         console.error('The cart count element could not be found.');
+//       }
+//     })
+//     .catch(error => {
+//       console.error('There was a problem with the fetch operation:', error);
+//     });
+// }
 
 
 // Clock

@@ -76,7 +76,7 @@
                             wire:click.prevent="store({{ $product->id }},'{{ $product->name }}',{{ $product->regular_price }})"><i
                                 class="fa-solid fa-cart-plus"></i>Thêm vào giỏ
                             hàng</button>
-                        <button class="details__cart-buy">Mua ngay</button>
+                        <button wire:click.prevent="storeBuy({{ $product->id }},'{{ $product->name }}',{{ $product->regular_price }})" class="details__cart-buy">Mua ngay</button>
                     </div>
                 </div>
             </div>

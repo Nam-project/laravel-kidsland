@@ -11,7 +11,8 @@
                     <i class="fa-solid fa-location-dot"></i>
                     Địa chỉ nhận hàng
                 </div>
-                <form wire:submit.prevent="placeOrder" class="checkout-form__address">
+                <form wire:submit.prevent="placeOrder"
+                    class="checkout-form__address">
                     <div class="checkout__address-group">
                         <div class="checkout__address-name">
                             <label class="checkout__address-label" for="">Họ và tên:</label>
@@ -90,7 +91,7 @@
                     </div>
                     <div class="checkout__products">
                         <div class="checkout__products-title">Sản phẩm</div>
-                        @foreach (Cart::content() as $item)
+                        @foreach (Cart::instance('cart')->content() as $item)
                             <div class="checkout__products-item">
                                 <img src="{{ asset('assets/imgs/products/' . $item->model->image) }}"
                                     alt="{{ $item->model->name }}" class="checkout__products-img">
@@ -105,31 +106,59 @@
                     <div class="checkout__infor">
                         <div class="checkout__infor-title">
                             <h2 class="checkout__infor-text">Phương thức thanh toán</h2>
-                            <select class="checkout__infor-pay" name="" id="">
-                                <option value="">Thanh toán khi nhận hàng</option>
-                                <option value=""></option>
-                                <option value=""></option>
-                            </select>
+
                         </div>
                         <div class="row">
-                            <div class="col l-9 m-8 c-0"></div>
-                            <div class="col l-3 m-4 c-12">
-                                @if (Session::has('checkout'))
-                                    <div class="checkout__infor-item">
-                                        <div class="">Tổng tiền hàng:</div>
-                                        <div class="">{{Session::get('checkout')['subtotal']}}<span class="copper">đ</span> </div>
+                            <div class="col l-9 m-8 c-0">
+                                <div class="checkout__infor-pay">
+                                    <div class="checkout__infor-pay-group">
+                                        <input type="radio" name="form" value="option1" wire:model="payment"
+                                            class="checkout__pay-checkbox" id="paycheckbox1">
+                                        <img src="{{ asset('assets/imgs/icon/pay-receive.png') }}"
+                                            class="checkout__pay-icon" alt="">
+                                        <label for="paycheckbox1" class="checkout__pay-label">Thanh toán khi nhận
+                                            hàng</label>
                                     </div>
-                                    {{-- <div class="checkout__infor-item">
-                                    <div class="">Phí vận chuyển:</div>
-                                    <div class="">27.500 <span class="copper">đ</span> </div>
-                                </div> --}}
-                                    {{-- <div class="checkout__infor-item">
-                                        <div class="">Tổng thanh toán:</div>
-                                        <div class="checkout__infor-item-money">27.500 <span class="copper">đ</span>
+                                    <div class="checkout__infor-pay-group">
+                                        <input type="radio" name="form" value="vnpay" wire:model="payment"
+                                            class="checkout__pay-checkbox" id="paycheckbox2">
+                                        <img src="{{ asset('assets/imgs/icon/vnpay-icon.png') }}"
+                                            class="checkout__pay-icon" alt="">
+                                        <label for="paycheckbox2" class="checkout__pay-label">Thanh toán bằng
+                                            VNPAY</label>
+                                    </div>
+                                    <div class="checkout__infor-pay-group">
+                                        <input type="radio" name="form" value="option3" wire:model="payment"
+                                            class="checkout__pay-checkbox" id="paycheckbox3">
+                                        <img src="{{ asset('assets/imgs/icon/momo-icon.jpg') }}"
+                                            class="checkout__pay-icon" alt="">
+                                        <label for="paycheckbox3" class="checkout__pay-label">Thanh toán bằng
+                                            MOMO</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col l-3 m-4 c-12 checkout__infor-contain">
+                                <div class="checkout__infor-contain-g">
+                                    @if (Session::has('checkout'))
+                                        <div class="checkout__infor-item">
+                                            <div class="">Tổng tiền hàng:</div>
+                                            <div class="checkout__infor-item-money">
+                                                {{ Session::get('checkout')['subtotal'] }}<span
+                                                    class="copper">đ</span> </div>
                                         </div>
+                                        {{-- <div class="checkout__infor-item">
+                                        <div class="">Phí vận chuyển:</div>
+                                        <div class="">27.500 <span class="copper">đ</span> </div>
                                     </div> --}}
-                                @endif
-                                <button class="btn__checkout">Đặt hàng</button>
+                                        {{-- <div class="checkout__infor-item">
+                                            <div class="">Tổng thanh toán:</div>
+                                            <div class="checkout__infor-item-money">27.500 <span class="copper">đ</span>
+                                            </div>
+                                        </div> --}}
+                                    @endif
+                                    <button class="btn__checkout">Đặt hàng</button>
+
+                                </div>
                             </div>
 
                         </div>

@@ -2100,10 +2100,37 @@ swiper-container {
 }
 
 .checkout__infor-pay {
-    border: none;
-    outline: none;
     font-size: 14px;
     color: var(--text-color);
+}
+
+.checkout__infor-pay-group {
+    display: flex;
+    align-items: center;
+    padding: 10px 0;
+
+}
+
+.checkout__pay-checkbox {
+    margin: 10px;
+}
+
+.checkout__pay-label {
+    cursor: pointer;
+
+}
+
+.checkout__pay-checkbox:checked + .checkout__pay-icon {
+	transform: scale(1.2);
+}
+
+.checkout__pay-icon {
+    height: 35px;
+    width: 35px;
+    object-fit: fill;
+    margin-right: 10px;
+    cursor: pointer;
+    transition: linear 0.3s;
 }
 
 .checkout__infor-item {
@@ -2135,4 +2162,14 @@ swiper-container {
 
 .btn__checkout:hover {
     opacity: .9;
+}
+
+.checkout__infor-contain {
+    display: flex;
+    align-items: flex-end;
+}
+
+.checkout__infor-contain-g {
+    width: 100%;
+    
 }

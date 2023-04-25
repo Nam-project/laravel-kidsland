@@ -32,7 +32,7 @@ use App\Http\Livewire\Admin\Coupon\AdminCouponComponent;
 use App\Http\Livewire\Admin\Coupon\AdminAddCouponComponent;
 use App\Http\Livewire\Admin\Coupon\AdminEditCouponComponent;
 
-
+use App\Http\Controllers\VnPayController;
 
 
 
@@ -79,6 +79,7 @@ Route::get('/thank-you', ThankYouComponent::class)->name('thankyou');
 // for user
 Route::middleware(['auth:sanctum', 'verified'])->group(function() {
     Route::get('/user/dashboard', UserDashboardCompoment::class)->name('user.dashboard');
+    // Route::post('/callback', CheckoutCompoment::class . '@callback')->name('callback');
 });
 
 // for Admin

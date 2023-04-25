@@ -5,7 +5,7 @@
             {{-- @if (Session::has('success_message'))
                 <h3>{{Session::get('success_message')}}</h3>
             @endif --}}
-            @if (Cart::count() > 0)
+            @if (Cart::instance('cart')->count() > 0)
                 <div class="cart__header">
                     <div class="cart__header--products"><span>Sản
                             phẩm</span></div>
@@ -15,7 +15,7 @@
                     <div class="cart__header--item">Thao tác</div>
                 </div>
                 <div class="products__cart-group">
-                    @foreach (Cart::content() as $item)
+                    @foreach (Cart::instance('cart')->content() as $item)
                         <div class="products__cart-item">
                             <div class="products__cart-i">
 
@@ -83,7 +83,7 @@
                         @endif
                     @endif
                     <div class="summary-info"><span>Tạm tính</span>
-                        <p>{{ Cart::subtotal() }} <span class="copper">đ</span></p>
+                        <p>{{ Cart::instance('cart')->subtotal() }} <span class="copper">đ</span></p>
                     </div>
                     @if (Session::has('coupon'))
                         <div class="summary-info">
@@ -103,7 +103,7 @@
                             <p>Freeship</p>
                         </div>
                         <div class="summary-info"><span>Tổng thanh toán</span>
-                            <p>{{ Cart::total() }} <span class="copper">đ</span></p>
+                            <p>{{ Cart::instance('cart')->total() }} <span class="copper">đ</span></p>
                         </div>
                     @endif
                     <div class="summary-info"><span></span><button wire:click.prevent="checkout" class="cart__btn-buynow">Mua hàng</button></div>

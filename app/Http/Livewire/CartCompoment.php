@@ -17,36 +17,34 @@ class CartCompoment extends Component
     
     public function increaseQuantity($rowId)
     {
-        $product = Cart::Get($rowId);
+        $product = Cart::instance('cart')->Get($rowId);
         $qty = $product->qty + 1;
-        Cart::update($rowId, $qty);
+        Cart::instance('cart')->update($rowId, $qty);
+        $this->emitTo('cart-count-component','refreshComponent');
     }
 
     public function decreaseQuantity($rowId)
     {
-        $product = Cart::Get($rowId);
+        $product = Cart::instance('cart')->Get($rowId);
         $qty = $product->qty - 1;
-        Cart::update($rowId, $qty);
+        Cart::instance('cart')->update($rowId, $qty);
+        $this->emitTo('cart-count-component','refreshComponent');
     }
 
     public function destroy($rowId)
     {
-        $cart = Cart::content()->where('rowId',$rowId);
+        $cart = Cart::instance('cart')->content()->where('rowId',$rowId);
         if($cart->isNotEmpty())
         {
-            Cart::remove($rowId);
+            Cart::instance('cart')->remove($rowId);
         }
-    }
-
-    public function getCartCount()
-    {
-        $count = Cart::count();
-        return response()->json(['count' => $count]);
+        $this->emitTo('cart-count-component','refreshComponent');
     }
 
     public function destroyAll()
     {
-        Cart::remove();
+        Cart::instance('cart')->remove();
+        $this->emitTo('cart-count-component','refreshComponent');
     }
 
     public function applyCouponCode()
@@ -80,9 +78,9 @@ class CartCompoment extends Component
             else
             {
                 
-                $this->discount = (number_format(str_replace(',', '', Cart::instance()->subtotal), 0, '.', '') * session()->get('coupon')['cart_value'])/100;
+                $this->discount = (number_format(str_replace(',', '', Cart::instance('cart')->subtotal), 0, '.', '') * session()->get('coupon')['cart_value'])/100;
             }
-            $this->subtotalAfterDiscount =number_format(str_replace(',', '', Cart::instance()->subtotal), 0, '.', '') - $this->discount;
+            $this->subtotalAfterDiscount =number_format(str_replace(',', '', Cart::instance('cart')->subtotal), 0, '.', '') - $this->discount;
 
         }
     }
@@ -103,7 +101,7 @@ class CartCompoment extends Component
 
     public function setAmountForCheckout()
     {
-        if (!Cart::count() > 0) {
+        if (!Cart::instance('cart')->count() > 0) {
             session()->forget('checkout');
             return;
         }
@@ -117,14 +115,13 @@ class CartCompoment extends Component
         else {
             session()->put('checkout', [
                 'discount' => 0,
-                'subtotal' => number_format(str_replace(',', '', Cart::instance()->subtotal), 0, '.', '')
+                'subtotal' => number_format(str_replace(',', '', Cart::instance('cart')->subtotal), 0, '.', '')
             ]);
         }
     }
 
     public function render()
     {
-
         // dd(number_format(str_replace(',', '', Cart::instance()->subtotal), 0, '.', ''));
         // dd(Cart::count());
         if(session()->has('coupon'))
@@ -138,6 +135,12 @@ class CartCompoment extends Component
             }
         }
         $this->setAmountForCheckout();
+
+        // dd(Cart::store(Auth::user()->email));
+        if (Auth::check()) {
+            Cart::instance('cart')->store(Auth::user()->email);
+        }
+
         return view('livewire.cart-compoment')->layout("layouts.base");
     }
 }

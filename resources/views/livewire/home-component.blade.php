@@ -111,7 +111,7 @@
                         </a>
                         <div class="product__with-cart">
                             <a href="" class="product__buy-now btn-pink">Mua ngay</a>
-                            <button onclick="updateCartCount()" class="product__cart"
+                            <button class="product__cart"
                                 wire:click.prevent="store({{ $product->id }},'{{ $product->name }}',{{ $product->regular_price }})">
                                 <i class="fa-solid fa-cart-plus"></i>
                             </button>
