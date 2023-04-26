@@ -16,15 +16,16 @@ class CreateOrdersTable extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->double('total'); //tong
-            $table->enum('status',['delivering','delivered']);
-            $table->double('pay'); //thanh toan
-            $table->bigInteger('user_id')->unsigned()->nullable();
-            $table->bigInteger('coupon_id')->unsigned()->nullable();
-            $table->bigInteger('payment_id')->unsigned()->nullable();
+            $table->enum('status',['ordered','delivered','canceled'])->default('ordered');
+            $table->double('discount')->default(0);
+            $table->string('name')->nullable();
+            $table->string('address')->nullable();
+            $table->string('phone')->nullable();
+            $table->bigInteger('user_id')->unsigned();
+            $table->bigInteger('ward_id')->nullable();
             $table->timestamps();
+            $table->foreign('ward_id')->references('xaid')->on('devvn_xaphuongthitran');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('coupon_id')->references('id')->on('coupons')->onDelete('cascade');
-            $table->foreign('payment_id')->references('id')->on('payments')->onDelete('cascade');
         });
     }
 

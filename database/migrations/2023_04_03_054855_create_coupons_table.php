@@ -17,7 +17,7 @@ class CreateCouponsTable extends Migration
             $table->id();
             $table->string('code')->unique();
             $table->enum('type',['fixed','percent']);
-            $table->unsignedInteger('quantity');
+            $table->unsignedInteger('value');
             $table->unsignedInteger('cart_value');
             $table->timestamps();
         });

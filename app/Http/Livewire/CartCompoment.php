@@ -60,7 +60,7 @@ class CartCompoment extends Component
                 'code' => $coupon->code,
                 'type' => $coupon->type,
                 'cart_value' => $coupon->cart_value,
-                'quantity' => $coupon->quantity,
+                'value' => $coupon->value,
             ]);
             $this->coupon_code = null;
         }
@@ -73,12 +73,12 @@ class CartCompoment extends Component
         {
             if (session()->get('coupon')['type'] == 'fixed') 
             {
-                $this->discount = session()->get('coupon')['cart_value'];
+                $this->discount = session()->get('coupon')['value'];
             }
             else
             {
                 
-                $this->discount = (number_format(str_replace(',', '', Cart::instance('cart')->subtotal), 0, '.', '') * session()->get('coupon')['cart_value'])/100;
+                $this->discount = (number_format(str_replace(',', '', Cart::instance('cart')->subtotal), 0, '.', '') * session()->get('coupon')['value'])/100;
             }
             $this->subtotalAfterDiscount =number_format(str_replace(',', '', Cart::instance('cart')->subtotal), 0, '.', '') - $this->discount;
 
@@ -126,7 +126,7 @@ class CartCompoment extends Component
         // dd(Cart::count());
         if(session()->has('coupon'))
         {
-            if (session()->get('coupon')['quantity'] > 0) {
+            if (session()->get('coupon')['value'] > 0) {
                 $this->calculateDiscounts();
             }
             else

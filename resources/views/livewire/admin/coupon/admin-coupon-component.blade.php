@@ -52,11 +52,11 @@
                             <td>{{ $coupon->code }}</td>
                             <td>{{ $coupon->type }}</td>
                             @if ($coupon->type == 'fixed')
-                                <td>{{ $coupon->cart_value }} VNĐ</td>
+                                <td>{{ $coupon->value }} VNĐ</td>
                             @else
-                                <td>{{ $coupon->cart_value }} %</td>
+                                <td>{{ $coupon->value }} %</td>
                             @endif
-                            <td>{{ $coupon->quantity }}</td>
+                            <td>{{ $coupon->cart_value }}</td>
                             <td>
                                 <a class="btn btn-primary btn-sm" href="{{route('admin.editcoupon',['coupon_id'=>$coupon->id])}}"><i class="nav-icon fas fa-edit"></i></a>
                                 <button class="btn btn-danger btn-sm" wire:click.prevent="deleteCoupon({{$coupon->id}})"><i class="ion-android-delete"></i></button>

@@ -10,6 +10,7 @@ use App\Models\Order;
 use App\Models\DetailOrder;
 use Cart;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
 class CheckoutCompoment extends Component
 {
@@ -25,9 +26,24 @@ class CheckoutCompoment extends Component
 
     public $payment;
     
-    public function mount()
+    public function mount(Request $request)
     {
         $this->payment = "option1";
+        if ($request->has('vnp_ResponseCode')) {
+            $responseCode = $request->input('vnp_ResponseCode');
+            if ($responseCode == '00') {
+                Cart::instance('cart')->destroy();
+                Cart::instance('cart')->store(Auth::user()->email);
+                session()->forget('checkout');
+                return redirect()->route('thankyou');
+            } else {
+                $order_id = intval(preg_replace('/\D/', '', $request->input('vnp_TxnRef')));
+                $order = Order::find($order_id);
+                if ($order) {
+                    $order->delete();
+                }
+            }
+        }
     }
 
     public function updated($fields)
@@ -53,7 +69,6 @@ class CheckoutCompoment extends Component
         $order = new Order();
         $order->user_id = Auth::user()->id;
         $order->total = session()->get('checkout')['subtotal'];
-        $order->pay = session()->get('checkout')['subtotal'];
         $order->discount = session()->get('checkout')['discount'];
         $order->ward_id = $this->ward_id;
         $order->name = $this->name;
@@ -76,7 +91,7 @@ class CheckoutCompoment extends Component
         // vnPay
         if ($this->payment == 'vnpay') {
             $vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-            $vnp_Returnurl = "http://127.0.0.1:8000/checkout";
+            $vnp_Returnurl = route('checkout');
             $vnp_TmnCode = "SR4U6ZON";//Mã website tại VNPAY 
             $vnp_HashSecret = "ZFVOGTSNRWHQOTZMJEZAGNLFTOEPAECH"; //Chuỗi bí mật
 
@@ -153,7 +168,7 @@ class CheckoutCompoment extends Component
 
     public function render()
     {
-
+    
         $this->verifyForCheckout();
 
         $cities = City::orderby('matp','ASC')->get();

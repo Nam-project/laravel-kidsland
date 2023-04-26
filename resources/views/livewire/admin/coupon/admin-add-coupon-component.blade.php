@@ -75,9 +75,9 @@
                     @enderror
                 </div>
                 <div class="form-group">
-                    <label for="slugCategory">Số lượng</label>
-                    <input type="text" class="form-control" placeholder="Số lượng" wire:model="quantity">
-                    @error('quantity')
+                    <label for="slugCategory">Giá trị</label>
+                    <input type="text" class="form-control" placeholder="Giá trị" wire:model="value">
+                    @error('value')
                         <p class="text-danger">{{ $message }}</p>
                     @enderror
                 </div>

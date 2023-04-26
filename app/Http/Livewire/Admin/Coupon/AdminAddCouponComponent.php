@@ -10,7 +10,7 @@ class AdminAddCouponComponent extends Component
 
     public $code;
     public $type;
-    public $quantity;
+    public $value;
     public $cart_value;
 
     public function updated($fields)
@@ -18,7 +18,7 @@ class AdminAddCouponComponent extends Component
         $this->validateOnly($fields, [
             'code'=>'required|unique:coupons',
             'type'=>'required',
-            'quantity'=>'required|numeric',
+            'value'=>'required|numeric',
             'cart_value'=>'required|numeric'
         ]);   
     }
@@ -28,13 +28,13 @@ class AdminAddCouponComponent extends Component
         $this->validate([
             'code'=>'required|unique:coupons',
             'type'=>'required',
-            'quantity'=>'required|numeric',
+            'value'=>'required|numeric',
             'cart_value'=>'required|numeric'
         ]);
         $coupon = new Coupon();
         $coupon->code = $this->code;
         $coupon->type = $this->type;
-        $coupon->quantity = $this->quantity;
+        $coupon->value = $this->value;
         $coupon->cart_value = $this->cart_value;
         $coupon->save();
         session()->flash('massage', 'Tạo phiếu giảm giá thành công');
