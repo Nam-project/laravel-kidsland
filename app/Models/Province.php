@@ -15,4 +15,9 @@ class Province extends Model
     ];
     protected $primaryKey = 'maqh';
     protected $table = "devvn_quanhuyen";
+
+    public function city()
+    {
+        return $this->belongsTo(City::class,'matp');
+    }
 }

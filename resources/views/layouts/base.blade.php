@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KidsLand</title>
-    <link rel="shortcut icon" href="{{asset('assets/imgs/2.png')}}" type="image/x-icon">
+    <link rel="shortcut icon" href="{{ asset('assets/imgs/2.png') }}" type="image/x-icon">
     <link rel="stylesheet" href="{{ asset('assets/css/normalize.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/grid.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/base.css') }}">
@@ -28,7 +28,7 @@
                                     alt=""></a>
                         </div>
                     </div>
-                    
+
 
                     @livewire('header-search-component')
 
@@ -77,7 +77,8 @@
                                         <ul class="login-success-plus">
                                             <li class="login-success-plus__i"><a href="{{ route('user.dashboard') }}">Thông
                                                     tin tài khoản</a></li>
-                                            <li class="login-success-plus__i"><a href="/cart">Đơn hàng của tôi</a></li>
+                                            <li class="login-success-plus__i"><a href="{{ route('user.orders') }}">Đơn hàng
+                                                    của tôi</a></li>
                                             <li class="login-success-plus__i"><a
                                                     onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
                                                     href="{{ route('logout') }}">Đăng xuất</a></li>
@@ -105,18 +106,24 @@
                     </nav> --}}
                     <nav class="nav__bar">
                         <ul class="nav__bar-group row">
-                            <li class="nav__bar-item col l-2"><a href="/shop" class="nav__bar-link"><i class="fa-solid fa-shop"></i><span>Shop</span></a></li>
-                            <li class="nav__bar-item col l-2"><a href="" class="nav__bar-link"><i class="fa-solid fa-phone"></i><span>Liên hệ</span></a></li>
-                            <li class="nav__bar-item col l-2"><a href="" class="nav__bar-link"><i class="fa-brands fa-slack"></i><span>Góp ý</span></a></li>
-                            <li class="nav__bar-item col l-2"><a href="" class="nav__bar-link"><i class="fa-solid fa-circle-question"></i><span>Hổ trợ</span></a></li>
-                            <li class="nav__bar-item col l-2"><a href="" class="nav__bar-link"><i class="fa-solid fa-comments"></i><span>Chat</span></a></li>
-                            <li class="nav__bar-item col l-2"><a href="" class="nav__bar-link"><i class="fa-solid fa-globe"></i><span>Cộng đồng</span></a></li>
+                            <li class="nav__bar-item col l-2"><a href="/shop" class="nav__bar-link"><i
+                                        class="fa-solid fa-shop"></i><span>Shop</span></a></li>
+                            <li class="nav__bar-item col l-2"><a href="" class="nav__bar-link"><i
+                                        class="fa-solid fa-phone"></i><span>Liên hệ</span></a></li>
+                            <li class="nav__bar-item col l-2"><a href="" class="nav__bar-link"><i
+                                        class="fa-brands fa-slack"></i><span>Góp ý</span></a></li>
+                            <li class="nav__bar-item col l-2"><a href="" class="nav__bar-link"><i
+                                        class="fa-solid fa-circle-question"></i><span>Hổ trợ</span></a></li>
+                            <li class="nav__bar-item col l-2"><a href="" class="nav__bar-link"><i
+                                        class="fa-solid fa-comments"></i><span>Chat</span></a></li>
+                            <li class="nav__bar-item col l-2"><a href="" class="nav__bar-link"><i
+                                        class="fa-solid fa-globe"></i><span>Cộng đồng</span></a></li>
                         </ul>
                     </nav>
                 </div>
-                
-                
-        </header>
+
+
+            </header>
 
             {{ $slot }}
 
@@ -133,7 +140,8 @@
                                 <li class="footer-item"> <a href="" class="footer-item-link">Giới thiệu</a></li>
                                 <li class="footer-item"> <a href="" class="footer-item-link">Hệ thống cửa hàng</a>
                                 </li>
-                                <li class="footer-item"> <a href="" class="footer-item-link">Chính sách bảo mật</a>
+                                <li class="footer-item"> <a href="" class="footer-item-link">Chính sách bảo
+                                        mật</a>
                                 </li>
                                 <li class="footer-item"> <a href="" class="footer-item-link">Điều khoản sử
                                         dụng</a></li>

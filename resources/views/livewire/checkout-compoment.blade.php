@@ -112,7 +112,7 @@
                             <div class="col l-9 m-8 c-0">
                                 <div class="checkout__infor-pay">
                                     <div class="checkout__infor-pay-group">
-                                        <input type="radio" name="form" value="option1" wire:model="payment"
+                                        <input type="radio" name="form" value="cod" wire:model="payment"
                                             class="checkout__pay-checkbox" id="paycheckbox1">
                                         <img src="{{ asset('assets/imgs/icon/pay-receive.png') }}"
                                             class="checkout__pay-icon" alt="">

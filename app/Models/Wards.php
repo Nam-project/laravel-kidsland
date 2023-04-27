@@ -15,4 +15,9 @@ class Wards extends Model
     ];
     protected $primaryKey = 'xaid';
     protected $table = "devvn_xaphuongthitran";
+
+    public function province()
+    {
+        return $this->belongsTo(Province::class,'maqh');
+    }
 }

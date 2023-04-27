@@ -10,4 +10,13 @@ class DetailOrder extends Model
     use HasFactory;
 
     protected $table = "detail_orders";
+
+    public function order()
+    {
+        return $this->belongsTo(Order::class);
+    }
+    public function product()
+    {
+        return $this->belongsTo(product::class);
+    }
 }

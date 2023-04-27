@@ -140,7 +140,9 @@ class CartCompoment extends Component
         if (Auth::check()) {
             Cart::instance('cart')->store(Auth::user()->email);
         }
+        
+        $coupons = Coupon::all();
 
-        return view('livewire.cart-compoment')->layout("layouts.base");
+        return view('livewire.cart-compoment',['coupons'=>$coupons])->layout("layouts.base");
     }
 }

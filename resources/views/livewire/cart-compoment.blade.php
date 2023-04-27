@@ -60,24 +60,26 @@
                                 <div class="coupon__cart-title"><span>Chọn khuyến mãi</span><label
                                         class="coupon__cart-close " for="check_coupon"><i
                                             class="fa-solid fa-xmark"></i></label></div>
-                                @if (Session::has('coupon_massage'))
-                                    <p>{{ Session::get('coupon_massage') }}</p>
-                                @endif
                                 <form wire:submit.prevent="applyCouponCode" class="coupon__cart-group">
                                     <span class="coupon__cart-text">CODE</span>
                                     <input type="text" class="coupon__cart-input" wire:model="couponCode">
                                     <button class="coupon__cart-apply">ÁP DỤNG</button>
                                 </form>
+                                @if (Session::has('coupon_massage'))
+                                    <p class="coupon-error">{{ Session::get('coupon_massage') }}</p>
+                                @endif
                                 <div class="coupon__cart-list">
-                                    <div class="coupon__cart-item">
-                                        <div class="coupon__item-left">
-                                            <div class="coupon__item-promotion">15k</div>
+                                    @foreach ($coupons as $coupon)
+                                        <div class="coupon__cart-item">
+                                            <div class="coupon__item-left">
+                                                <div class="coupon__item-promotion">15k</div>
+                                            </div>
+                                            <div class="coupon__item-right">
+                                                <div class="coupon__item-title">{{$coupon->code}}</div>
+                                                <button class="coupon__item-btn">Chọn</button>
+                                            </div>
                                         </div>
-                                        <div class="coupon__item-right">
-                                            <div class="coupon__item-title">COUPON</div>
-                                            <button class="coupon__item-btn">Chọn</button>
-                                        </div>
-                                    </div>
+                                    @endforeach
                                 </div>
                             </div>
                         @endif
@@ -88,7 +90,7 @@
                     @if (Session::has('coupon'))
                         <div class="summary-info">
                             <div class="summary-info__group"><span>Giảm giá</span> <button class="delete__coupon"
-                                wire:click.prevent="removeCoupon">{{ Session::get('coupon')['code'] }}<i
+                                    wire:click.prevent="removeCoupon">{{ Session::get('coupon')['code'] }}<i
                                         class="fa-solid fa-xmark"></i></button> </div>
                             <p>-{{ number_format($discount, 2) }} <span class="copper">đ</span></p>
                         </div>
@@ -106,7 +108,8 @@
                             <p>{{ Cart::instance('cart')->total() }} <span class="copper">đ</span></p>
                         </div>
                     @endif
-                    <div class="summary-info"><span></span><button wire:click.prevent="checkout" class="cart__btn-buynow">Mua hàng</button></div>
+                    <div class="summary-info"><span></span><button wire:click.prevent="checkout"
+                            class="cart__btn-buynow">Mua hàng</button></div>
                 </div>
             @else
                 <div class="cart-empty">

@@ -197,6 +197,14 @@
             </li>
           </ul>
         </li>
+        <li class="nav-item">
+          <a href="{{route('admin.order')}}" class="nav-link">
+            <i class="pl-1 fas fa-inbox"></i>
+            <p>
+              Đơn đặt hàng
+            </p>
+          </a>
+        </li>
         
       </ul>
     </nav>

@@ -1363,6 +1363,7 @@ swiper-container {
 }
 
 .coupon__cart-form {
+    overflow: hidden;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -1420,10 +1421,17 @@ swiper-container {
     box-shadow: 1px 1px 1px var(--grey-color);
 }
 
+.coupon-error {
+    padding: 0 20px;
+    font-size: 12px;
+    color: var(--pink-color);
+}
+
 .coupon__cart-list {
     /* height: 386.3px; */
     height: 360px;
     padding: 10px 20px;
+    overflow-y: scroll;
 }
 
 .coupon__cart-item {
@@ -1443,7 +1451,7 @@ swiper-container {
     border-right: none;
 }
 
-.coupon__item-left::after {
+/* .coupon__item-left::after {
     position: absolute;
     top: -14px;
     right: -11px;
@@ -1465,7 +1473,7 @@ swiper-container {
     border-radius: 50px;
     background-color: var(--white-color);
     border-top: 2px solid var(--grey-color);
-}
+} */
 
 .coupon__item-promotion {
     font-size: 30px;
@@ -2172,4 +2180,89 @@ swiper-container {
 .checkout__infor-contain-g {
     width: 100%;
     
+}
+
+/* User Order */
+.order__user {
+    display: flex;
+    align-items: center;
+}
+
+.order__user-img {
+    height: 40px;
+    width: 40px;
+    object-fit: scale-down;
+}
+
+.order__user-group {
+    font-size: 12px;
+    color: var(--text-color);
+    padding-left: 10px;
+}
+
+.order__user-name {
+    font-size: 14px;
+    padding-top: 3px;
+    font-weight: 500;
+}
+
+.order__nav {
+    list-style: none;
+    padding: 0;
+}
+
+.order__nav li {
+    
+}
+
+.order__nav > li > a {
+    text-decoration: none;
+    color: var(--text-color);
+    font-size: 14px;
+    display: block;
+    padding: 12px 10px;
+}
+
+.order__nav > li > a:hover {
+    background-color: var(--smoky-gray-color);
+}
+
+.order__nav-active {
+    background-color: var(--smoky-gray-color);
+}
+
+.order__main {
+    min-height: 500px;
+    margin-bottom: 20px;
+    padding: 10px;
+    background-color: var(--white-color);
+    border-radius: 5px;
+}
+
+.order-title {
+    padding: 10px 10px;
+    font-size: 16px;
+    color: var(--text-color);
+}
+
+.order-table {
+    width: 100%;
+    font-size: 12px;
+    color: var(--text-color);
+}
+
+.order-table th {
+    text-align: left;
+}
+
+.order-table td {
+    padding: 15px 0;
+}
+
+.btn-orderdetails {
+    text-decoration: none;
+    padding: 5px 10px;
+    background-color: var(--blue--color);
+    border-radius: 3px;
+    color: var(--white-color);
 }

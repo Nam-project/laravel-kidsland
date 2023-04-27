@@ -9,6 +9,8 @@ use App\Http\Livewire\DetailsComponent;
 use App\Http\Livewire\CategoryComponent;
 use App\Http\Livewire\ThankYouComponent;
 use App\Http\Livewire\User\UserDashboardCompoment;
+use App\Http\Livewire\User\UserOrdersComponent;
+use App\Http\Livewire\User\UserOrderDetailsComponent;
 use App\Http\Livewire\Admin\AdminDashboardCompoment;
 use App\Http\Livewire\Admin\AdminCategoryComponent;
 use App\Http\Livewire\Admin\AdminAddCategoryComponent;
@@ -31,6 +33,8 @@ use App\Http\Livewire\Admin\Weightage\AdminEditWeightAgeComponent;
 use App\Http\Livewire\Admin\Coupon\AdminCouponComponent;
 use App\Http\Livewire\Admin\Coupon\AdminAddCouponComponent;
 use App\Http\Livewire\Admin\Coupon\AdminEditCouponComponent;
+use App\Http\Livewire\Admin\Order\AdminOrderComponent;
+use App\Http\Livewire\Admin\Order\AdminOrderDetailsComponent;
 
 use App\Http\Controllers\VnPayController;
 
@@ -80,6 +84,8 @@ Route::get('/thank-you', ThankYouComponent::class)->name('thankyou');
 Route::middleware(['auth:sanctum', 'verified'])->group(function() {
     Route::get('/user/dashboard', UserDashboardCompoment::class)->name('user.dashboard');
     // Route::post('/callback', CheckoutCompoment::class . '@callback')->name('callback');
+    Route::get('/user/orders', UserOrdersComponent::class)->name('user.orders');
+    Route::get('/user/orders/{order_id}', UserOrderDetailsComponent::class)->name('user.orderdetails');
 });
 
 // for Admin
@@ -117,4 +123,7 @@ Route::middleware(['auth:sanctum', 'verified', 'authadmin'])->group(function() {
     Route::get('/admin/coupon/add', AdminAddCouponComponent::class)->name('admin.addcoupon');
     Route::get('/admin/coupon/edit/{coupon_id}', AdminEditCouponComponent::class)->name('admin.editcoupon');
 
+    // Order
+    Route::get('/admin/orders', AdminOrderComponent::class)->name('admin.order');
+    Route::get('/admin/orders/{order_id}', AdminOrderDetailsComponent::class)->name('admin.orderdetails');
 });

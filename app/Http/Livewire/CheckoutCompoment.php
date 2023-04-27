@@ -8,6 +8,7 @@ use App\Models\City;
 use App\Models\Province;
 use App\Models\Order;
 use App\Models\DetailOrder;
+use App\Models\Transaction;
 use Cart;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -28,17 +29,16 @@ class CheckoutCompoment extends Component
     
     public function mount(Request $request)
     {
-        $this->payment = "option1";
+        $this->payment = "cod";
         if ($request->has('vnp_ResponseCode')) {
             $responseCode = $request->input('vnp_ResponseCode');
+            $order_id = intval(preg_replace('/\D/', '', $request->input('vnp_TxnRef')));
+            $order = Order::find($order_id);
             if ($responseCode == '00') {
-                Cart::instance('cart')->destroy();
-                Cart::instance('cart')->store(Auth::user()->email);
-                session()->forget('checkout');
+                $this->makeTransaction($order_id,'paypal','approved');
+                $this->resetCart();
                 return redirect()->route('thankyou');
             } else {
-                $order_id = intval(preg_replace('/\D/', '', $request->input('vnp_TxnRef')));
-                $order = Order::find($order_id);
                 if ($order) {
                     $order->delete();
                 }
@@ -84,6 +84,10 @@ class CheckoutCompoment extends Component
             $orderItem->price = $item->price;
             $orderItem->count = $item->qty;
             $orderItem->save();
+        }
+
+        if ($this->payment == 'cod') {
+            $this->makeTransaction($order->id,'cod','pending');
         }
 
         $this->thankyou = 1;
@@ -150,9 +154,17 @@ class CheckoutCompoment extends Component
         }
 
         // end vnPay
-        Cart::instance('cart')->destroy();
-        Cart::instance('cart')->store(Auth::user()->email);
-        session()->forget('checkout');
+        $this->resetCart();
+    }
+
+    public function makeTransaction($order_id, $mode, $status)
+    {
+        $transaction = new Transaction();
+        $transaction->user_id = Auth::user()->id;
+        $transaction->order_id = $order_id;
+        $transaction->mode = $mode;
+        $transaction->status = $status;
+        $transaction->save();
     }
 
     public function verifyForCheckout()
@@ -164,6 +176,13 @@ class CheckoutCompoment extends Component
         }else if(!session()->get('checkout')){
             return redirect()->route('product.cart');
         }
+    }
+
+    public function resetCart()
+    {
+        Cart::instance('cart')->destroy();
+        Cart::instance('cart')->store(Auth::user()->email);
+        session()->forget('checkout');
     }
 
     public function render()
