@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Models\Product;
 use App\Models\ProductDetails;
+use App\Models\DetailOrder;
 use Livewire\Component;
 use Cart;
 
@@ -48,6 +49,7 @@ class DetailsComponent extends Component
         $product = Product::where('slug', $this->slug)->first();
         $productdetail = ProductDetails::where('product_id',$product->id)->first();
         $related_products = Product::where('subcategory_id', $product->subcategory_id)->limit(5)->get();
-        return view('livewire.details-component', ['product'=>$product, 'related_products'=>$related_products, 'productdetail'=>$productdetail])->layout('layouts.base');
+        $detailOrder = DetailOrder::where('product_id',$product->id)->where('rstatus', 1)->get();
+        return view('livewire.details-component', ['product'=>$product, 'related_products'=>$related_products, 'productdetail'=>$productdetail, 'detailOrder'=>$detailOrder])->layout('layouts.base');
     }
 }

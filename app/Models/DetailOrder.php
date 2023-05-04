@@ -17,6 +17,12 @@ class DetailOrder extends Model
     }
     public function product()
     {
-        return $this->belongsTo(product::class);
+        return $this->belongsTo(Product::class);
     }
+
+    public function evaluates()
+    {
+        return $this->hasOne(Evaluate::class, 'detail_orders_id');
+    }
+
 }

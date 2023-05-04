@@ -76,7 +76,9 @@
                             wire:click.prevent="store({{ $product->id }},'{{ $product->name }}',{{ $product->regular_price }})"><i
                                 class="fa-solid fa-cart-plus"></i>Thêm vào giỏ
                             hàng</button>
-                        <button wire:click.prevent="storeBuy({{ $product->id }},'{{ $product->name }}',{{ $product->regular_price }})" class="details__cart-buy">Mua ngay</button>
+                        <button
+                            wire:click.prevent="storeBuy({{ $product->id }},'{{ $product->name }}',{{ $product->regular_price }})"
+                            class="details__cart-buy">Mua ngay</button>
                     </div>
                 </div>
             </div>
@@ -236,39 +238,26 @@
                 </div>
 
                 <div class="details__evaluate-comment col l-8">
-                    <div class="evaluate__comment-rating">
-                        <a href="" class="evaluate__comment-avatar"><img src="../assets/imgs/user.png"
-                                alt=""></a>
-                        <div class="evaluate__comment-main">
-                            <div class="evaluate__comment-username">Năm Nguyễn <span>08/04/2023</span></div>
-                            <div class="evaluate__comment-star">
-                                <span class="star__active"><i class="fa-solid fa-star"></i></span>
-                                <span class="star__active"><i class="fa-solid fa-star"></i></span>
-                                <span class="star__active"><i class="fa-solid fa-star"></i></span>
-                                <span class="star__active"><i class="fa-solid fa-star"></i></span>
-                                <span class="star__active"><i class="fa-solid fa-star"></i></span>
-                            </div>
-                            <div class="evaluate__comment-text">
-                                Đơn hàng được giao đúng hẹn, nguyên vẹn và sạch sẽ.
-                            </div>
-                        </div>
-                    </div>
-                    <div class="evaluate__comment-rating">
-                        <a class="evaluate__comment-avatar"><img src="../assets/imgs/user.png" alt=""></a>
-                        <div class="evaluate__comment-main">
-                            <div class="evaluate__comment-username">Năm Nguyễn <span>08/04/2023</span></div>
-                            <div class="evaluate__comment-star">
-                                <span class="star__active"><i class="fa-solid fa-star"></i></span>
-                                <span class="star__active"><i class="fa-solid fa-star"></i></span>
-                                <span class="star__active"><i class="fa-solid fa-star"></i></span>
-                                <span class="star__active"><i class="fa-solid fa-star"></i></span>
-                                <span class="star__active"><i class="fa-solid fa-star"></i></span>
-                            </div>
-                            <div class="evaluate__comment-text">
-                                Đơn hàng được giao đúng hẹn, nguyên vẹn và sạch sẽ.
+                    @foreach ($detailOrder as $item)
+                        <div class="evaluate__comment-rating">
+                            <a href="" class="evaluate__comment-avatar"><img src="../assets/imgs/user.png"
+                                    alt=""></a>
+                            <div class="evaluate__comment-main">
+                                <div class="evaluate__comment-username">{{$item->evaluates->user->name}}<span>{{$item->evaluates->created_at}}</span></div>
+                                {{-- <div class="evaluate__comment-star">
+                                    <span class="star__active"><i class="fa-solid fa-star"></i></span>
+                                    <span class="star__active"><i class="fa-solid fa-star"></i></span>
+                                    <span class="star__active"><i class="fa-solid fa-star"></i></span>
+                                    <span class="star__active"><i class="fa-solid fa-star"></i></span>
+                                    <span class="star__active"><i class="fa-solid fa-star"></i></span>
+                                </div> --}}
+                                <div class="review-rating__star evaluate__comment-star" style="--rating: {{$item->evaluates->star}};" aria-label="Rating of this product is 2.3 out of 5."></div>
+                                <div class="evaluate__comment-text">
+                                    {{$item->evaluates->content}}
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    @endforeach
                 </div>
             </div>
 
@@ -276,7 +265,7 @@
             <div id="evaluate" class="details__evaluate row">
                 <div class="details__evaluate-title col l-12">Đánh giá - Nhận xét<i
                         class="fa-solid fa-caret-right"></i></div>
-                
+
             </div>
 
 

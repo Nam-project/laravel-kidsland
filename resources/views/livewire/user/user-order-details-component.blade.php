@@ -23,30 +23,80 @@
                 <div class="order-title">
                     Chi tiết đơn hàng
                 </div>
-                <div class="order__main">
-                    <div class="checkout__products">
-                        <div class="checkout__products-title">Sản phẩm</div>
+                <div class="orderdetail__main">
+                    <div class="order__tracking">
+                        <div class="order__tracking-spoint"><span class="point-style"><i
+                                    class="fa-solid fa-check"></i></span></div>
+                        @if ($order->transaction->status == 'approved')
+                            <div class="order__tracking-point"><span class="point-style"><i
+                                        class="fa-solid fa-check"></i></span></div>
+                        @endif
+                        @if ($order->status == 'shipped' || $order->status == 'delivered')
+                            <div class="order__tracking-point"><span class="point-style"><i
+                                        class="fa-solid fa-check"></i></span></div>
+                        @else
+                            <div class="order__tracking-pointf"><span class="point-default"><i
+                                        class="fa-regular fa-circle"></i></span></div>
+                        @endif
+                        @if ($order->status == 'delivered')
+                            <div class="order__tracking-point"><span class="point-style"><i
+                                        class="fa-solid fa-check"></i></span></div>
+                        @else
+                            <div class="order__tracking-pointf"><span class="point-default"><i
+                                        class="fa-regular fa-circle"></i></span></div>
+                        @endif
+                    </div>
+                    <div class="order__tracking-infor">
+                        <div class="order__tracking-group">
+                            <img src="{{ asset('assets/imgs/icon/order-icon.png') }}" alt=""
+                                class="order__tracking-img">
+                            <div class="order__tracking-text">Đơn hàng đã đặt</div>
+                            <div class="order__tracking-date">{{ $order->created_at }}</div>
+                        </div>
+                        @if ($order->transaction->status == 'approved')
+                            <div class="order__tracking-group">
+                                <img src="{{ asset('assets/imgs/icon/credit-card.png') }}" alt=""
+                                    class="order__tracking-img">
+                                <div class="order__tracking-text">Đã thanh toán</div>
+                                <div class="order__tracking-date">{{ $order->created_at }}</div>
+                            </div>
+                        @endif
+                        <div class="order__tracking-group">
+                            <img src="{{ asset('assets/imgs/icon/enroute-icon.png') }}" alt=""
+                                class="order__tracking-img">
+                            <div class="order__tracking-text">Đang giao</div>
+                        </div>
+                        <div class="order__tracking-group">
+                            <img src="{{ asset('assets/imgs/icon/arrived-icon.png') }}" alt=""
+                                class="order__tracking-img">
+                            <div class="order__tracking-text">Giao hàng thành công</div>
+                            @if ($order->status == 'delivered')
+                                <div class="order__tracking-date">{{ $order->delivered_date }}</div>
+                            @endif
+                        </div>
+                    </div>
+                    <div class="order__detail-including">
+                        <div class="order__detail-title">Kiện hàng gồm:</div>
                         @foreach ($order->detailOrder as $item)
-                            <div class="checkout__products-item">
-                                <img src="{{ asset('assets/imgs/products') }}/{{ $item->product->image }}"
-                                    alt="{{ $item->product->name }}" class="checkout__products-img">
-                                <div class="checkout__products-name">{{ $item->product->name }}</div>
-                                <div class="checkout__products-text"><span>Đơn
-                                        giá:</span>{{ $item->price }}<span class="copper">đ</span>
+                            <div class="order__item-products row no-gutters">
+                                <div class="order__item-image col l-2">
+                                    <img src="{{ asset('assets/imgs/products') }}/{{ $item->product->image }}"
+                                        alt="{{ $item->product->name }}" class="order__item-img">
                                 </div>
-                                <div class="checkout__products-text"><span>Số lượng:</span>{{ $item->count }}</div>
+                                <div class="order__item-infor col l-8">
+                                    <div class="order__item-name">{{ $item->product->name }}</div>
+                                    <span class="order__item-quantity">Số lượng: {{ $item->count }}</span>
+                                </div>
+                                <div class="order__item-price col l-2">
+                                    {{ number_format($item->product->sale_price, 0) }} <span class="copper">đ</span>
+                                </div>
                             </div>
                         @endforeach
-                    </div>
-                    <div class="cart__order">
-                        <div class="summary-info"><span>Giảm giá</span>
-                            <p>{{$order->discount}}<span class="copper">đ</span></p>
-                        </div>
-                        <div class="summary-info"><span>Vận chuyển</span>
-                            <p>Freeship</p>
-                        </div>
-                        <div class="summary-info"><span>Tổng thanh toán</span>
-                            <p>{{$order->total}}<span class="copper">đ</span></p>
+                        <div class="order__item-footer">
+                            <div class="order__item-total">Tổng tiền:
+                                <span>{{ number_format($order->total, 0) }} <span class="copper">đ</span></span>
+                            </div>
+
                         </div>
                     </div>
                 </div>

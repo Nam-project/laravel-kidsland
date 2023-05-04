@@ -15,6 +15,43 @@
             </div>
         </div><!-- /.container-fluid -->
     </section>
+    <div class="card card-info">
+        <div class="card-header">
+            <h3 class="card-title">Order Details</h3>
+        </div>
+        <div class="card-body">
+            <table class="table table-striped">
+                <tr>
+                    <th>Ngày đặt:</th>
+                    <td>{{ $order->created_at }}</td>
+                    <th>Trạng thái:</th>
+                    <td>
+                        @if ($order->status == 'delivered')
+                            <span class="badge badge-success">Đã giao hàng</span>
+                        @elseif ($order->status == 'canceled')
+                            <span class="badge badge-warning">Hủy bỏ</span>
+                        @else
+                            <span class="badge badge-danger">Đang xữ lý</span>
+                        @endif
+                    </td>
+                    <th>
+                        @if ($order->status == 'delivered')
+                            Ngày giao:
+                        @elseif ($order->status == 'canceled')
+                            Ngày hủy bỏ
+                        @endif
+                    </th>
+                    <td>
+                        @if ($order->status == 'delivered')
+                            {{$order->delivered_date}}
+                        @elseif ($order->status == 'canceled')
+                            {{$order->canceled_date}}
+                        @endif
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
     <div class="card card-primary">
         <div class="card-header">
             <h3 class="card-title">Order Items</h3>

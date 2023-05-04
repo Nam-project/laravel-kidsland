@@ -25,10 +25,11 @@
                 <div class="card-header">
                     <div class="card-title">{{ Session::get('order_massage') }}</div>
                     <div class="card-tools">
-                      <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i>
-                      </button>
+                        <button type="button" class="btn btn-tool" data-card-widget="remove"><i
+                                class="fas fa-times"></i>
+                        </button>
                     </div>
-                  </div>
+                </div>
             </div>
         @endif
         <!-- /.card-header -->
@@ -56,7 +57,15 @@
                             <td>{{ $order->phone }}</td>
                             <td>{{ $order->discount }}</td>
                             <td>{{ $order->total }}</td>
-                            <td>{{ $order->status }}</td>
+                            <td>
+                                @if ($order->status == 'delivered')
+                                    <span class="badge badge-success">Đã giao hàng</span>
+                                @elseif ($order->status == 'canceled')
+                                    <span class="badge badge-warning">Hủy bỏ</span>
+                                @else
+                                    <span class="badge badge-danger">Đang xữ lý</span>
+                                @endif
+                            </td>
                             <td>{{ $order->created_at }}</td>
                             <td><a class="btn btn-primary btn-sm"
                                     href="{{ route('admin.orderdetails', ['order_id' => $order->id]) }}"><i
@@ -69,8 +78,10 @@
                                         {{-- <span class="sr-only">Toggle Dropdown</span> --}}
                                     </button>
                                     <div class="dropdown-menu" role="menu" style="">
-                                        <button wire:click.prevent="updateOrderStatus({{$order->id}},'delivered')" class="dropdown-item">Delivered</button>
-                                        <button wire:click.prevent="updateOrderStatus({{$order->id}},'canceled')" class="dropdown-item">Canceled</button>
+                                        <button wire:click.prevent="updateOrderStatus({{ $order->id }},'delivered')"
+                                            class="dropdown-item">Delivered</button>
+                                        <button wire:click.prevent="updateOrderStatus({{ $order->id }},'canceled')"
+                                            class="dropdown-item">Canceled</button>
                                     </div>
                                 </div>
                             </td>
