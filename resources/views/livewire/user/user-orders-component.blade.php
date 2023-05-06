@@ -89,7 +89,7 @@
                                                     <label for="ratting_checkout" class="form-evaluate-cushion"></label>
                                                     <div class="form-evaluate">
                                                         <form wire:submit.prevent="addEvaluates({{$item->id}})">
-                                                            <div class="form-evaluate-title"><span>Nhận xét</span><label
+                                                            <div class="form-evaluate-title"><span class="form-evaluate-span">Nhận xét</span><label
                                                                     for="ratting_checkout" class="close-evaluate"><i
                                                                         class="fa-solid fa-xmark"></i></label></div>
                                                             <div class='form-evaluate-stars'>
@@ -120,6 +120,7 @@
                                                                         class='evaluate-star-icon fa fa-star '></i></label>
                                                             </div>
                                                             <div class="form-evaluate-group">
+                                                                <label class="form-evaluate-text">Nhận xét của bạn:</label>
                                                                 <textarea class="form-evaluate-textarea" wire:model="content" name="" id="" cols="30"
                                                                     rows="10"></textarea>
 

@@ -2,9 +2,9 @@
     <div class="grid wide">
         <div class="details">
             <div class="product__breadcrumb">
-                <a href="">Trang chủ</a><i class="fa-solid fa-angle-right"></i>
-                <a href="">Sửa bôt cao cấp</a><i class="fa-solid fa-angle-right"></i>
-                <span>Sữa dê Bubs Goat số 3 800g (12-36 tháng)</span>
+                <a href="/">Trang chủ</a><i class="fa-solid fa-angle-right"></i>
+                <a href="{{Route('product.category',['category_slug' => $product->subcategory->category->slug])}}">{{$product->subcategory->category->name}}</a><i class="fa-solid fa-angle-right"></i>
+                <span>{{$product->name}}</span>
             </div>
             <div class="row details__group">
                 <div class="col l-5 c-12 m-12 details__g-img">
@@ -161,11 +161,11 @@
                         class="fa-solid fa-caret-right"></i></div>
                 <div class="details__evaluate-rating col l-4">
                     <div class="review-rating__summary">
-                        <div class="review-rating__point">4.3</div>
+                        <div class="review-rating__point">{{ count($detailOrder) > 0 ? $avg_evaluate : '0 / 5' }}</div>
                         <div class="review-rating__stars">
-                            <div class="review-rating__star" style="--rating: 4.3;"
+                            <div class="review-rating__star" style="--rating: {{ $avg_evaluate }};"
                                 aria-label="Rating of this product is 2.3 out of 5."></div>
-                            <div class="review-rating__total">100 nhận xét</div>
+                            <div class="review-rating__total">{{ count($detailOrder) }} nhận xét</div>
                         </div>
                     </div>
                     <div class="review-rating__detail">
@@ -178,9 +178,11 @@
                                 <span class="star__active"><i class="fa-solid fa-star"></i></span>
                             </div>
                             <div class="review-rating__processbar">
-                                <div class="rating__processbar-cushion" style="width: 80%;"></div>
+                                <div class="rating__processbar-cushion"
+                                    style="width: {{ count($detailOrder) > 0 ? ($evaluate_5 * 100) / count($detailOrder) : 0 }}%;">
+                                </div>
                             </div>
-                            <div class="review-rating__number">80</div>
+                            <div class="review-rating__number">{{ $evaluate_5 }}</div>
                         </div>
                         <div class="review-rating__level">
                             <div class="review-rating__group">
@@ -191,9 +193,11 @@
                                 <span class=""><i class="fa-solid fa-star"></i></span>
                             </div>
                             <div class="review-rating__processbar">
-                                <div class="rating__processbar-cushion" style="width: 10%;"></div>
+                                <div class="rating__processbar-cushion"
+                                    style="width: {{ count($detailOrder) > 0 ? ($evaluate_4 * 100) / count($detailOrder) : 0 }}%;">
+                                </div>
                             </div>
-                            <div class="review-rating__number">10</div>
+                            <div class="review-rating__number">{{ $evaluate_4 }}</div>
                         </div>
                         <div class="review-rating__level">
                             <div class="review-rating__group">
@@ -204,9 +208,11 @@
                                 <span class=""><i class="fa-solid fa-star"></i></span>
                             </div>
                             <div class="review-rating__processbar">
-                                <div class="rating__processbar-cushion" style="width: 10%;"></div>
+                                <div class="rating__processbar-cushion"
+                                    style="width: {{ count($detailOrder) > 0 ? ($evaluate_3 * 100) / count($detailOrder) : 0 }}%;">
+                                </div>
                             </div>
-                            <div class="review-rating__number">10</div>
+                            <div class="review-rating__number">{{ $evaluate_3 }}</div>
                         </div>
                         <div class="review-rating__level">
                             <div class="review-rating__group">
@@ -217,9 +223,11 @@
                                 <span class=""><i class="fa-solid fa-star"></i></span>
                             </div>
                             <div class="review-rating__processbar">
-                                <div class="rating__processbar-cushion" style="width: 30%;"></div>
+                                <div class="rating__processbar-cushion"
+                                    style="width: {{ count($detailOrder) > 0 ? ($evaluate_2 * 100) / count($detailOrder) : 0 }}%;">
+                                </div>
                             </div>
-                            <div class="review-rating__number">30</div>
+                            <div class="review-rating__number">{{ $evaluate_2 }}</div>
                         </div>
                         <div class="review-rating__level">
                             <div class="review-rating__group">
@@ -230,41 +238,82 @@
                                 <span class=""><i class="fa-solid fa-star"></i></span>
                             </div>
                             <div class="review-rating__processbar">
-                                <div class="rating__processbar-cushion" style="width: 5%;"></div>
+                                <div class="rating__processbar-cushion"
+                                    style="width: {{ count($detailOrder) > 0 ? ($evaluate_1 * 100) / count($detailOrder) : 0 }}%;">
+                                </div>
                             </div>
-                            <div class="review-rating__number">5</div>
+                            <div class="review-rating__number">{{ $evaluate_1 }}</div>
                         </div>
                     </div>
                 </div>
 
                 <div class="details__evaluate-comment col l-8">
-                    @foreach ($detailOrder as $item)
-                        <div class="evaluate__comment-rating">
-                            <a href="" class="evaluate__comment-avatar"><img src="../assets/imgs/user.png"
+                    @if (count($detailOrder) > 0)
+                        @foreach ($detailOrder as $item)
+                            <div class="evaluate__comment-rating">
+                                <a href="" class="evaluate__comment-avatar"><img src="../assets/imgs/user.png"
+                                        alt=""></a>
+                                <div class="evaluate__comment-main">
+                                    <div class="evaluate__comment-username">
+                                        {{ $item->evaluates->user->name }}<span>{{ $item->evaluates->created_at }}</span>
+                                    </div>
+                                    {{-- <div class="evaluate__comment-star">
+                                        <span class="star__active"><i class="fa-solid fa-star"></i></span>
+                                        <span class="star__active"><i class="fa-solid fa-star"></i></span>
+                                        <span class="star__active"><i class="fa-solid fa-star"></i></span>
+                                        <span class="star__active"><i class="fa-solid fa-star"></i></span>
+                                        <span class="star__active"><i class="fa-solid fa-star"></i></span>
+                                    </div> --}}
+                                    <div class="review-rating__star evaluate__comment-star"
+                                        style="--rating: {{ $item->evaluates->star }};"
+                                        aria-label="Rating of this product is 2.3 out of 5."></div>
+                                    <div class="evaluate__comment-text">
+                                        {{ $item->evaluates->content }}
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    @else
+                        <div class="orders-empty">
+                            <img src="http://127.0.0.1:8000/assets/imgs/icon/comment.png" alt=""
+                                class="img-orders-empty">
+                            <h2 class="cart-empty-title">Chưa có đánh giá</h2>
+                        </div>
+                    @endif
+                </div>
+            </div>
+
+            <div class="details__comments row">
+                <div id="evaluate" class="details__comment">
+                    <div class="details__evaluate-title details__comment-title">Hỏi đáp<i
+                            class="fa-solid fa-caret-right"></i></div>
+                    <form action="" wire:submit.prevent="addComment" class="details__comment-form">
+                        <div class="details__comment-group width-100">
+                            <input type="text" class="details__comment-input" wire:model="content" name="" id="">
+                            @error('content')
+                                <p class="checkout-error">{{ $message }}</p>
+                            @enderror
+                        </div>
+                        <div class="details__comment-group">
+                            <button type="submit" class="details__comment-send"><i
+                                    class="fa-solid fa-paper-plane"></i></button>
+                        </div>
+                    </form>
+                </div>
+                <div class="details__evaluate-comment width-100 pd-10">
+                    @foreach ($comments as $comment)
+                        <div class="evaluate__comment-rating details__comment-background">
+                            <a href="" class="evaluate__comment-avatar"><img src="{{asset('assets/imgs/user.png')}}"
                                     alt=""></a>
                             <div class="evaluate__comment-main">
-                                <div class="evaluate__comment-username">{{$item->evaluates->user->name}}<span>{{$item->evaluates->created_at}}</span></div>
-                                {{-- <div class="evaluate__comment-star">
-                                    <span class="star__active"><i class="fa-solid fa-star"></i></span>
-                                    <span class="star__active"><i class="fa-solid fa-star"></i></span>
-                                    <span class="star__active"><i class="fa-solid fa-star"></i></span>
-                                    <span class="star__active"><i class="fa-solid fa-star"></i></span>
-                                    <span class="star__active"><i class="fa-solid fa-star"></i></span>
-                                </div> --}}
-                                <div class="review-rating__star evaluate__comment-star" style="--rating: {{$item->evaluates->star}};" aria-label="Rating of this product is 2.3 out of 5."></div>
+                                <div class="evaluate__comment-username">User<span>{{$comment->created_at}}</span></div>
                                 <div class="evaluate__comment-text">
-                                    {{$item->evaluates->content}}
+                                    {{$comment->content}}
                                 </div>
                             </div>
                         </div>
                     @endforeach
                 </div>
-            </div>
-
-
-            <div id="evaluate" class="details__evaluate row">
-                <div class="details__evaluate-title col l-12">Đánh giá - Nhận xét<i
-                        class="fa-solid fa-caret-right"></i></div>
 
             </div>
 

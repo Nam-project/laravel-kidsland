@@ -67,7 +67,7 @@ Route::get('/checkout', CheckoutCompoment::class)->name('checkout');
 
 Route::get('/product/{slug}',DetailsComponent::class)->name('product.details');
 
-Route::get('/product-category/{category_slug}/{subcategory_slug?}', CategoryComponent::class)->name('product.category');
+Route::get('/product-category/{category_slug}/{subcategory_slug?}/{brand_slug?}', CategoryComponent::class)->name('product.category');
 
 Route::get('/cart/count', [CartCompoment::class, 'getCartCount']);
 

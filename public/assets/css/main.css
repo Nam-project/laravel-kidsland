@@ -1234,6 +1234,70 @@ swiper-container {
     padding-bottom: 10px;
 }
 
+.details__comments {
+    margin-top: 10px;
+    border-radius: 5px;
+    background-color: var(--white-color);
+}
+
+.details__comment {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.details__comment-form {
+    flex: 1;
+    display: flex;
+    padding-right: 20px;
+}
+
+.width-100 {
+    width: 100%;
+}
+
+.pd-10 {
+    padding: 10px 20px;
+}
+
+.details__comment-group {
+    
+}
+
+.details__comment-input {
+    width: 100%;
+    font-size: 16px;
+    outline: none;
+    border-radius: 20px;
+    padding: 10px 15px;
+    box-shadow: 0 0 10px 2px rgba(0, 0, 0, .1);
+    border: 1px solid var(--lightblue-color);
+    background-image: linear-gradient(to right, #E3FDF5, #FFF1EB);
+}
+
+.details__comment-send {
+    margin-left: 10px;
+    cursor: pointer;
+    padding: 10px;
+    font-size: 18px;
+    border: none;
+    border-radius: 20px;
+    color: var(--pink-color);
+    background-image: linear-gradient(to right, #E3FDF5, #FFF1EB);
+    box-shadow: 0 0 10px 2px rgba(0, 0, 0, .1);
+}
+
+.details__comment-send:hover {
+    opacity: .8;
+}
+
+.details__comment-background {
+    background-image: linear-gradient(to right, #E3FDF5, #FFF1EB);
+    padding: 20px;
+    border-radius: 15px;
+    margin-bottom: 10px;
+}
+
 
 /* Css Cart page */
 
@@ -2413,7 +2477,7 @@ swiper-container {
     left: 0;
     height: 100%;
     width: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.1);
 }
 
 .ratting__item-checkout {
@@ -2434,15 +2498,16 @@ swiper-container {
     left: 50%;
     transform: translate(-50%, -50%);
     padding: 20px;
-    border-radius: 5px;
+    border-radius: 10px;
     background-color: var(--white-color);
+    box-shadow: 0 0 15px 5px rgba(0, 0, 0, .1);
 }
 
 .form-evaluate-stars {
     display: flex;
     flex-direction: row-reverse;
     justify-content: space-around;
-    padding: 30px 20px;
+    padding: 40px 20px;
     color: var(--grey-color);
 }
 
@@ -2452,7 +2517,7 @@ swiper-container {
 
 .evaluate-star-icon {
     transition: all .5s;
-    font-size: 16px;
+    font-size: 30px;
 }
 
 .evaluate-star-icon:hover {
@@ -2465,16 +2530,22 @@ swiper-container {
 }
 
 .form-evaluate-title {
-    font-size: 16px;
     color: var(--text-color);
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
+.form-evaluate-span {
+    font-size: 25px;
+    border-bottom: 8px solid var(--star-background);
+    font-weight: bolder;
+    padding: 10px 0;
+}
+
 .close-evaluate {
-    color: var(--pink-color);
-    font-size: 20px;
+    color: var(--text-color);
+    font-size: 25px;
     padding: 5px 8.6px;
     border-radius: 20px;
     cursor: pointer;
@@ -2488,8 +2559,15 @@ swiper-container {
     text-align: start;
 }
 
+.form-evaluate-text {
+    font-size: 14px;
+    color: var(--text-color);
+    font-weight: 500;
+}
+
 .form-evaluate-textarea {
-    border: 1px solid var(--blue--color);
+    margin-top: 10px;
+    border: 1px solid var(--text-color);
     border-radius: 3px;
     width: 100%;
     padding: 5px;
@@ -2508,21 +2586,23 @@ swiper-container {
 
 .btn-evaluate {
     cursor: pointer;
-    font-size: 14px;
-    color: var(--text-color);
+    font-size: 16px;
     border-radius: 3px;
     border: none;
-    padding: 7px 30px;
+    padding: 10px 0;
+    width: 50%;
     background-color: var(--pink-color);
-    color: var(--white-color);
+    color: var(--text-color);
+    font-weight: 500;
 }
 
 .btn-evaluate:hover {
-    opacity: .9;
+    background-color: var(--text-color);
+    color: var(--white-color);
 }
 
 .evaluate-submit {
-    background-color: var(--lightblue-color);
+    background-color: var(--star-background);
 }
 
 /* Detail Order */

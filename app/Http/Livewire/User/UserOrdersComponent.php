@@ -18,7 +18,6 @@ class UserOrdersComponent extends Component
     public function mount()
     {
         $this->status = 'all';
-        $this->detail_order_id = 1;
     }
 
     public function addEvaluates($detail_order_id)
@@ -37,6 +36,8 @@ class UserOrdersComponent extends Component
         $detailOrder = DetailOrder::find($detail_order_id);
         $detailOrder->rstatus = true;
         $detailOrder->save();
+        $this->viewEvaluate = 0;
+        $this->reset('star', 'content');
     }
 
     public function statusOrder($status)
