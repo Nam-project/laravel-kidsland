@@ -3,7 +3,7 @@
   <!-- Brand Logo -->
   <a href="{{route('admin.dashboard')}}" class="brand-link">
     <img src="{{asset('assets/imgs/2.png')}}" alt="Admin Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-    <span class="brand-text font-weight-light">Admin</span>
+    <span class="brand-text font-weight-light">Admin KidsLand</span>
   </a>
 
   <!-- Sidebar -->
@@ -14,7 +14,7 @@
         <img src="{{asset('dist/img/user2-160x160.jpg')}}" class="img-circle elevation-2" alt="User Image">
       </div>
       <div class="info">
-        <a href="#" class="d-block">Alexander Pierce</a>
+        <a href="#" class="d-block">{{ Auth::user()->name }}</a>
       </div>
     </div>
 
@@ -40,7 +40,7 @@
           <a href="#" class="nav-link">
             <i class="nav-icon fas fa-th"></i>
             <p>
-              Quản lý danh mục
+              Danh mục
               <i class="right fas fa-angle-left"></i>
             </p>
           </a>
@@ -147,6 +147,18 @@
               <a href="{{route('admin.addproduct')}}" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Thêm sản phẩm</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{{route('admin.warehouse')}}" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Nhập hàng</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{{route('admin.supplier')}}" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Nhà cung cấp</p>
               </a>
             </li>
           </ul>

@@ -22,6 +22,9 @@ use App\Http\Livewire\Admin\Brand\AdminBrandsComponent;
 use App\Http\Livewire\Admin\Brand\AdminAddBrandsComponent;
 use App\Http\Livewire\Admin\Brand\AdminEditBrandsComponent;
 use App\Http\Livewire\Admin\Products\AdminProductComponent;
+use App\Http\Livewire\Admin\Products\AdminSupplierComponent;
+use App\Http\Livewire\Admin\Products\AdminEnterStockComponent;
+use App\Http\Livewire\Admin\Products\AdminAddEnterStockComponent;
 use App\Http\Livewire\Admin\Products\AdminAddProductComponent;
 use App\Http\Livewire\Admin\Products\AdminEditProductComponent;
 use App\Http\Livewire\Admin\Slider\AdminHomeSliderComponent;
@@ -107,6 +110,11 @@ Route::middleware(['auth:sanctum', 'verified', 'authadmin'])->group(function() {
     Route::get('/admin/products', AdminProductComponent::class)->name('admin.products');
     Route::get('/admin/product/add', AdminAddProductComponent::class)->name('admin.addproduct');
     Route::get('/admin/product/edit/{product_slug}', AdminEditProductComponent::class)->name('admin.editproduct');
+    // suppliers
+    Route::get('/admin/suppliers', AdminSupplierComponent::class)->name('admin.supplier');
+    // Enter stock
+    Route::get('/admin/warehouse', AdminEnterStockComponent::class)->name('admin.warehouse');
+    Route::get('/admin/warehouse/add', AdminAddEnterStockComponent::class)->name('admin.addwarehouse');
 
     // Home Slider
     Route::get('/admin/slider', AdminHomeSliderComponent::class)->name('admin.homeslider');

@@ -18,11 +18,11 @@ class CreateDetailReceiptsTable extends Migration
             $table->double('price'); //don gia
             $table->unsignedInteger('quantity');
             $table->bigInteger('product_id')->unsigned()->nullable();
-            $table->bigInteger('warehouse_id')->unsigned()->nullable();
+            
             $table->bigInteger('receipt_id')->unsigned()->nullable();
             $table->timestamps();
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
-            $table->foreign('warehouse_id')->references('id')->on('ware_houses')->onDelete('cascade');
+            
             $table->foreign('receipt_id')->references('id')->on('receipts')->onDelete('cascade');
         });
     }

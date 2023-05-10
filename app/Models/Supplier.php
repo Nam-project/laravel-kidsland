@@ -10,4 +10,9 @@ class Supplier extends Model
     use HasFactory;
 
     protected $table = "suppliers";
+
+    public function ward()
+    {
+        return $this->belongsTo(Wards::class,'ward_id');
+    }
 }
