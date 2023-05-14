@@ -16,6 +16,7 @@ class DetailsComponent extends Component
 {
     public $slug;
     public $qty;
+    public $can_sell;
 
     public $evaluate_5;
     public $evaluate_4;
@@ -84,7 +85,9 @@ class DetailsComponent extends Component
     }
 
     public function increaseQuantity() {
-        $this->qty++;
+        if ($this->qty != $this->can_sell) {
+            $this->qty++;
+        }
     }
 
     public function decreseQuantity() {
@@ -121,6 +124,7 @@ class DetailsComponent extends Component
     public function render()
     {
         $product = Product::where('slug', $this->slug)->first();
+        $this->can_sell = $product->can_sell;
         $productdetail = ProductDetails::where('product_id',$product->id)->first();
         $related_products = Product::where('subcategory_id', $product->subcategory_id)->limit(5)->get();
         $detailOrder = DetailOrder::where('product_id',$product->id)->where('rstatus', 1)->get();

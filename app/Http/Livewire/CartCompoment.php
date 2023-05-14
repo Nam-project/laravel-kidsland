@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 use Livewire\Component;
 use Cart;
 use App\Models\Coupon;
+use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
 
 class CartCompoment extends Component
@@ -18,9 +19,12 @@ class CartCompoment extends Component
     public function increaseQuantity($rowId)
     {
         $product = Cart::instance('cart')->Get($rowId);
-        $qty = $product->qty + 1;
-        Cart::instance('cart')->update($rowId, $qty);
-        $this->emitTo('cart-count-component','refreshComponent');
+        $item = Product::find($product->id);
+        if ($product->qty != $item->can_sell) {
+            $qty = $product->qty + 1;
+            Cart::instance('cart')->update($rowId, $qty);
+            $this->emitTo('cart-count-component','refreshComponent');
+        }
     }
 
     public function decreaseQuantity($rowId)

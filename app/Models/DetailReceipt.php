@@ -10,4 +10,9 @@ class DetailReceipt extends Model
     use HasFactory;
 
     protected $table = "detail_receipts";
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
 }

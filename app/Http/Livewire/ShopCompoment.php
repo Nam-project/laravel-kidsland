@@ -34,6 +34,13 @@ class ShopCompoment extends Component
         return redirect()->back();
     }
 
+    public function storeBuy($product_id, $product_name, $product_price)
+    {
+        Cart::instance('cart')->add($product_id, $product_name,1, $product_price)->associate('App\Models\Product');
+        $this->emitTo('cart-count-component','refreshComponent');
+        return redirect()->route('product.cart');
+    }
+
     public function render()
     {
         if ($this->sorting == 'price') {

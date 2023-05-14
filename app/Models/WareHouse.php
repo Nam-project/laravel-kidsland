@@ -10,4 +10,9 @@ class WareHouse extends Model
     use HasFactory;
 
     protected $table = "ware_houses";
+
+    public function ward()
+    {
+        return $this->belongsTo(Wards::class,'ward_id');
+    }
 }

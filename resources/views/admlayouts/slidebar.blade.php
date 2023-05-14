@@ -150,7 +150,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="{{route('admin.warehouse')}}" class="nav-link">
+              <a href="{{route('admin.receipts')}}" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Nhập hàng</p>
               </a>
@@ -159,6 +159,29 @@
               <a href="{{route('admin.supplier')}}" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Nhà cung cấp</p>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-book"></i>
+            <p>
+              Quản lý kho
+              <i class="fas fa-angle-left right"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="{{route('admin.productwarehouse')}}" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Toàn bộ phiên bản</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{{route('admin.warehouse')}}" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Chi nhánh</p>
               </a>
             </li>
           </ul>

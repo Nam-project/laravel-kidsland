@@ -79,14 +79,16 @@
             <div class="row flast-sale__list">
                 @foreach ($saleProducts as $product)
                     <div class="col l-2 m-3 c-6 flast-sale__item">
-                        <a href="{{route('product.details',['slug'=>$product->slug])}}" class="flast-sale__link">
-                            <img src="{{ asset('assets/imgs/products') }}/{{$product->image}}" alt=""
+                        <a href="{{ route('product.details', ['slug' => $product->slug]) }}" class="flast-sale__link">
+                            <img src="{{ asset('assets/imgs/products') }}/{{ $product->image }}" alt=""
                                 class="sale__item-img">
-                            <div class="flast-sale__name">{{$product->name}}
+                            <div class="flast-sale__name">{{ $product->name }}
                             </div>
                             <div class="flast-sale__price">
-                                <div class="sale__price-old">{{$product->regular_price}}<span class="copper">đ</span></div>
-                                <div class="sale__price-new">{{$product->sale_price}}<span class="copper">đ</span></div>
+                                <div class="sale__price-old">{{ $product->regular_price }}<span class="copper">đ</span>
+                                </div>
+                                <div class="sale__price-new">{{ $product->sale_price }}<span class="copper">đ</span>
+                                </div>
                             </div>
                         </a>
                     </div>
@@ -110,7 +112,9 @@
                             </div>
                         </a>
                         <div class="product__with-cart">
-                            <a href="" class="product__buy-now btn-pink">Mua ngay</a>
+                            <a href=""
+                                wire:click.prevent="storeBuy({{ $product->id }},'{{ $product->name }}',{{ $product->regular_price }})"
+                                class="product__buy-now btn-pink">Mua ngay</a>
                             <button class="product__cart"
                                 wire:click.prevent="store({{ $product->id }},'{{ $product->name }}',{{ $product->regular_price }})">
                                 <i class="fa-solid fa-cart-plus"></i>

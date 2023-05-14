@@ -7,9 +7,12 @@ use App\Models\Wards;
 use App\Models\City;
 use App\Models\Province;
 use App\Models\Supplier;
+use Livewire\WithPagination;
 
 class AdminSupplierComponent extends Component
 {
+    use WithPagination;
+
     public $show_supplier;
     public $show_editsupplier;
 
@@ -109,7 +112,7 @@ class AdminSupplierComponent extends Component
 
     public function render()
     {
-        $suppliers = Supplier::orderBy('created_at','DESC')->get();
+        $suppliers = Supplier::paginate(6);
         $cities = City::orderby('matp','ASC')->get();
         if ($this->city_id) {
             $provinces = Province::where('matp', $this->city_id)->get();

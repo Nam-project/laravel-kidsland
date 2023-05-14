@@ -90,6 +90,7 @@ class AdminAddProductComponent extends Component
         $product->subcategory_id = $this->subcategory_id;
         $product->brand_id = $this->brand_id;
         $product->stock_status = $this->stock_status;
+        $product->can_sell = $this->quantity;
 
         if ($this->image) {
             $imageName = Carbon::now()->timestamp.'.'.$this->image->extension();

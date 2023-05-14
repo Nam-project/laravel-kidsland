@@ -3,12 +3,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Nhà cung cấp</h1>
+                    <h1>Quản lý chi nhánh</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Home</a></li>
-                        <li class="breadcrumb-item active">Nhà cung cấp</li>
+                        <li class="breadcrumb-item active">Quản lý chi nhánh</li>
                     </ol>
                 </div>
             </div>
@@ -17,38 +17,31 @@
     <div class="card">
         <div class="card-header">
             <div class="card-tools">
-                <input type="checkbox" class="supplier_ckeck" wire:model="show_supplier" value="1"
-                    name="show_supplier" id="show_supplier">
-                <label for="show_supplier" class="btn btn-block btn-primary">Thêm Nhà cung cấp</label>
+                <input type="checkbox" class="supplier_ckeck" wire:model="showwarehouse" value="1"
+                    name="showwarehouse" id="showwarehouse">
+                <label for="showwarehouse" class="btn btn-block btn-primary">Thêm chi nhánh</label>
             </div>
-            @if ($show_supplier == 1)
-                <label for="show_supplier" class="supplier-cushion"></label>
+            @if ($showwarehouse == 1)
+                <label for="showwarehouse" class="supplier-cushion"></label>
                 <div class="form-supplier">
                     <div>
                         <div class="card-header">
-                            <h3 class="card-title">Thêm mới nhà cung cấp</h3>
+                            <h3 class="card-title">Thêm mới chi nhánh</h3>
 
                             <div class="card-tools">
-                                <label for="show_supplier" class="btn btn-tool">
+                                <label for="showwarehouse" class="btn btn-tool">
                                     <i class="fas fa-times"></i>
                                 </label>
                             </div>
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form wire:submit.prevent="addSupplier" class="form-horizontal">
+                        <form wire:submit.prevent="addWarehouse" class="form-horizontal">
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">Tên nhà cung cấp</label>
+                                    <label for="exampleInputEmail1">Tên chi nhánh</label>
                                     <input type="text" class="form-control" wire:model="name" placeholder="">
                                     @error('name')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">Email</label>
-                                    <input type="text" class="form-control" wire:model="email" placeholder="">
-                                    @error('email')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
@@ -106,7 +99,7 @@
                             </div>
                             <!-- /.card-body -->
                             <div class="card-footer">
-                                <label for="show_supplier" type="submit" class="btn btn-default">Thoát</label>
+                                <label for="showwarehouse" type="submit" class="btn btn-default">Thoát</label>
                                 <button type="submit" class="btn btn-info float-right">Thêm</button>
                             </div>
                             <!-- /.card-footer -->
@@ -148,26 +141,28 @@
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>Tên nhà cung cấp</th>
-                        <th>Email</th>
+                        <th>Tên chi nhánh</th>
                         <th>Số điện thoại</th>
                         <th>Địa chỉ</th>
-                        <td></td>
+                        <th>Thành phố/Tỉnh</th>
+                        <th>Quận/Huyện</th>
+                        <th>Xã Phường</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($suppliers as $key => $item)
+                    @foreach ($warehouses as $key => $item)
                         <tr>
                             <td>
                                 {{ $key + 1 }}
                             </td>
                             <td>{{ $item->name }}</td>
-                            <td>{{ $item->email }}</td>
                             <td>{{ $item->phone }}</td>
                             <td>{{ $item->address }}</td>
+                            <td>{{ $item->ward->province->city->name }}</td>
+                            <td>{{ $item->ward->province->name }}</td>
+                            <td>{{ $item->ward->name }}</td>
                             <td>
-                                {{-- <input type="checkbox" class="supplier_ckeck" wire:model="show_editsupplier"
-                                    value="1" name="show_editsupplier" id="show_editsupplier"> --}}
                                 <button wire:click="valueEdit({{ $item->id }})" class="btn btn-primary btn-sm"><i
                                         class="nav-icon fas fa-edit"></i></button>
                                 @if ($itemId != 0)
@@ -175,7 +170,7 @@
                                     <div class="form-supplier">
                                         <div>
                                             <div class="card-header">
-                                                <h3 class="card-title">Chỉnh sửa nhà cung cấp</h3>
+                                                <h3 class="card-title">Chỉnh sửa chi nhánh</h3>
 
                                                 <div class="card-tools">
                                                     <label wire:click="resetValueEdit" class="btn btn-tool">
@@ -185,22 +180,14 @@
                                             </div>
                                             <!-- /.card-header -->
                                             <!-- form start -->
-                                            <form wire:submit.prevent="updateSupplier({{ $itemId }})"
+                                            <form wire:submit.prevent="updateWareHouse({{$itemId}})"
                                                 class="form-horizontal">
                                                 <div class="card-body">
                                                     <div class="form-group">
-                                                        <label for="exampleInputEmail1">Tên nhà cung cấp</label>
+                                                        <label for="exampleInputEmail1">Tên chi nhánh</label>
                                                         <input wire:ignore type="text" class="form-control"
                                                             wire:model="name" placeholder="">
                                                         @error('name')
-                                                            <span class="text-danger">{{ $message }}</span>
-                                                        @enderror
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="exampleInputEmail1">Email</label>
-                                                        <input type="text" class="form-control" wire:model="email"
-                                                            placeholder="">
-                                                        @error('email')
                                                             <span class="text-danger">{{ $message }}</span>
                                                         @enderror
                                                     </div>
@@ -277,7 +264,7 @@
                                     </div>
                                 @endif
                                 <button class="btn btn-danger btn-sm"
-                                    wire:click.prevent="deleteSupplier({{ $item->id }})"><i
+                                    wire:click.prevent="deleteWarehouse({{ $item->id }})"><i
                                         class="ion-android-delete"></i></button>
                             </td>
                         </tr>
@@ -286,7 +273,6 @@
             </table>
 
         </div>
-        {{ $suppliers->links('pagination-links') }}
         <!-- /.card-body -->
         {{-- <div class="card-footer clearfix">
             <ul class="pagination pagination-sm m-0 float-right">
@@ -299,6 +285,7 @@
                 <li class="page-item"><a class="page-link" href="{{ $products->nextPageUrl() }}">&raquo;</a></li>
             </ul>
         </div> --}}
+        {{ $warehouses->links('pagination-links') }}
     </div>
     <!-- /.card -->
 </div>

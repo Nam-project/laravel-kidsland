@@ -25,6 +25,9 @@ use App\Http\Livewire\Admin\Products\AdminProductComponent;
 use App\Http\Livewire\Admin\Products\AdminSupplierComponent;
 use App\Http\Livewire\Admin\Products\AdminEnterStockComponent;
 use App\Http\Livewire\Admin\Products\AdminAddEnterStockComponent;
+use App\Http\Livewire\Admin\Products\AdminViewEnterStockComponent;
+use App\Http\Livewire\Admin\Products\AdminWareHouseComponent;
+use App\Http\Livewire\Admin\Productwarehouse\AdminProductWareHouseComponent;
 use App\Http\Livewire\Admin\Products\AdminAddProductComponent;
 use App\Http\Livewire\Admin\Products\AdminEditProductComponent;
 use App\Http\Livewire\Admin\Slider\AdminHomeSliderComponent;
@@ -113,8 +116,12 @@ Route::middleware(['auth:sanctum', 'verified', 'authadmin'])->group(function() {
     // suppliers
     Route::get('/admin/suppliers', AdminSupplierComponent::class)->name('admin.supplier');
     // Enter stock
-    Route::get('/admin/warehouse', AdminEnterStockComponent::class)->name('admin.warehouse');
-    Route::get('/admin/warehouse/add', AdminAddEnterStockComponent::class)->name('admin.addwarehouse');
+    Route::get('/admin/receipts', AdminEnterStockComponent::class)->name('admin.receipts');
+    Route::get('/admin/receipts/add', AdminAddEnterStockComponent::class)->name('admin.addreceipts');
+    Route::get('/admin/receipts/view/{receipt_id}', AdminViewEnterStockComponent::class)->name('admin.viewreceipts');
+    // Warehouse
+    Route::get('/admin/warehouse', AdminWareHouseComponent::class)->name('admin.warehouse');
+    Route::get('/admin/productwarehouse', AdminProductWareHouseComponent::class)->name('admin.productwarehouse');
 
     // Home Slider
     Route::get('/admin/slider', AdminHomeSliderComponent::class)->name('admin.homeslider');

@@ -7,7 +7,7 @@
                 </div>
                 <div class="col-sm-6">
                     <div class="float-sm-right">
-                        <a href="{{ Route('admin.addwarehouse')}}" class="btn btn-block btn-primary">Tạo đơn nhập hàng</a>
+                        <a href="{{ Route('admin.addreceipts') }}" class="btn btn-block btn-primary">Tạo đơn nhập hàng</a>
                     </div>
                 </div>
             </div>
@@ -45,36 +45,67 @@
         <div class="card-body">
             <ul class="nav nav-tabs" id="custom-content-below-tab" role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link active" id="custom-content-below-home-tab" data-toggle="pill"
-                        href="" role="tab">Tất cả đơn nhập hàng</a>
+                    <a class="btn nav-link {{$sorting == 'all' ? 'active' : ''}}" wire:click="sortingReceipt('all')" id="custom-content-below-home-tab"
+                        role="tab">Tất cả đơn nhập hàng</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="custom-content-below-profile-tab" data-toggle="pill"
-                        href="" role="tab">Đang giao dịch</a>
+                    <a class="btn nav-link {{$sorting == 'all' ? '' : 'active'}}" wire:click="sortingReceipt('confirm')" id="custom-content-below-profile-tab"
+                        role="tab">Đang giao dịch</a>
                 </li>
             </ul>
             <table class="table">
                 <thead>
-                  <tr>
-                    <th style="width: 10px"></th>
-                    <th>Task</th>
-                    <th>Progress</th>
-                    <th style="width: 40px">Label</th>
-                  </tr>
+                    <tr>
+                        <th>#</th>
+                        <th>Tên nhà cung cấp</th>
+                        <th>Chi nhánh</th>
+                        <th>Trạng thái</th>
+                        <th>Thanh toán</th>
+                        <th>Nhập kho</th>
+                        <th>Tổng tiền</th>
+                        <th>Nhân viên tạo</th>
+                        <th></th>
+                    </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>1.</td>
-                    <td>Update software</td>
-                    <td>
-                      <div class="progress progress-xs">
-                        <div class="progress-bar progress-bar-danger" style="width: 55%"></div>
-                      </div>
-                    </td>
-                    <td><span class="badge bg-danger">55%</span></td>
-                  </tr>
+                    @foreach ($receipts as $key => $item)
+                        <tr>
+                            <td>{{ $key + 1 }}</td>
+                            <td>{{ $item->supplier->name }}</td>
+                            <td>{{ $item->warehouse->name }}</td>
+                            <td>
+                                @if ($item->status == 'complete')
+                                    <small class="badge badge-success">Hoàn thành</small>
+                                @else
+                                    <small class="badge badge-info">Duyệt</small>
+                                @endif
+                            </td>
+                            <td>
+                                <small class="badge badge-success">Đã thanh toán</small>
+                            </td>
+                            <td>
+                                @if ($item->status == 'complete')
+                                    <small class="badge badge-success">Đã nhập kho</small>
+                                @else
+                                    <small class="badge badge-info">Chưa nhập kho</small>
+                                @endif
+                            </td>
+                            <td>{{ $item->total }}</td>
+                            <td>
+                                {{ $item->user->name }}
+                            </td>
+                            <td>
+                                <a href="{{ Route('admin.viewreceipts', ['receipt_id' => $item->id]) }}"
+                                    class="btn btn-primary btn-sm">
+                                    <i class="fas fa-eye"></i>
+                                    </i>
+                                    View
+                                </a>
+                            </td>
+                        </tr>
+                    @endforeach
                 </tbody>
-              </table>
+            </table>
 
         </div>
         <!-- /.card-body -->

@@ -9,6 +9,7 @@ use App\Models\Province;
 use App\Models\Order;
 use App\Models\DetailOrder;
 use App\Models\Transaction;
+use App\Models\Product;
 use Cart;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -35,6 +36,10 @@ class CheckoutCompoment extends Component
             $order_id = intval(preg_replace('/\D/', '', $request->input('vnp_TxnRef')));
             $order = Order::find($order_id);
             if ($responseCode == '00') {
+                foreach ($order->detailOrder as $item) {
+                    $item->product->can_sell = $item->product->can_sell - $item->count;
+                    $item->product->save();
+                }
                 $this->makeTransaction($order_id,'paypal','approved');
                 $this->resetCart();
                 return redirect()->route('thankyou');
@@ -84,6 +89,11 @@ class CheckoutCompoment extends Component
             $orderItem->price = $item->price;
             $orderItem->count = $item->qty;
             $orderItem->save();
+            if ($this->payment == 'cod') {
+                $product = Product::find($item->id);
+                $product->can_sell = $product->can_sell - $orderItem->count;
+                $product->save();
+            }
         }
 
         if ($this->payment == 'cod') {

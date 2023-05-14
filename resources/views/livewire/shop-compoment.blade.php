@@ -16,7 +16,7 @@
                         {{-- <button class="shop-sort-by-option btn-shop__active" >Mới nhất</button>
                         <button class="shop-sort-by-option">Cũ nhất</button>
                         <button class="shop-sort-by-option">Bán chạy</button> --}}
-                        <select name="" id="" class="shop-sort-by__select" wire:model ="sorting">
+                        <select name="" id="" class="shop-sort-by__select" wire:model="sorting">
                             <option value="">Default sorting</option>
                             <option value="orderby_new">Mới nhất</option>
                             <option value="orderby_old">Cũ nhất</option>
@@ -25,7 +25,7 @@
                         </select>
                     </div>
                     <div class="shop-mini-page-controller">
-                        <select name="" id="" class="shop-sort-by__select" wire:model ="pagesize">
+                        <select name="" id="" class="shop-sort-by__select" wire:model="pagesize">
                             <option value="15">15 trên trang</option>
                             <option value="20">20 trên trang</option>
                             <option value="25">25 trên trang</option>
@@ -49,8 +49,9 @@
                                     </div>
                                 </a>
                                 <div class="product__with-cart">
-                                    <a href="" class="product__buy-now btn-pink">Mua ngay</a>
-                                    <button onclick="updateCartCount()" class="product__cart"
+                                    <a wire:click.prevent="storeBuy({{ $product->id }},'{{ $product->name }}',{{ $product->regular_price }})"
+                                        href="" class="product__buy-now btn-pink">Mua ngay</a>
+                                    <button class="product__cart"
                                         wire:click.prevent="store({{ $product->id }},'{{ $product->name }}',{{ $product->regular_price }})">
                                         <i class="fa-solid fa-cart-plus"></i>
                                     </button>
