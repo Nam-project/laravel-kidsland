@@ -7,6 +7,7 @@ use App\Http\Livewire\SearchComponent;
 use App\Http\Livewire\CheckoutCompoment;
 use App\Http\Livewire\DetailsComponent;
 use App\Http\Livewire\CategoryComponent;
+use App\Http\Livewire\WishlistComponent;
 use App\Http\Livewire\ThankYouComponent;
 use App\Http\Livewire\User\UserDashboardCompoment;
 use App\Http\Livewire\User\UserOrdersComponent;
@@ -28,6 +29,7 @@ use App\Http\Livewire\Admin\Products\AdminAddEnterStockComponent;
 use App\Http\Livewire\Admin\Products\AdminViewEnterStockComponent;
 use App\Http\Livewire\Admin\Products\AdminWareHouseComponent;
 use App\Http\Livewire\Admin\Productwarehouse\AdminProductWareHouseComponent;
+use App\Http\Livewire\Admin\Productwarehouse\AdminViewProductWareHouseComponent;
 use App\Http\Livewire\Admin\Products\AdminAddProductComponent;
 use App\Http\Livewire\Admin\Products\AdminEditProductComponent;
 use App\Http\Livewire\Admin\Slider\AdminHomeSliderComponent;
@@ -79,6 +81,8 @@ Route::get('/cart/count', [CartCompoment::class, 'getCartCount']);
 
 Route::get('/search',SearchComponent::class)->name('product.search');
 
+Route::get('/wishlist',WishlistComponent::class)->name('product.wishlist');
+
 Route::get('/thank-you', ThankYouComponent::class)->name('thankyou');
 
 
@@ -122,6 +126,7 @@ Route::middleware(['auth:sanctum', 'verified', 'authadmin'])->group(function() {
     // Warehouse
     Route::get('/admin/warehouse', AdminWareHouseComponent::class)->name('admin.warehouse');
     Route::get('/admin/productwarehouse', AdminProductWareHouseComponent::class)->name('admin.productwarehouse');
+    Route::get('/admin/view-product-warehouse/{product_id}', AdminViewProductWareHouseComponent::class)->name('admin.viewproductwarehouse');
 
     // Home Slider
     Route::get('/admin/slider', AdminHomeSliderComponent::class)->name('admin.homeslider');

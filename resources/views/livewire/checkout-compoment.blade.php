@@ -143,7 +143,7 @@
                                         <div class="checkout__infor-item">
                                             <div class="">Tổng tiền hàng:</div>
                                             <div class="checkout__infor-item-money">
-                                                {{ Session::get('checkout')['subtotal'] }}<span
+                                                {{ number_format(Session::get('checkout')['subtotal'], 2) }}<span
                                                     class="copper">đ</span> </div>
                                         </div>
                                         {{-- <div class="checkout__infor-item">

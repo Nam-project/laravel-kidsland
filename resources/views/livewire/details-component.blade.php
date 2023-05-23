@@ -69,7 +69,7 @@
                                 wire:model="qty" class="details__quantity-input">
                             <button class="plus-btn" wire:click.prevent="increaseQuantity" type="button">+</button>
                         </div>
-                        <div class="details__quantity-text">{{ $product->quantity }} sản phẩm có sẵn</div>
+                        <div class="details__quantity-text">{{ $product->can_sell }} sản phẩm có sẵn</div>
                     </div>
                     <div class="details__cart">
                         <button class="details__cart-add"

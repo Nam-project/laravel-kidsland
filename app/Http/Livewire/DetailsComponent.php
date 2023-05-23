@@ -73,7 +73,7 @@ class DetailsComponent extends Component
     {
         Cart::instance('cart')->add($product_id, $product_name,$this->qty, $product_price)->associate('App\Models\Product');
         $this->emitTo('cart-count-component','refreshComponent');
-        toastr()->success('', 'Thêm vào giỏ hàng thành công');
+        toastr()->success('Bạn đã thêm sản phẩm vào giỏ hàng thành công!', 'Thành công!', ['closeButton' => true]);
         return redirect()->back();
     }
 
@@ -85,7 +85,7 @@ class DetailsComponent extends Component
     }
 
     public function increaseQuantity() {
-        if ($this->qty != $this->can_sell) {
+        if ($this->qty < $this->can_sell) {
             $this->qty++;
         }
     }

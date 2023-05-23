@@ -41,7 +41,6 @@
                         <th>Tên</th>
                         <th>Email</th>
                         <th>Số ĐT</th>
-                        <th>Giảm giá</th>
                         <th>Tổng tiền</th>
                         <th>Trạng thái</th>
                         <th>Ngày đặt</th>
@@ -55,13 +54,14 @@
                             <td>{{ $order->name }}</td>
                             <td>{{ $order->user->email }}</td>
                             <td>{{ $order->phone }}</td>
-                            <td>{{ $order->discount }}</td>
                             <td>{{ $order->total }}</td>
                             <td>
                                 @if ($order->status == 'delivered')
                                     <span class="badge badge-success">Đã giao hàng</span>
                                 @elseif ($order->status == 'canceled')
                                     <span class="badge badge-warning">Hủy bỏ</span>
+                                @elseif ($order->status == 'shipping')
+                                    <span class="badge badge-info">Đang giao hàng</span>
                                 @else
                                     <span class="badge badge-danger">Đang xữ lý</span>
                                 @endif
@@ -69,21 +69,33 @@
                             <td>{{ $order->created_at }}</td>
                             <td><a class="btn btn-primary btn-sm"
                                     href="{{ route('admin.orderdetails', ['order_id' => $order->id]) }}"><i
-                                        class="pr-2 fas fa-folder"></i>Chi tiết</a></td>
+                                        class="fas fa-eye"></i></a></td>
                             <td>
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-success">Status</button>
-                                    <button type="button" class="btn btn-success dropdown-toggle"
-                                        data-toggle="dropdown" aria-expanded="false">
-                                        {{-- <span class="sr-only">Toggle Dropdown</span> --}}
-                                    </button>
-                                    <div class="dropdown-menu" role="menu" style="">
-                                        <button wire:click.prevent="updateOrderStatus({{ $order->id }},'delivered')"
-                                            class="dropdown-item">Delivered</button>
-                                        <button wire:click.prevent="updateOrderStatus({{ $order->id }},'canceled')"
-                                            class="dropdown-item">Canceled</button>
+                                <button class="btn btn-primary btn-sm">
+                                    <i class="fas fa-download"></i>
+                                </button>
+                            </td>
+                            <td>
+                                @if ($order->status != 'delivered' && $order->status != 'canceled')
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-success">Status</button>
+                                        <button type="button" class="btn btn-success dropdown-toggle"
+                                            data-toggle="dropdown" aria-expanded="false">
+                                            {{-- <span class="sr-only">Toggle Dropdown</span> --}}
+                                        </button>
+                                        <div class="dropdown-menu" role="menu" style="">
+                                            <button
+                                                wire:click.prevent="updateOrderStatus({{ $order->id }},'delivered')"
+                                                class="dropdown-item">Delivered</button>
+                                            <button
+                                                wire:click.prevent="updateOrderStatus({{ $order->id }},'shipping')"
+                                                class="dropdown-item">Shipping</button>
+                                            <button
+                                                wire:click.prevent="updateOrderStatus({{ $order->id }},'canceled')"
+                                                class="dropdown-item">Canceled</button>
+                                        </div>
                                     </div>
-                                </div>
+                                @endif
                             </td>
                         </tr>
                     @endforeach

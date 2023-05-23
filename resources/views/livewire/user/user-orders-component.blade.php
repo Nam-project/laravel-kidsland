@@ -14,7 +14,7 @@
                     </div>
                 </div>
                 <ul class="order__nav">
-                    <li><a href="">Thông tin tài khoản</a></li>
+                    <li><a href="{{route('user.dashboard')}}">Thông tin tài khoản</a></li>
                     <li><a href="" class="order__nav-active">Quản lý đơn hàng</a></li>
                 </ul>
             </div>
@@ -27,7 +27,8 @@
                         wire:click.prevent="statusOrder('all')">Tất cả đơn</div>
                     <div class="order__nav-item {{ $status == 'ordered' ? 'order__navbar-active' : '' }}"
                         wire:click.prevent="statusOrder('ordered')">Đang xử lý</div>
-                    {{-- <div class="order__nav-item">Đang vận chuyển</div> --}}
+                    <div class="order__nav-item {{ $status == 'shipping' ? 'order__navbar-active' : '' }}"
+                        wire:click.prevent="statusOrder('shipping')">Đang vận chuyển</div>
                     <div class="order__nav-item {{ $status == 'delivered' ? 'order__navbar-active' : '' }}"
                         wire:click.prevent="statusOrder('delivered')">Đã giao</div>
                     <div class="order__nav-item {{ $status == 'canceled' ? 'order__navbar-active' : '' }}"
@@ -76,7 +77,7 @@
                                             <span class="order__item-quantity">Số lượng: {{ $item->count }}</span>
                                         </div>
                                         <div class="order__item-price col l-2">
-                                            {{ number_format($item->product->sale_price, 0) }} <span
+                                            {{ number_format($item->price, 0) }} <span
                                                 class="copper">đ</span>
                                             @if ($order->status == 'delivered' && $item->rstatus == false)
                                                 <div class="ratting__checkout-group">
@@ -88,8 +89,9 @@
                                                 @if ($viewEvaluate == 1)
                                                     <label for="ratting_checkout" class="form-evaluate-cushion"></label>
                                                     <div class="form-evaluate">
-                                                        <form wire:submit.prevent="addEvaluates({{$item->id}})">
-                                                            <div class="form-evaluate-title"><span class="form-evaluate-span">Nhận xét</span><label
+                                                        <form wire:submit.prevent="addEvaluates({{ $item->id }})">
+                                                            <div class="form-evaluate-title"><span
+                                                                    class="form-evaluate-span">Nhận xét</span><label
                                                                     for="ratting_checkout" class="close-evaluate"><i
                                                                         class="fa-solid fa-xmark"></i></label></div>
                                                             <div class='form-evaluate-stars'>
@@ -120,7 +122,8 @@
                                                                         class='evaluate-star-icon fa fa-star '></i></label>
                                                             </div>
                                                             <div class="form-evaluate-group">
-                                                                <label class="form-evaluate-text">Nhận xét của bạn:</label>
+                                                                <label class="form-evaluate-text">Nhận xét của
+                                                                    bạn:</label>
                                                                 <textarea class="form-evaluate-textarea" wire:model="content" name="" id="" cols="30"
                                                                     rows="10"></textarea>
 

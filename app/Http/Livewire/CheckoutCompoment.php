@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Mail\OrderMail;
 use Livewire\Component;
 use App\Models\Wards;
 use App\Models\City;
@@ -12,6 +13,7 @@ use App\Models\Transaction;
 use App\Models\Product;
 use Cart;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
 
 class CheckoutCompoment extends Component
@@ -98,6 +100,7 @@ class CheckoutCompoment extends Component
 
         if ($this->payment == 'cod') {
             $this->makeTransaction($order->id,'cod','pending');
+            $this->sendOrderConfirmationMail($order);
         }
 
         $this->thankyou = 1;
@@ -175,6 +178,12 @@ class CheckoutCompoment extends Component
         $transaction->mode = $mode;
         $transaction->status = $status;
         $transaction->save();
+    }
+
+    public function sendOrderConfirmationMail($order)
+    {
+        Mail::to($order->user->email)->send(new OrderMail($order));
+
     }
 
     public function verifyForCheckout()

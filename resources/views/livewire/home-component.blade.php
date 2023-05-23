@@ -1,5 +1,17 @@
 <div class="main__content">
     <div class="grid wide">
+        {{-- <div wire:loading.class="opacity-50">
+            @if (session()->has('success_message'))
+                <div id="toast" class="toast">
+                    <i class="fas fa-check-circle toast__icon"></i>
+                    <div>
+                        <div class="toast__title">Thành công</div>
+                        <div class="toast__text">{{ session('success_message') }}</div>
+                    </div>
+                    <button class="toast__close" wire:click.prevent="closeAlert"><i class="fas fa-times"></i></button>
+                </div>
+            @endif
+        </div> --}}
         <div class="row no-gutters">
             <div class="col l-2 c-0 m-0 category__group">
                 <ul class="category-list">
@@ -60,7 +72,7 @@
                 </div>
             </div>
         </div>
-        <div class="flast-sale">
+        <div class="flast-sale" wire:ignore>
             <div class="flast-sale__titles">
                 <div class="flast-sale__title">
                     <div class="flast-sale__title-text">
@@ -97,9 +109,22 @@
         </div>
         <div class="title__for-you">Gợi ý hôm nay</div>
         <div class="row product__list">
+            @php
+                $witems = Cart::instance('wishlist')
+                    ->content()
+                    ->pluck('id');
+            @endphp 
             @foreach ($products as $product)
                 <div class="col l-2 m-3 c-6 product__item">
                     <div class="product__item-link">
+                        @if ($witems->contains($product->id))
+                            <button wire:click.prevent="removeFromWishlist({{ $product->id }})"
+                                class="favorite-btn clicked"><i class="fas fa-heart"></i></button>
+                        @else
+                            <button
+                                wire:click.prevent="addToWishlist({{ $product->id }},'{{ $product->name }}',{{ $product->regular_price }})"
+                                class="favorite-btn"><i class="fas fa-heart"></i></button>
+                        @endif
                         <a href="{{ Route('product.details', ['slug' => $product->slug]) }}">
                             <img src="{{ asset('assets/imgs/products') }}/{{ $product->image }}" alt=""
                                 class="product__img">

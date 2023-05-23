@@ -15,4 +15,10 @@ class Product extends Model
     {
         return $this->belongsTo(SubCategory::class,'subcategory_id');
     }
+
+    public function DetailOrder()
+    {
+        return $this->hasMany(DetailOrder::class);
+    }
+
 }

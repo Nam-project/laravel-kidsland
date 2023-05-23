@@ -116,8 +116,8 @@
                                         class="fa-solid fa-circle-question"></i><span>Hổ trợ</span></a></li>
                             <li class="nav__bar-item col l-2"><a href="" class="nav__bar-link"><i
                                         class="fa-solid fa-comments"></i><span>Chat</span></a></li>
-                            <li class="nav__bar-item col l-2"><a href="" class="nav__bar-link"><i
-                                        class="fa-solid fa-globe"></i><span>Cộng đồng</span></a></li>
+                            <li class="nav__bar-item col l-2"><a href="{{route('product.wishlist')}}" class="nav__bar-link"><i
+                                        class="fas fa-heart"></i><span>Yêu thích</span></a></li>
                         </ul>
                     </nav>
                 </div>

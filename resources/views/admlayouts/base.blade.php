@@ -40,6 +40,8 @@
     </div>
 </body>
 
+<!-- OPTIONAL SCRIPTS -->
+<script src="{{ asset('plugins/chart.js/Chart.min.js') }}"></script>
 <!-- jQuery -->
 <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
 <!-- Bootstrap -->

@@ -7,6 +7,15 @@
                         <i class="fa-solid fa-bars"></i>
                         Danh Mục
                     </div>
+                    @foreach ($categories as $item)
+                        <div for="" class="shop-categories__checkbox">
+                            <input id="category{{ $item->id }}" wire:model="categoryInputs"
+                                value="{{ $item->id }}" type="checkbox">
+                            <span class="checkbox__custom"></span>
+                            <label class="shop-category__checktext"
+                                for="category{{ $item->id }}">{{ $item->name }}</label>
+                        </div>
+                    @endforeach
                 </div>
             </div>
             <div class="shop-main col l-10">
@@ -34,9 +43,22 @@
                     </div>
                 </div>
                 <div class="row">
+                    @php
+                        $witems = Cart::instance('wishlist')
+                            ->content()
+                            ->pluck('id');
+                    @endphp
                     @foreach ($products as $product)
                         <div class="col l-2-4 m-3 c-6 product__item">
                             <div class="product__item-link">
+                                @if ($witems->contains($product->id))
+                                    <button wire:click.prevent="removeFromWishlist({{ $product->id }})"
+                                        class="favorite-btn clicked"><i class="fas fa-heart"></i></button>
+                                @else
+                                    <button
+                                        wire:click.prevent="addToWishlist({{ $product->id }},'{{ $product->name }}',{{ $product->regular_price }})"
+                                        class="favorite-btn"><i class="fas fa-heart"></i></button>
+                                @endif
                                 <a href="{{ Route('product.details', ['slug' => $product->slug]) }}">
                                     <img src="{{ asset('assets/imgs/products/' . $product->image) }}"
                                         alt="{{ $product->name }}" class="product__img">

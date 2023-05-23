@@ -61,7 +61,7 @@
                                         class="coupon__cart-close " for="check_coupon"><i
                                             class="fa-solid fa-xmark"></i></label></div>
                                 <form wire:submit.prevent="applyCouponCode" class="coupon__cart-group">
-                                    <span class="coupon__cart-text">CODE</span>
+                                    <span class="coupon__cart-text">CODE</span> 
                                     <input type="text" class="coupon__cart-input" wire:model="couponCode">
                                     <button class="coupon__cart-apply">ÁP DỤNG</button>
                                 </form>
@@ -72,11 +72,11 @@
                                     @foreach ($coupons as $coupon)
                                         <div class="coupon__cart-item">
                                             <div class="coupon__item-left">
-                                                <div class="coupon__item-promotion">15k</div>
+                                                <div class="coupon__item-promotion">{{$coupon->type == 'fixed'? substr($coupon->value, 0, -3):$coupon->value}}{{$coupon->type == 'fixed'?'K':'%'}}</div>
                                             </div>
                                             <div class="coupon__item-right">
                                                 <div class="coupon__item-title">{{$coupon->code}}</div>
-                                                <button class="coupon__item-btn">Chọn</button>
+                                                <button class="coupon__item-btn" wire:click.prevent='applyCoupon({{$coupon->id}})'>Chọn</button>
                                             </div>
                                         </div>
                                     @endforeach

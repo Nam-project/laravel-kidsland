@@ -20,7 +20,7 @@ class CartCompoment extends Component
     {
         $product = Cart::instance('cart')->Get($rowId);
         $item = Product::find($product->id);
-        if ($product->qty != $item->can_sell) {
+        if ($product->qty < $item->can_sell) {
             $qty = $product->qty + 1;
             Cart::instance('cart')->update($rowId, $qty);
             $this->emitTo('cart-count-component','refreshComponent');
@@ -67,8 +67,21 @@ class CartCompoment extends Component
                 'value' => $coupon->value,
             ]);
             $this->coupon_code = null;
+            $this->reset('couponCode');
         }
 
+    }
+
+    public function applyCoupon($coupon_id)
+    {
+        $coupon = Coupon::find($coupon_id);
+        session()->put('coupon', [
+            'code' => $coupon->code,
+            'type' => $coupon->type,
+            'cart_value' => $coupon->cart_value,
+            'value' => $coupon->value,
+        ]);
+        $this->coupon_code = null;
     }
 
     public function calculateDiscounts()

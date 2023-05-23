@@ -31,7 +31,7 @@
                             <div class="order__tracking-point"><span class="point-style"><i
                                         class="fa-solid fa-check"></i></span></div>
                         @endif
-                        @if ($order->status == 'shipped' || $order->status == 'delivered')
+                        @if ($order->status == 'shipping' || $order->status == 'delivered')
                             <div class="order__tracking-point"><span class="point-style"><i
                                         class="fa-solid fa-check"></i></span></div>
                         @else
@@ -65,6 +65,7 @@
                             <img src="{{ asset('assets/imgs/icon/enroute-icon.png') }}" alt=""
                                 class="order__tracking-img">
                             <div class="order__tracking-text">Đang giao</div>
+                            <div class="order__tracking-date">{{ $order->shipping_date }}</div>
                         </div>
                         <div class="order__tracking-group">
                             <img src="{{ asset('assets/imgs/icon/arrived-icon.png') }}" alt=""
@@ -88,7 +89,7 @@
                                     <span class="order__item-quantity">Số lượng: {{ $item->count }}</span>
                                 </div>
                                 <div class="order__item-price col l-2">
-                                    {{ number_format($item->product->sale_price, 0) }} <span class="copper">đ</span>
+                                    {{ number_format($item->price, 0) }} <span class="copper">đ</span>
                                 </div>
                             </div>
                         @endforeach

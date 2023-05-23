@@ -11,6 +11,10 @@ class DetailReceipt extends Model
 
     protected $table = "detail_receipts";
 
+    public function receipt()
+    {
+        return $this->belongsTo(Receipt::class);
+    }
     public function product()
     {
         return $this->belongsTo(Product::class);

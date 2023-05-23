@@ -87,19 +87,20 @@
                         <tr>
                             <td>
                                 <div class="icheck-primary m-0">
-                                    <input type="checkbox" value="" id="check{{$product->id}}">
-                                    <label for="check{{$product->id}}"></label>
+                                    <input type="checkbox" value="" id="check{{ $product->id }}">
+                                    <label for="check{{ $product->id }}"></label>
                                 </div>
                             </td>
                             <td> <img src="{{ asset('assets/imgs/products') }}/{{ $product->image }}" height="50px"
-                                    width="50px" style="object-fit: scale-down;" alt=""> {{ $product->name }}
+                                    width="50px" style="object-fit: scale-down;" alt=""> <a
+                                    href="" class="text-primary">{{ $product->name }}</a>
                             </td>
                             <td>{{ $product->SKU }}</td>
                             <td>{{ $product->subcategory->category->name }}/{{ $product->subcategory->name }}</td>
                             <td>{{ $product->can_sell }}</td>
                             <td>{{ $product->quantity }}</td>
-                            <td></td>
-                            <td></td>
+                            <td> {{ $this->getProductReceiptCounts($product->id) }} </td>
+                            <td>{{ $this->getProductOrderCounts($product->id) }}</td>
                         </tr>
                     @endforeach
                 </tbody>
