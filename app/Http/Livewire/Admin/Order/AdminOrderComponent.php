@@ -6,9 +6,11 @@ use App\Models\Order;
 use App\Models\ProductWareHouse;
 use Livewire\Component;
 use Illuminate\Support\Facades\DB;
+use Livewire\WithPagination;
 
 class AdminOrderComponent extends Component
 {
+    use WithPagination;
     public function updateOrderStatus($order_id, $status)
     {
         $order = Order::find($order_id);
@@ -41,6 +43,11 @@ class AdminOrderComponent extends Component
         }
         $order->save();
         session()->flash('order_massage','Cập nhật trạng thái đơn hàng thành công !');
+    }
+
+    public function dowloadInvoice($order_id)
+    {
+        return redirect()->route('download.invoice', ['order_id' =>$order_id]);
     }
 
     public function render()

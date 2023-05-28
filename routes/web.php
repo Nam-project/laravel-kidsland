@@ -43,8 +43,9 @@ use App\Http\Livewire\Admin\Coupon\AdminAddCouponComponent;
 use App\Http\Livewire\Admin\Coupon\AdminEditCouponComponent;
 use App\Http\Livewire\Admin\Order\AdminOrderComponent;
 use App\Http\Livewire\Admin\Order\AdminOrderDetailsComponent;
+use App\Http\Livewire\Admin\Order\GenerateInvoice;
 
-use App\Http\Controllers\VnPayController;
+use App\Http\Controllers\InvoiceController;
 
 
 
@@ -146,4 +147,5 @@ Route::middleware(['auth:sanctum', 'verified', 'authadmin'])->group(function() {
     // Order
     Route::get('/admin/orders', AdminOrderComponent::class)->name('admin.order');
     Route::get('/admin/orders/{order_id}', AdminOrderDetailsComponent::class)->name('admin.orderdetails');
+    Route::get('/admin/download-invoice/{order_id}', [InvoiceController::class, 'downloadInvoice'])->name('download.invoice');
 });

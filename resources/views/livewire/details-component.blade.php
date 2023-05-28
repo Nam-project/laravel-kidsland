@@ -3,8 +3,10 @@
         <div class="details">
             <div class="product__breadcrumb">
                 <a href="/">Trang chủ</a><i class="fa-solid fa-angle-right"></i>
-                <a href="{{Route('product.category',['category_slug' => $product->subcategory->category->slug])}}">{{$product->subcategory->category->name}}</a><i class="fa-solid fa-angle-right"></i>
-                <span>{{$product->name}}</span>
+                <a
+                    href="{{ Route('product.category', ['category_slug' => $product->subcategory->category->slug]) }}">{{ $product->subcategory->category->name }}</a><i
+                    class="fa-solid fa-angle-right"></i>
+                <span>{{ $product->name }}</span>
             </div>
             <div class="row details__group">
                 <div class="col l-5 c-12 m-12 details__g-img">
@@ -83,7 +85,13 @@
                 </div>
             </div>
             <div class="row  details__information">
-                <div class="col l-9 details__information-groups">
+                <div class="col l-9 details__information-groups" style="height: {{ $showMore == 1 ? '1462px' : '100%' }}">
+                    @if ($showMore == 1)
+                        <div class="details__gradian"></div>
+                        <div class="details__more">
+                            <button wire:click.prevent="setShowMore" class="details__btn-more">Xem thêm nội dung</button>
+                        </div>
+                    @endif
                     <div class="details__information-group">
                         <div class="details__information-title">
                             <div onclick="scrollToElement('target-element')" class="information__text text__active">Chi
@@ -161,7 +169,8 @@
                         class="fa-solid fa-caret-right"></i></div>
                 <div class="details__evaluate-rating col l-4">
                     <div class="review-rating__summary">
-                        <div class="review-rating__point">{{ count($detailOrder) > 0 ? $avg_evaluate : '0 / 5' }}</div>
+                        <div class="review-rating__point">{{ count($detailOrder) > 0 ? $avg_evaluate : '0 / 5' }}
+                        </div>
                         <div class="review-rating__stars">
                             <div class="review-rating__star" style="--rating: {{ $avg_evaluate }};"
                                 aria-label="Rating of this product is 2.3 out of 5."></div>
@@ -289,7 +298,8 @@
                             class="fa-solid fa-caret-right"></i></div>
                     <form action="" wire:submit.prevent="addComment" class="details__comment-form">
                         <div class="details__comment-group width-100">
-                            <input type="text" class="details__comment-input" wire:model="content" name="" id="">
+                            <input type="text" class="details__comment-input" wire:model="content" name=""
+                                id="">
                             @error('content')
                                 <p class="checkout-error">{{ $message }}</p>
                             @enderror
@@ -303,12 +313,13 @@
                 <div class="details__evaluate-comment width-100 pd-10">
                     @foreach ($comments as $comment)
                         <div class="evaluate__comment-rating details__comment-background">
-                            <a href="" class="evaluate__comment-avatar"><img src="{{asset('assets/imgs/user.png')}}"
-                                    alt=""></a>
+                            <a href="" class="evaluate__comment-avatar"><img
+                                    src="{{ asset('assets/imgs/user.png') }}" alt=""></a>
                             <div class="evaluate__comment-main">
-                                <div class="evaluate__comment-username">User<span>{{$comment->created_at}}</span></div>
+                                <div class="evaluate__comment-username">User<span>{{ $comment->created_at }}</span>
+                                </div>
                                 <div class="evaluate__comment-text">
-                                    {{$comment->content}}
+                                    {{ $comment->content }}
                                 </div>
                             </div>
                         </div>

@@ -39,7 +39,7 @@
                                         <h4 class="subcategory__heading">Thương hiệu</h4>
                                         @foreach ($item->brand as $brand)
                                             <li class="subcategory__title"><a class="subcategory__title-link"
-                                                    href="">{{ $brand->name }}</a></li>
+                                                    href="{{ route('product.category', ['category_slug' => $brand->category->slug]) }}" wire:click="searchBrand({{$brand->id}})">{{ $brand->name }}</a></li>
                                         @endforeach
                                     </ul>
                                 @endif

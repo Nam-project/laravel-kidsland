@@ -71,9 +71,12 @@
                                     href="{{ route('admin.orderdetails', ['order_id' => $order->id]) }}"><i
                                         class="fas fa-eye"></i></a></td>
                             <td>
-                                <button class="btn btn-primary btn-sm">
+                                <button wire:click.prevent='dowloadInvoice({{$order->id}})' class="btn btn-primary btn-sm">
                                     <i class="fas fa-download"></i>
                                 </button>
+                                {{-- <a href="{{route('admin.invoice',['order_id' => $order->id])}}" class="btn btn-primary btn-sm">
+                                    <i class="fas fa-download"></i>
+                                </a> --}}
                             </td>
                             <td>
                                 @if ($order->status != 'delivered' && $order->status != 'canceled')

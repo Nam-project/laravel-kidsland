@@ -33,12 +33,17 @@ class CategoryComponent extends Component
 
     public function mount($category_slug, $subcategory_slug=null)
     {
+        if (session()->has('brand')) {
+            $this->brandInputs = [session()->get('brand')];
+            session()->forget('brand');
+        }
         $this->sorting = 'default';
         $this->pagesize = 15;
         $this->category_slug = $category_slug;
         $this->subcategory_slug = $subcategory_slug;
         $this->minPrice = Product::min('regular_price');
         $this->maxPrice = Product::max('regular_price');
+        
     }
 
     public function store($product_id, $product_name, $product_price)

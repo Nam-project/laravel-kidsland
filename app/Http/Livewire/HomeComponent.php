@@ -61,6 +61,11 @@ class HomeComponent extends Component
         }
     }
 
+    public function searchBrand($brand_id)
+    {
+        session()->put('brand', $brand_id);
+    }
+
     public function render()
     {
         $sliders = HomeSlider::where('status', 1)->get();

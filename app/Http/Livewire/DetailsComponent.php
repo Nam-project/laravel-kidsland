@@ -25,6 +25,7 @@ class DetailsComponent extends Component
     public $evaluate_1;
 
     public $content;
+    public $showMore;
 
     public function mount($slug)
     {
@@ -32,6 +33,12 @@ class DetailsComponent extends Component
         $this->qty = 1;
         $this->numberOfReviews();
         // dd($this->evaluate_5);
+        $this->showMore = 1;
+    }
+
+    public function setShowMore()
+    {
+        $this->showMore = null;
     }
 
     public function numberOfReviews()
