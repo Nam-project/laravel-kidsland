@@ -38,13 +38,13 @@
                                 </a>
                                 <div class="profile__form-name">
                                     <label class="profile__form-label" for="">Họ & Tên</label>
-                                    <input class="profile__form-input" type="text">
+                                    <input class="profile__form-input" wire:model="name" type="text">
                                 </div>
                             </div>
                         </div>
                         <div class="profile__form-control">
                             <label class="profile__form-label" for="">Ngày sinh</label>
-                            <input class="profile__form-input" type="date">
+                            <input class="profile__form-input" wire:model="datebirth" type="date">
                         </div>
                         <div class="profile__form-control">
                             <label class="profile__form-label" for="">Giới tính</label>
@@ -86,7 +86,7 @@
                                 </div>
                                 <div class="profile-item__group">
                                     <div>Địa chỉ email</div>
-                                    <div class="profile-item_phone">qng.namnguyen@gmail.com
+                                    <div class="profile-item_phone">{{ Auth::user()->email }}
                                     </div>
                                 </div>
                                 <button class="profile-item__btn">Cập nhật</button>

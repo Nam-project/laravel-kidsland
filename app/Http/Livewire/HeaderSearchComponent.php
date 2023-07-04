@@ -37,6 +37,9 @@ class HeaderSearchComponent extends Component
 
         $this->search = $record->name;
         $this->showDiv = false;
+        $url = route('product.search');
+        return redirect($url.'?search='.$this->search);
+
     }
 
     public function render()

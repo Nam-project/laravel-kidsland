@@ -24,6 +24,7 @@ class AdminViewEnterStockComponent extends Component
         foreach ($receipt->detailReceipt as $item) {
             $product = Product::find($item->product->id);
             $product->quantity = $product->quantity + $item->quantity;
+            $product->can_sell = $product->can_sell + $item->quantity;
             $product->save();
             $warehouse = ProductWarehouse::where('product_id',$item->product_id)->where('warehouse_id',$receipt->warehouse_id)->first();
             if ($warehouse) {

@@ -79,6 +79,8 @@
                         </div>
                     </form>
                 </div>
+                <hr>
+                <button type="submit" class="shop-price__range-apply">XÓA TẤT CẢ</button>
             </div>
             <div class="shop-main col l-10">
                 <div class="shop-sort-bar">
@@ -88,7 +90,7 @@
                         <button class="shop-sort-by-option">Cũ nhất</button>
                         <button class="shop-sort-by-option">Bán chạy</button> --}}
                         <select name="" id="" class="shop-sort-by__select" wire:model="sorting">
-                            <option value="">Default sorting</option>
+                            <option value="">Sắp xếp theo</option>
                             <option value="orderby_new">Mới nhất</option>
                             <option value="orderby_old">Cũ nhất</option>
                             <option value="price">Giá: Cao đến thấp</option>

@@ -3,7 +3,8 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>Invoice</title>
+    <title>Tax Invoice</title>
+    <link rel="shortcut icon" type="image/png" href="./favicon.png" />
     <style>
         * {
             box-sizing: border-box;
@@ -113,6 +114,9 @@
             padding: 14px 0;
 
         }
+        .table-info td {
+            padding: 3px 6px;
+        }
     </style>
 </head>
 
@@ -126,41 +130,48 @@
                   font-size: 14px;
                   color: #4a4a4a;
                 ">
-            <h1>KidsLand</h1>
+            <h1 style="padding-left: 5px; font-size: 28px;">KidsLand</h1>
 
-            <p style="font-weight: bold; color: #000; margin-top: 15px; font-size: 18px;">
-                Invoice
+            <p style="font-weight: bold; margin-top: 10px; font-size: 18px;">
+                HOA DON
             </p>
-            <p>
-                <b>DN:</b> 0101234567
-            </p>
-            <p>
-                <b>VAT:</b> 0123456789
-            </p>
-            <p>
-                <b>Date:</b> 2023/05/23-12:07
-            </p>
+                <table style="margin-top: 10px" class="table-info">
+                    <tr>
+                        <td>Xin chao,</td>
+                        <td style="width: 110px"></td>
+                        <td><b>DN:</b> 0101234567</td>
+                    </tr>
+                    <tr>
+                        <td>{{Str::slug($order->name, ' ')}}</td>
+                        <td></td>
+                        <td><b>VAT:</b> 0123456789</td>
+                    </tr>
+                    <tr>
+                        <td>No.000{{$order->id}}</td>
+                        <td></td>
+                        <td><b>Date:</b> {{$order->updated_at}}</td>
+                    </tr>
+                </table>
             <hr style="border: 1px dashed rgb(131, 131, 131); margin: 25px auto">
         </div>
         <table style="width: 100%; table-layout: fixed">
             <thead>
                 <tr>
                     <th style="width: 50px; padding-left: 0;">Sn.</th>
-                    <th style="width: 220px;">Item Name</th>
-                    <th style="text-align: center;">QTY</th>
-                    <th style="text-align: right; padding-right: 0;">Price</th>
+                    <th style="width: 220px;">San pham</th>
+                    <th>qty</th>
+                    <th style="text-align: right; padding-right: 0;">Gia</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($order->detailOrder as $key => $item)
                     <tr class="invoice-items">
-                        <td>{{$key + 1}}</td>
+                        <td>{{ $key + 1 }}</td>
                         <td>{{ Str::slug($item->product->name, ' ') }}</td>
-                        <td style="text-align: center;">{{$item->count}}</td>
-                        <td style="text-align: right;">{{$item->price}}</td>
+                        <td>{{ $item->count }}</td>
+                        <td style="text-align: right;">{{ number_format($item->price, 0) }} vnd</td>
                     </tr>
                 @endforeach
-
             </tbody>
         </table>
 
@@ -169,10 +180,10 @@
               border-radius: 4px;">
             <thead>
                 <tr>
-                    <th>Total</th>
-                    <th style="text-align: center;">Item (10)</th>
-                    <th>&nbsp;</th>
-                    <th style="text-align: right;">{{$order->total}}</th>
+                    <th>Tong tien</th>
+                    <th></th>
+                    <th></th>
+                    <th style="text-align: right;">{{ number_format($order->total, 0) }} vnd</th>
 
                 </tr>
             </thead>
@@ -186,17 +197,19 @@
               border-radius: 3px;">
             <thead>
                 <tr>
-                    <td>Total Saving In Rs: </td>
-                    <td style="text-align: right;">396</td>
+                    <td>Giam gia: </td>
+                    <td style="text-align: right;">{{number_format($order->discount, 0)}} vnd</td>
                 </tr>
                 <tr>
-                    <td>Total Saving In %: </td>
-                    <td style="text-align: right;">32%</td>
+                    <td>Thue gia tri gia tang: </td>
+                    <td style="text-align: right;">10%</td>
                 </tr>
             </thead>
 
         </table>
-
+        <p
+            style="font-size: 12px; padding-top: 10px; color: #5b5b5b; line-height: 18px; vertical-align: top; text-align: left;">
+            Chuc ban mot ngay tot lanh.</p>
     </section>
 </body>
 

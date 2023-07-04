@@ -33,10 +33,10 @@ class CategoryComponent extends Component
 
     public function mount($category_slug, $subcategory_slug=null)
     {
-        if (session()->has('brand')) {
-            $this->brandInputs = [session()->get('brand')];
-            session()->forget('brand');
-        }
+        // if (session()->has('brand')) {
+        //     $this->brandInputs = [session()->get('brand')];
+        //     session()->forget('brand');
+        // }
         $this->sorting = 'default';
         $this->pagesize = 15;
         $this->category_slug = $category_slug;

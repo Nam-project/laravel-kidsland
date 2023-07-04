@@ -55,13 +55,21 @@
                                     <button type="button" class="btn btn-block btn-primary"
                                         wire:click.prevent="filterResults">Lọc kết quả</button>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group pr-2">
                                     <select class="form-control" wire:model="by_date">
                                         <option value="0">Sắp xếp theo</option>
                                         <option value="7">7 ngày qua</option>
                                         <option value="30">Tháng này</option>
                                         <option value="90">Tháng trước</option>
                                         <option value="365">365 ngày qua</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <select class="form-control" wire:model="categoryId">
+                                        <option value="0">Tất cả danh mục</option>
+                                        @foreach ($categories as $item)
+                                            <option value="{{$item->id}}">{{$item->name}}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                                 </p>
@@ -73,16 +81,6 @@
                                 {{-- @livewire('admin.chart-component') --}}
                                 <canvas id="orderRevenueChart"
                                     style="height: 450px; width: 100%;"></canvas>
-                            </div>
-
-                            <div class="d-flex flex-row justify-content-end">
-                                <span class="mr-2">
-                                    <i class="fas fa-square text-primary"></i> This year
-                                </span>
-
-                                <span>
-                                    <i class="fas fa-square text-gray"></i> Last year
-                                </span>
                             </div>
                         </div>
                     </div>

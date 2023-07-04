@@ -34,7 +34,7 @@ class AdminProductWareHouseComponent extends Component
 
     public function render()
     {
-        $products = Product::paginate(10);
+        $products = Product::orderBy('created_at', 'desc')->paginate(10);
         
         return view('livewire.admin.productwarehouse.admin-product-ware-house-component',['products'=>$products])->layout('admlayouts.base');
     }

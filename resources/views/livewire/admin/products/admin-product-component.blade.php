@@ -52,7 +52,7 @@
                         <tr>
                             <td>{{ $product->id }}</td>
                             <td><img src="{{asset('assets/imgs/products')}}/{{$product->image}}" height="100px" alt=""></td>
-                            <td>{{ $product->name }}</td>
+                            <td style="max-width: 500px;">{{ $product->name }}</td>
                             <td>{{ $product->quantity }}</td>
                             <td>{{ $product->stock_status }}</td>
                             <td>{{ $product->sale_price }}</td>

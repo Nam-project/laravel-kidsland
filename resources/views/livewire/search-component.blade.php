@@ -7,7 +7,30 @@
                         <i class="fa-solid fa-bars"></i>
                         Danh Mục
                     </div>
+                    @foreach ($categories as $item)
+                        <div for="" class="shop-categories__checkbox">
+                            <input id="category{{ $item->id }}" wire:model="categoryInputs"
+                                value="{{ $item->id }}" type="checkbox">
+                            <span class="checkbox__custom"></span>
+                            <label class="shop-category__checktext"
+                                for="category{{ $item->id }}">{{ $item->name }}</label>
+                        </div>
+                    @endforeach
                 </div>
+                <form action="" wire:submit.prevent="rangePrice">
+                    <div class="shop-category__subtitle">Khoảng giá</div>
+                    <hr>
+                    <div class="shop-price__range">
+                        <input type="number" wire:model="fromPrice" placeholder="TỪ -" class="shop-price__range-input">
+                    </div>
+                    <div class="shop-price__range">
+                        <input type="number" wire:model="toPrice" placeholder="ĐẾN" class="shop-price__range-input">
+                    </div>
+                    <div class="shop-price__range">
+                        <button type="submit" class="shop-price__range-apply">ÁP DỤNG</button>
+                    </div>
+                </form>
+
             </div>
             <div class="shop-main col l-10">
                 <div class="shop-sort-bar">
@@ -17,7 +40,7 @@
                         <button class="shop-sort-by-option">Cũ nhất</button>
                         <button class="shop-sort-by-option">Bán chạy</button> --}}
                         <select name="" id="" class="shop-sort-by__select" wire:model="sorting">
-                            <option value="">Default sorting</option>
+                            <option value="">Sắp xếp theo</option>
                             <option value="orderby_new">Mới nhất</option>
                             <option value="orderby_old">Cũ nhất</option>
                             <option value="price">Giá: Cao đến thấp</option>
@@ -44,15 +67,22 @@
                                         <div class="product__name">{{ $product->name }}
                                         </div>
                                         <div class="product__group">
-                                            <div class="product__price">{{ $product->regular_price }} <span
-                                                    class="copper">đ</span></div>
+                                            <div class="product__price">
+                                                @if ($product->sale_price > 0)
+                                                    {{ number_format($product->sale_price, 0) }}
+                                                @else
+                                                    {{ number_format($product->regular_price, 0) }}
+                                                @endif <span class="copper">đ</span>
+                                            </div>
                                             <div class="product__assess">5<i class="fa-solid fa-star"></i></i></div>
                                         </div>
                                     </a>
                                     <div class="product__with-cart">
-                                        <a href="" class="product__buy-now btn-pink">Mua ngay</a>
-                                        <button onclick="updateCartCount()" class="product__cart"
-                                            wire:click.prevent="store({{ $product->id }},'{{ $product->name }}',{{ $product->regular_price }})">
+                                        <a href=""
+                                            wire:click.prevent="storeBuy({{ $product->id }},'{{ $product->name }}',{{ $product->sale_price > 0 ? $product->sale_price : $product->regular_price }})"
+                                            class="product__buy-now btn-pink">Mua ngay</a>
+                                        <button class="product__cart"
+                                            wire:click.prevent="store({{ $product->id }},'{{ $product->name }}',{{ $product->sale_price > 0 ? $product->sale_price : $product->regular_price }})">
                                             <i class="fa-solid fa-cart-plus"></i>
                                         </button>
                                     </div>
@@ -61,7 +91,11 @@
                         @endforeach
                     </div>
                 @else
-                    <p>No products</p>
+                    <div class="cart-empty">
+                        <img src="{{ asset('assets/imgs/icon/search-none.png') }}" alt=""
+                            class="img-cart-drum">
+                        <h2 class="cart-empty-title">Không tìm thấy sản phẩm</h2>
+                    </div>
                 @endif
             </div>
         </div>

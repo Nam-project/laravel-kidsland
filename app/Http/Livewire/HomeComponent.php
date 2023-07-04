@@ -61,10 +61,10 @@ class HomeComponent extends Component
         }
     }
 
-    public function searchBrand($brand_id)
-    {
-        session()->put('brand', $brand_id);
-    }
+    // public function searchBrand($brand_id)
+    // {
+    //     session()->put('brand', $brand_id);
+    // }
 
     public function render()
     {

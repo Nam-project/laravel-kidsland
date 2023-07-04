@@ -67,7 +67,8 @@
                 <div class="form-group">
                     <label for="fileInput">Hinh ảnh group</label>
                     <div class="custom-file">
-                        <input class="pt-2" type="file" id="file-upload" name="file-upload" wire:model="images" multiple>
+                        <input class="pt-2" type="file" id="file-upload" name="file-upload" wire:model="images"
+                            multiple>
                     </div>
                     @error('images')
                         <p class="text-danger">{{ $message }}</p>
@@ -122,17 +123,34 @@
                         <option value="1">Yes</option>
                     </select>
                 </div>
-                <div class="form-group">
-                    <label>Danh mục</label>
-                    <select class="custom-select" wire:model="subcategory_id">
-                        <option value="">Chọn danh mục</option>
-                        @foreach ($subcategories as $subcategory)
-                            <option value="{{ $subcategory->id }}">{{ $subcategory->name }}</option>
-                        @endforeach
-                    </select>
-                    @error('subcategory_id')
-                        <p class="text-danger">{{ $message }}</p>
-                    @enderror
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label>Danh mục</label>
+                            <select class="custom-select" wire:model="category_id">
+                                <option value="">Chọn danh mục</option>
+                                @foreach ($category as $cate)
+                                    <option value="{{ $cate->id }}">{{ $cate->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label>Danh mục con</label>
+                            <select class="custom-select" wire:model="subcategory_id">
+                                <option value="">Chọn danh mục</option>
+                                @if ($subcategories)
+                                    @foreach ($subcategories as $subcategory)
+                                        <option value="{{ $subcategory->id }}">{{ $subcategory->name }}</option>
+                                    @endforeach
+                                @endif
+                            </select>
+                            @error('subcategory_id')
+                                <p class="text-danger">{{ $message }}</p>
+                            @enderror
+                        </div>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label>Thương hiệu</label>

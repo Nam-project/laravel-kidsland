@@ -953,6 +953,7 @@ swiper-container {
 }
 
 .details__name {
+    line-height: 25px;
     margin: 20px 20px 5px;
     font-size: 20px;
     text-transform: uppercase;
@@ -1276,6 +1277,21 @@ swiper-container {
 
 .review-rating__detail {
     display: block;
+}
+
+.review-filter {
+    cursor: pointer;
+    margin: 5px 0;
+    border-radius: 10px;
+}
+.review-filter__activate
+{
+    background-color: var(--white-color);
+}
+
+.none-text-center {
+    text-align: left !important;
+    padding-left: 10px;
 }
 
 .review-rating__level {
@@ -2750,6 +2766,7 @@ swiper-container {
     background-color: var(--white-color);
     border-radius: 5px;
     margin-bottom: 20px;
+    min-height: 450px;
 }
 
 .profile-title {
@@ -2857,8 +2874,14 @@ swiper-container {
     font-size: 16px;
     border: none;
     border-radius: 5px;
+    color: var(--blue--color);
+    background-color: var(--white-color);
+    border: 1px solid var(--blue--color);
+}
+
+.profile__form-btn:hover {
+    background: var(--blue--color);
     color: var(--white-color);
-    background-color: var(--blue--color);
 }
 
 .profile-group {

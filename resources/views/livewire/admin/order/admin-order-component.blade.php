@@ -81,7 +81,7 @@
                             <td>
                                 @if ($order->status != 'delivered' && $order->status != 'canceled')
                                     <div class="btn-group">
-                                        <button type="button" class="btn btn-success">Status</button>
+                                        <button type="button" class="btn btn-success">Trạng thái</button>
                                         <button type="button" class="btn btn-success dropdown-toggle"
                                             data-toggle="dropdown" aria-expanded="false">
                                             {{-- <span class="sr-only">Toggle Dropdown</span> --}}
@@ -89,13 +89,13 @@
                                         <div class="dropdown-menu" role="menu" style="">
                                             <button
                                                 wire:click.prevent="updateOrderStatus({{ $order->id }},'delivered')"
-                                                class="dropdown-item">Delivered</button>
+                                                class="dropdown-item">Đã giao hàng</button>
                                             <button
                                                 wire:click.prevent="updateOrderStatus({{ $order->id }},'shipping')"
-                                                class="dropdown-item">Shipping</button>
+                                                class="dropdown-item">Đang chuyển hàng</button>
                                             <button
                                                 wire:click.prevent="updateOrderStatus({{ $order->id }},'canceled')"
-                                                class="dropdown-item">Canceled</button>
+                                                class="dropdown-item">Hủy</button>
                                         </div>
                                     </div>
                                 @endif

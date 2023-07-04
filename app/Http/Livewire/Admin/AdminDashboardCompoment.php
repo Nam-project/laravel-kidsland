@@ -8,6 +8,7 @@ use App\Models\Order;
 use Illuminate\Support\Facades\Session;
 use App\Models\User;
 use App\Models\Product;
+use App\Models\Category;
 
 class AdminDashboardCompoment extends Component
 {
@@ -18,6 +19,8 @@ class AdminDashboardCompoment extends Component
     public $total;
     public $filterStart;
     public $filterEnd;
+
+    public $categoryId;
 
     public function mount()
     {
@@ -31,11 +34,27 @@ class AdminDashboardCompoment extends Component
 
     public function loadDataChart()
     {
-        $orderData = Order::selectRaw('DATE(updated_at) as date, SUM(total) as revenue')
+        if ( $this->categoryId == 0) {
+            $orderData = Order::selectRaw('DATE(updated_at) as date, SUM(total) as revenue')
             ->whereBetween('updated_at', [$this->start, $this->end])
             ->groupBy('date')
             ->orderBy('date')
             ->get();
+            $this->total = Order::whereBetween('updated_at', [$this->start, $this->end])->sum('total');
+        } else {
+            $categoryId = $this->categoryId;
+            $orderData = Order::whereHas('detailOrder.product.subcategory.category', function ($query) use ($categoryId) {
+                $query->where('id', $categoryId);
+            })->selectRaw('DATE(updated_at) as date, SUM(total) as revenue')
+                ->whereBetween('updated_at', [$this->start, $this->end])
+                ->groupBy('date')
+                ->orderBy('date')
+                ->get();
+            $this->total = Order::whereHas('detailOrder.product.subcategory.category', function ($query) use ($categoryId) {
+                $query->where('id', $categoryId);
+            })->whereBetween('updated_at', [$this->start, $this->end])->sum('total');
+        }
+        
         $formattedData = [];
         foreach ($orderData as $order) {
             $formattedData[] = [
@@ -44,7 +63,6 @@ class AdminDashboardCompoment extends Component
             ];
         }
         $this->data = $formattedData;
-        $this->total = Order::whereBetween('updated_at', [$this->start, $this->end])->sum('total');
     }
 
     public function filterResults()
@@ -92,9 +110,12 @@ class AdminDashboardCompoment extends Component
         $quantity_product = Product::all()->count();
         $growth_rate = 100*(Order::whereBetween('updated_at', [Carbon::now()->subDays(30), Carbon::now()])->sum('total') - Order::whereBetween('updated_at', [Carbon::now()->subDays(60), Carbon::now()->subDays(30)])->sum('total'))/Order::whereBetween('updated_at', [Carbon::now()->subDays(60), Carbon::now()->subDays(30)])->sum('total');
 
+
+        $categories = Category::all();
+
         return view('livewire.admin.admin-dashboard-compoment',
                 ['data'=>$this->data,'growth_rate'=>$growth_rate, 'quantity_order'=>$quantity_order,
-                'quantity_user'=>$quantity_user, 'quantity_product'=>$quantity_product])
+                'quantity_user'=>$quantity_user, 'quantity_product'=>$quantity_product, 'categories'=>$categories])
                 ->layout('admlayouts.base');
     }
 

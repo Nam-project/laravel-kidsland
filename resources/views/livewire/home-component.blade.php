@@ -39,7 +39,8 @@
                                         <h4 class="subcategory__heading">Thương hiệu</h4>
                                         @foreach ($item->brand as $brand)
                                             <li class="subcategory__title"><a class="subcategory__title-link"
-                                                    href="{{ route('product.category', ['category_slug' => $brand->category->slug]) }}" wire:click="searchBrand({{$brand->id}})">{{ $brand->name }}</a></li>
+                                                    href="{{ url('product-category/' . $brand->category->slug . '?brandInputs[0]=' . $brand->id) }}">{{ $brand->name }}</a>
+                                            </li>
                                         @endforeach
                                     </ul>
                                 @endif
@@ -97,9 +98,9 @@
                             <div class="flast-sale__name">{{ $product->name }}
                             </div>
                             <div class="flast-sale__price">
-                                <div class="sale__price-old">{{ $product->regular_price }}<span class="copper">đ</span>
+                                <div class="sale__price-old">{{ number_format($product->regular_price, 0) }}<span class="copper">đ</span>
                                 </div>
-                                <div class="sale__price-new">{{ $product->sale_price }}<span class="copper">đ</span>
+                                <div class="sale__price-new">{{ number_format($product->sale_price, 0) }}<span class="copper">đ</span>
                                 </div>
                             </div>
                         </a>
@@ -113,7 +114,7 @@
                 $witems = Cart::instance('wishlist')
                     ->content()
                     ->pluck('id');
-            @endphp 
+            @endphp
             @foreach ($products as $product)
                 <div class="col l-2 m-3 c-6 product__item">
                     <div class="product__item-link">
@@ -131,17 +132,23 @@
                             <div class="product__name">{{ $product->name }}
                             </div>
                             <div class="product__group">
-                                <div class="product__price">{{ $product->regular_price }}<span class="copper">đ</span>
+                                <div class="product__price">
+                                    @if ($product->sale_price > 0)
+                                        {{ number_format($product->sale_price, 0) }}
+                                    @else
+                                        {{ number_format($product->regular_price, 0) }}
+                                    @endif
+                                    <span class="copper">đ</span>
                                 </div>
-                                <div class="product__assess">5<i class="fa-solid fa-star"></i></i></div>
+                                {{-- <div class="product__assess">5<i class="fa-solid fa-star"></i></i></div> --}}
                             </div>
                         </a>
                         <div class="product__with-cart">
                             <a href=""
-                                wire:click.prevent="storeBuy({{ $product->id }},'{{ $product->name }}',{{ $product->regular_price }})"
+                                wire:click.prevent="storeBuy({{ $product->id }},'{{ $product->name }}',{{ $product->sale_price > 0 ? $product->sale_price : $product->regular_price }})"
                                 class="product__buy-now btn-pink">Mua ngay</a>
                             <button class="product__cart"
-                                wire:click.prevent="store({{ $product->id }},'{{ $product->name }}',{{ $product->regular_price }})">
+                                wire:click.prevent="store({{ $product->id }},'{{ $product->name }}',{{ $product->sale_price > 0 ? $product->sale_price : $product->regular_price }})">
                                 <i class="fa-solid fa-cart-plus"></i>
                             </button>
                         </div>

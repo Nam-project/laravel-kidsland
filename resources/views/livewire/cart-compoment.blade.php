@@ -25,7 +25,7 @@
                                     <div class="product__cart-name">{{ $item->model->name }}</div>
                                 </a>
                             </div>
-                            <div class="products__cart-other">{{ $item->model->regular_price }} <span
+                            <div class="products__cart-other">{{ $item->price }} <span
                                     class="copper">đ</span></div>
                             <div class="products__cart-other">
                                 <div class="details__quantity-add">
@@ -39,7 +39,7 @@
                                         type="button">+</button>
                                 </div>
                             </div>
-                            <div class="products__cart-other">{{ $item->model->regular_price }} <span
+                            <div class="products__cart-other">{{ $item->price }} <span
                                     class="copper">đ</span></div>
                             <div class="products__cart-other">
                                 <button class="cart-btn-delete"

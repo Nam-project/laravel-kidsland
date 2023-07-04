@@ -46,23 +46,23 @@
                 <div class="col l-7 c-12 m-12">
                     <div class="details__name">{{ $product->name }}</div>
                     <div class="details__group-evaluate">
-                        <div class="star__evaluate">
-                            <span>5.0</span>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                        </div>
-                        <div class="star__evaluate"><span>255</span>
-                            <div class="star__evaluate-text">Đánh giá</div>
-                        </div>
-                        <div class="details__sold">
-                            <div>255</div>
-                            <div class="star__evaluate-text">Đã bán</div>
+                        <div class="review-rating__summary">
+                            <div class="review-rating__point">{{ count($detailOrder) > 0 ? $avg_evaluate : '0 / 5' }}
+                            </div>
+                            <div class="review-rating__stars">
+                                <div class="review-rating__star" style="--rating: {{ $avg_evaluate }};"
+                                    aria-label="Rating of this product is 2.3 out of 5."></div>
+                            </div>
                         </div>
                     </div>
-                    <div class="details__price">{{ $product->sale_price }}<span class="copper">đ</span></div>
+                    <div class="details__price">
+                        @if ($product->sale_price > 0)
+                            {{ number_format($product->sale_price, 0) }}
+                        @else
+                            {{ number_format($product->regular_price, 0) }}
+                        @endif
+                        <span class="copper">đ</span>
+                    </div>
                     <div class="details__quantity">
                         <div class="details__quantity-text">Số lượng</div>
                         <div class="details__quantity-add">
@@ -75,21 +75,23 @@
                     </div>
                     <div class="details__cart">
                         <button class="details__cart-add"
-                            wire:click.prevent="store({{ $product->id }},'{{ $product->name }}',{{ $product->regular_price }})"><i
+                            wire:click.prevent="store({{ $product->id }},'{{ $product->name }}',{{ $product->sale_price > 0 ? $product->sale_price : $product->regular_price }})"><i
                                 class="fa-solid fa-cart-plus"></i>Thêm vào giỏ
                             hàng</button>
                         <button
-                            wire:click.prevent="storeBuy({{ $product->id }},'{{ $product->name }}',{{ $product->regular_price }})"
+                            wire:click.prevent="storeBuy({{ $product->id }},'{{ $product->name }}',{{ $product->sale_price > 0 ? $product->sale_price : $product->regular_price }})"
                             class="details__cart-buy">Mua ngay</button>
                     </div>
                 </div>
             </div>
             <div class="row  details__information">
-                <div class="col l-9 details__information-groups" style="height: {{ $showMore == 1 ? '1462px' : '100%' }}">
+                <div class="col l-9 details__information-groups"
+                    style="height: {{ $showMore == 1 ? '1462px' : '100%' }}">
                     @if ($showMore == 1)
                         <div class="details__gradian"></div>
                         <div class="details__more">
-                            <button wire:click.prevent="setShowMore" class="details__btn-more">Xem thêm nội dung</button>
+                            <button wire:click.prevent="setShowMore" class="details__btn-more">Xem thêm nội
+                                dung</button>
                         </div>
                     @endif
                     <div class="details__information-group">
@@ -146,8 +148,14 @@
                                         <div class="product__name">{{ $r_product->name }}
                                         </div>
                                         <div class="product__group">
-                                            <div class="product__price">{{ $r_product->sale_price }} <span
-                                                    class="copper">đ</span></div>
+                                            <div class="product__price">
+                                                @if ($r_product->sale_price > 0)
+                                                    {{ number_format($r_product->sale_price, 0) }}
+                                                @else
+                                                    {{ number_format($r_product->regular_price, 0) }}
+                                                @endif
+                                                <span class="copper">đ</span>
+                                            </div>
                                             <div class="product__assess">5<i class="fa-solid fa-star"></i></i></div>
                                         </div>
                                     </a>

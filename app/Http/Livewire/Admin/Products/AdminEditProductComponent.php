@@ -8,6 +8,7 @@ use App\Models\Product;
 use App\Models\ProductDetails;
 use Carbon\Carbon;
 use App\Models\SubCategory;
+use App\Models\Category;
 use App\Models\Brand;
 use Livewire\WithFileUploads;
 
@@ -36,6 +37,8 @@ class AdminEditProductComponent extends Component
 
     public $images;
     public $newimages;
+
+    public $category_id;
 
 
     public function mount($product_slug)
@@ -173,8 +176,12 @@ class AdminEditProductComponent extends Component
 
     public function render()
     {
+        $category = Category::all();
         $subcategories = SubCategory::all();
+        if ($this->category_id) {
+            $subcategories = SubCategory::where('category_id',$this->category_id)->get();
+        }
         $brands = Brand::all();
-        return view('livewire.admin.products.admin-edit-product-component',['subcategories'=>$subcategories, 'brands'=>$brands])->layout('admlayouts.base');
+        return view('livewire.admin.products.admin-edit-product-component',['category'=>$category,'subcategories'=>$subcategories, 'brands'=>$brands])->layout('admlayouts.base');
     }
 }
